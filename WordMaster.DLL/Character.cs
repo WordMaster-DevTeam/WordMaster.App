@@ -14,7 +14,7 @@ namespace WordMaster.DLL
         uint _hp;
         uint _xp;
         uint _level;
-        List<string> _inventory;
+        List<Equipment> _inventory;
         uint _armor;
         int _posX;
         int _posY;
@@ -68,7 +68,7 @@ namespace WordMaster.DLL
         /// <param name="armor">Must be greater than 0.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, uint hp, uint xp, uint lvl, List<string> invent, uint armor, int posX, int posY)
+        public Character(string name, string descript, uint hp, uint xp, uint lvl, List<Equipment> invent, uint armor, int posX, int posY)
         {
             #region Exception management
             if (name == "" || name == null) throw new ArgumentException("Name can't be empty or null.");
@@ -102,7 +102,7 @@ namespace WordMaster.DLL
         /// <param name="invent">Can't be null.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, List<string> invent, int posX, int posY): this(name, descript, 100, 0, 1, invent,10, posX, posY)
+        public Character(string name, string descript, List<Equipment> invent, int posX, int posY): this(name, descript, 100, 0, 1, invent,10, posX, posY)
         {
         }
 
@@ -112,6 +112,14 @@ namespace WordMaster.DLL
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
         public void Move(int posX, int posY)
+        {
+            throw new NotImplementedException();
+        }
+
+        /// <summary>
+        /// Make the Character attack.
+        /// </summary>
+        public void Attack()
         {
             throw new NotImplementedException();
         }

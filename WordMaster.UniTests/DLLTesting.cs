@@ -10,10 +10,12 @@ namespace WordMaster.UniTests
 	[TestFixture]
     public class DLLTesting
     {
-		[Test]
-		public void func()
+        #region Character builder tests
+        [Test]
+		public void Create_Character_with_negative_zero_or_null_value()
 		{
-
-		}
+            throw new NotImplementedException();
+        }
+        #endregion
     }
 }

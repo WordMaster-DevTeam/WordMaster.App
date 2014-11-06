@@ -11,11 +11,12 @@ namespace WordMaster.DLL
         #region Attributes
         readonly string _name;
         readonly string _description;
-        uint _hp;
-        uint _xp;
-        uint _level;
-        List<Equipment> _inventory;
-        uint _armor;
+        int _hp;
+        int _xp;
+        int _level;
+        List<string> _book;
+        List<Item> _inventory;
+        int _armor;
         int _posX;
         int _posY;
         #endregion
@@ -31,28 +32,38 @@ namespace WordMaster.DLL
             get { return _description; }
         }
 
-        public uint Health
+        public int Health
         {
             get { return _hp; }
             set { _hp = value; }
         }
 
-        public uint Experience
+        public int Experience
         {
             get { return _xp; }
             set { _xp = value; }
         }
 
-        public uint Level
+        public int Level
         {
             get { return _level; }
             set { _level = value; }
         }
 
-        public uint Armor
+        public int Armor
         {
             get { return _armor; }
             set { _armor = value; }
+        }   
+     
+        public List<Item> Inventory
+        {
+            get { return _inventory; }
+        }
+
+        public List<string> Book
+        {
+            get { return _book; }
         }
         #endregion
 
@@ -68,18 +79,16 @@ namespace WordMaster.DLL
         /// <param name="armor">Must be greater than 0.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, uint hp, uint xp, uint lvl, List<Equipment> invent, uint armor, int posX, int posY)
+        public Character(string name, string descript, int hp, int xp, int lvl,List<string> book, List<Item> invent, int armor, int posX, int posY)
         {
             #region Exception management
-            if (name == "" || name == null) throw new ArgumentException("Name can't be empty or null.");
+            if (name == string.Empty || name == null || name== " ") throw new ArgumentException("Name can't be empty or null.");
             if (descript == null) throw new ArgumentException("Description can't be null");
             if (hp <= 0) throw new ArgumentException("Health Point must be greater than 0.");
             if (xp < 0) throw new ArgumentException("Expérience point can't be negative.");
             if (lvl <= 0) throw new ArgumentException("Level must be greater than 0.");
             if (invent == null) throw new ArgumentException("Inventory can't be null.");
             if (armor <= 0) throw new ArgumentException("Armor must be greater than 0.");
-            if (posX == null) throw new ArgumentException("Postion X can't be null.");
-            if (posY == null) throw new ArgumentException("Position Y can't be null");
             #endregion
 
             #region Assignation
@@ -87,6 +96,8 @@ namespace WordMaster.DLL
             _description = descript;
             _hp = hp;
             _xp = xp;
+            _level = lvl;
+            _book = book;
             _inventory = invent;
             _armor = armor;
             _posX = posX;
@@ -95,14 +106,14 @@ namespace WordMaster.DLL
         }
 
         /// <summary>
-        /// Initialize a new instance of <see cref="Character"/> class.
+        /// Initialize a new instance of <see cref="Character"/> class, create a level 1 character.
         /// </summary>
         /// <param name="name">Can't be empty or null.</param>
         /// <param name="descript">CAN be empty but not null.</param>
         /// <param name="invent">Can't be null.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, List<Equipment> invent, int posX, int posY): this(name, descript, 100, 0, 1, invent,10, posX, posY)
+        public Character(string name, string descript, int posX, int posY):this(name, descript,100,0,1,new List<string>(),new List<Item>(),10,posX,posY)
         {
         }
 
@@ -111,9 +122,18 @@ namespace WordMaster.DLL
         /// </summary>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public void Move(int posX, int posY)
+        public void MoveTo(int posX, int posY)
         {
-            throw new NotImplementedException();
+            _posX = posX;
+            _posY = posY;
+        }
+      
+        /// <summary>
+        /// Use an item from the inventory.
+        /// </summary>
+        public void UseItem()
+        {
+            throw new NotImplementedException( );
         }
 
         /// <summary>

@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
-    class Equipment
+    public class Item
     {
         #region Attributes
-        string _name;
-        string _description;
-        bool _equipable;
-        bool _isEquiped;
+        //string _name;
+        //string _description;
+        //bool _equipable;
+        //bool _isEquiped;
         #endregion
     }
 }

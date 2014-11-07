@@ -42,12 +42,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DLLTesting.cs" />
-    <Compile Include="IOChecksTesting.cs" />
+    <Compile Include="DungeonTests.cs" />
+    <Compile Include="NoMagicHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordMaster.DLL\WordMaster.DLL.csproj">
+      <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
+      <Name>WordMaster.DLL</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

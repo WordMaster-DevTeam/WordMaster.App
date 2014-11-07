@@ -19,9 +19,10 @@ namespace WordMaster.DLL
         int _armor;
         int _posX;
         int _posY;
+        //Dungeon _Dungeon;
         #endregion
 
-        #region Getters and setters
+        #region Getters, setters
         public string Name
         {
             get { return _name; }

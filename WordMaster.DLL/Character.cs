@@ -8,7 +8,6 @@ namespace WordMaster.DLL
 {
     public class Character
     {
-        #region Attributes
         readonly string _name;
         readonly string _description;
         int _hp;
@@ -20,9 +19,7 @@ namespace WordMaster.DLL
         int _posX;
         int _posY;
         //Dungeon _Dungeon;
-        #endregion
 
-        #region Getters, setters
         public string Name
         {
             get { return _name; }
@@ -66,7 +63,6 @@ namespace WordMaster.DLL
         {
             get { return _book; }
         }
-        #endregion
 
         /// <summary>
         /// Initialize a new instance of <see cref="Character"/>, base massive builder.
@@ -82,17 +78,14 @@ namespace WordMaster.DLL
         /// <param name="posY">Can't be null.</param>
         public Character(string name, string descript, int hp, int xp, int lvl,List<string> book, List<Item> invent, int armor, int posX, int posY)
         {
-            #region Exception management
             if (name == string.Empty || name == null || name== " ") throw new ArgumentException("Name can't be empty or null.");
             if (descript == null) throw new ArgumentException("Description can't be null");
             if (hp <= 0) throw new ArgumentException("Health Point must be greater than 0.");
             if (xp < 0) throw new ArgumentException("Expérience point can't be negative.");
             if (lvl <= 0) throw new ArgumentException("Level must be greater than 0.");
             if (invent == null) throw new ArgumentException("Inventory can't be null.");
-            if (armor <= 0) throw new ArgumentException("Armor must be greater than 0.");
-            #endregion
+            if (armor <= 0) throw new ArgumentException("Armor must be greater than 0.");      
 
-            #region Assignation
             _name = name;
             _description = descript;
             _hp = hp;
@@ -103,7 +96,6 @@ namespace WordMaster.DLL
             _armor = armor;
             _posX = posX;
             _posY = posY;
-            #endregion
         }
 
         /// <summary>

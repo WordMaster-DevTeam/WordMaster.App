@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EC26859-CE67-46F2-B1C6-FD628769D5BD}</ProjectGuid>
+    <ProjectGuid>{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.UniTests</RootNamespace>
-    <AssemblyName>WordMaster.UniTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>WordMaster.DLL</RootNamespace>
+    <AssemblyName>WordMaster.DLL</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,9 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework">
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,27 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterTests.cs" />
-    <Compile Include="DungeonTests.cs" />
-    <Compile Include="NoMagicHelperTests.cs" />
+    <Compile Include="NoMagicHelper.cs" />
+    <Compile Include="Square.cs" />
+    <Compile Include="Character.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="Floor.cs" />
+    <Compile Include="Dungeon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.DLL.csproj">
-      <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
-      <Name>WordMaster.DLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.IOChecks\WordMaster.IOChecks.csproj">
-      <Project>{609380a8-a076-4830-8c74-c7301e385450}</Project>
-      <Name>WordMaster.IOChecks</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.UI\WordMaster.UI.csproj">
-      <Project>{e25f5c76-a174-4a19-9e5a-16908225a8a3}</Project>
-      <Name>WordMaster.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

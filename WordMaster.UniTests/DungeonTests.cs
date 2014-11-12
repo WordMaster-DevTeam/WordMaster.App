@@ -8,7 +8,7 @@ using NUnit.Framework;
 namespace WordMaster.UniTests
 {
 	[TestFixture]
-    public class IOChecksTesting
+    public class DungeonTests
     {
 		[Test]
 		public void func()

@@ -18,10 +18,13 @@ namespace WordMaster.UniTests
 		{
             List<Item> invent= new List<Item>();
             List<string> book = new List<string>( );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
 
-            Assert.Throws<ArgumentException>( ()=>new Character(" ", "zer",10,0,1, book, invent,10,0,0) );
-            Assert.Throws<ArgumentException>( () => new Character(null, "zer", 10, 0, 1, book, invent, 10, 0, 0) );
-            Assert.Throws<ArgumentException>( () => new Character(string.Empty, "zer", 10, 0, 1, book, invent, 10, 0, 0) );
+            Assert.Throws<ArgumentException>( ()=>new Character(" ", "zer",10,0,1, book, invent,10,testdungeon,testfloor,testsquare) );
+            Assert.Throws<ArgumentException>( () => new Character(null, "zer", 10, 0, 1, book, invent, 10, testdungeon,testfloor,testsquare) );
+            Assert.Throws<ArgumentException>( () => new Character(string.Empty, "zer", 10, 0, 1, book, invent, 10, testdungeon,testfloor,testsquare) );
         }
 
         [Test]
@@ -29,8 +32,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>();
             List<string> book = new List<string>( );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
 
-            Assert.Throws<ArgumentException>(() => new Character("zer", null, 10, 0, 1, book, invent, 10, 0, 0));
+            Assert.Throws<ArgumentException>( () => new Character( "zer", null, 10, 0, 1, book, invent, 10, testdungeon, testfloor, testsquare ) );
         }
 
         [Test]
@@ -38,15 +44,21 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>();
             List<string> book = new List<string>( );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor("testfloor",18,25 );
+            Square testsquare = new Square( "testtype", true );
 
-            Assert.Throws<ArgumentException>(() => new Character("zer", "", 0, 0, 1, book, invent, 10, 0, 0));
+            Assert.Throws<ArgumentException>( () => new Character( "zer", "", 0, 0, 1, book, invent, 10, testdungeon, testfloor, testsquare ) );
         }
 
         [Test]
         public void Helper_builder_create_character_correctly()
         {
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
            
-            Character testChar = new Character("tartempion", "truc", 10, 20);
+            Character testChar = new Character("tartempion", "truc", testdungeon,testfloor,testsquare);
 
             Assert.That(testChar.Name, Is.EqualTo("tartempion"));
             Assert.That(testChar.Descritption, Is.EqualTo("truc"));
@@ -61,7 +73,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>();
             List<string> book = new List<string>( );
-            Character testCharacter = new Character("tartempion", "truc", 8100, 3700, 18, book, invent, 58, 0, 0);
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
+
+            Character testCharacter = new Character("tartempion", "truc", 8100, 3700, 18, book, invent, 58, testdungeon,testfloor,testsquare);
 
             Assert.That(testCharacter.Name, Is.EqualTo("tartempion"));
             Assert.That(testCharacter.Descritption, Is.EqualTo("truc"));
@@ -76,7 +92,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>( );
             List<string> book = new List<string>( );
-            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, -3700, 18, book, invent, 58, 0, 0 ) );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
+
+            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, -3700, 18, book, invent, 58, testdungeon, testfloor, testsquare ) );
         }
 
         [Test]
@@ -84,7 +104,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>( );
             List<string> book = new List<string>( );
-            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", -8100, 3700, 18, book, invent, 58, 0, 0 ) );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
+
+            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", -8100, 3700, 18, book, invent, 58, testdungeon, testfloor, testsquare ) );
         }
 
         [Test]
@@ -92,7 +116,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>( );
             List<string> book = new List<string>( );
-            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, 3700, -18, book, invent, 58, 0, 0 ) );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
+
+            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, 3700, -18, book, invent, 58, testdungeon, testfloor, testsquare ) );
         }
 
         [Test]
@@ -100,7 +128,11 @@ namespace WordMaster.UniTests
         {
             List<Item> invent = new List<Item>( );
             List<string> book = new List<string>( );
-            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, 3700, 18, book, invent, -58, 0, 0 ) );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 25 );
+            Square testsquare = new Square( "testtype", true );
+
+            Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, 3700, 18, book, invent, -58, testdungeon, testfloor, testsquare ) );
         }
         #endregion
     }

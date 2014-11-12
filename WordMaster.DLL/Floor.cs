@@ -17,7 +17,7 @@ namespace WordMaster.DLL
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
 		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
 		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		internal Floor( string name, int length, int width )
+		public Floor( string name, int length, int width )
 		{
 			_name = name;
 			_layout = new Square[length, width];
@@ -42,5 +42,12 @@ namespace WordMaster.DLL
 		{
 			get { return _name; }
 		}
+
+        public Square[,] Layout
+        {
+            get { return _layout; }
+        }
+
+        
 	}
 }

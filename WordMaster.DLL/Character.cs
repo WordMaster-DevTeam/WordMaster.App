@@ -16,9 +16,11 @@ namespace WordMaster.DLL
         List<string> _book;
         List<Item> _inventory;
         int _armor;
-        int _posX;
-        int _posY;
-        //Dungeon _Dungeon;
+        //int _posX;
+        //int _posY;
+        Dungeon _currentdungeon;
+        Floor _currentfloor;
+        Square _currentsquare;
 
         public string Name
         {
@@ -76,9 +78,10 @@ namespace WordMaster.DLL
         /// <param name="armor">Must be greater than 0.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, int hp, int xp, int lvl,List<string> book, List<Item> invent, int armor, int posX, int posY)
+        public Character(string name, string descript, int hp, int xp, int lvl,List<string> book, List<Item> invent, int armor, Dungeon currentdungeon, Floor currentfloor, Square currentsquare)
         {
-            if (name == string.Empty || name == null || name== " ") throw new ArgumentException("Name can't be empty or null.");
+            if (name == string.Empty || name == null || name== " " ) throw new ArgumentException("Name can't be empty or null.");
+            if ( NoMagicHelper.CheckNameLength( name ) != true ) throw new ArgumentException( "Invalid name length" );
             if (descript == null) throw new ArgumentException("Description can't be null");
             if (hp <= 0) throw new ArgumentException("Health Point must be greater than 0.");
             if (xp < 0) throw new ArgumentException("Expérience point can't be negative.");
@@ -93,9 +96,11 @@ namespace WordMaster.DLL
             _level = lvl;
             _book = book;
             _inventory = invent;
-            _armor = armor;
-            _posX = posX;
-            _posY = posY;
+            _armor = armor;            
+            _currentdungeon = currentdungeon;
+            _currentfloor = currentfloor;
+            _currentsquare = currentsquare;
+
         }
 
         /// <summary>
@@ -106,7 +111,8 @@ namespace WordMaster.DLL
         /// <param name="invent">Can't be null.</param>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, int posX, int posY):this(name, descript,100,0,1,new List<string>(),new List<Item>(),10,posX,posY)
+        public Character( string name, string descript, Dungeon currentdungeon, Floor currentfloor, Square currentsquare )
+            : this( name, descript, 100, 0, 1, new List<string>( ), new List<Item>( ), 10, currentdungeon,currentfloor,currentsquare )
         {
         }
 
@@ -115,12 +121,13 @@ namespace WordMaster.DLL
         /// </summary>
         /// <param name="posX">Can't be null.</param>
         /// <param name="posY">Can't be null.</param>
-        public void MoveTo(int posX, int posY)
+        public void MoveTo( int posX, int posY )
         {
-            _posX = posX;
-            _posY = posY;
-        }
-      
+            if ( _currentfloor.Layout[ posX, posY ].Holdable != true ) throw new ArgumentException( "Moving to a non-holdable Square." );
+
+            _currentsquare = _currentfloor.Layout[ posX, posY ];
+        }   
+
         /// <summary>
         /// Use an item from the inventory.
         /// </summary>
@@ -135,7 +142,6 @@ namespace WordMaster.DLL
         public void Attack()
         {
             throw new NotImplementedException();
-        }
-
+        }       
     }
 }

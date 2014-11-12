@@ -32,5 +32,11 @@ namespace WordMaster.DLL
 			get { return _type; }
 			set { _type = value; }
 		}
+
+        public bool Holdable
+        {
+            get { return _isHoldable; }
+            set { _isHoldable = value; }
+        }
 	}
 }

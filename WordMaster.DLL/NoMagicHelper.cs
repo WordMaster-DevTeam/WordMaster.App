@@ -14,11 +14,11 @@ namespace WordMaster.DLL
 		readonly static int _maxFloorSize = 100;
 
 		/// <summary>
-		/// Checks if a name is between MinLengthName and MaxLengthName.
+		/// Checks if a name is between MinNameLength and MaxNameLength.
 		/// </summary>
 		/// <param name="name">The name of something to check.</param>
 		/// <returns>True if the name's length is correct, false if not.</returns>
-		static public bool CheckLengthName( string name )
+		static public bool CheckNameLength( string name )
 		{
 			if( name.Length >= _minLengthName && name.Length <= _maxLengthName ) return true;
 			else return false;
@@ -36,17 +36,17 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets the MinLengthName's value.
+		/// Gets the MinNameLength's value.
 		/// </summary>
-		static public int MinLengthName
+		static public int MinNameLength
 		{
 			get { return _minLengthName; }
 		}
 
 		/// <summary>
-		/// Gets the MaxLengthName's value.
+		/// Gets the MaxNameLength's value.
 		/// </summary>
-		static public int MaxLengthName
+		static public int MaxNameLength
 		{
 			get { return _maxLengthName; }
 		}

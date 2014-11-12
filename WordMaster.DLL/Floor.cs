@@ -13,29 +13,23 @@ namespace WordMaster.DLL
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Floor"/> class.
-		/// The floor created will be right-angled.
 		/// </summary>
-		/// <param name="name">Name (3 to 30 characters) of the floor.</param>
-		/// <param name="length">Length of the floor, must be included in [3, 100].</param>
-		/// <param name="width">width of the floor, must be included in [3, 100].</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
 		internal Floor( string name, int length, int width )
 		{
-			if( NoMagicHelper.CheckLengthName( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinLengthName + " to " + NoMagicHelper.MaxLengthName + " characters.", "name" );
-			if( NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length");
-			if( NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
-			
 			_name = name;
 			_layout = new Square[length, width];
 		}
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="Floor"/> class.
-		/// The floor created will be cubic.
+		/// Sets a Square in the layout of the Floor.
 		/// </summary>
-		/// <param name="name">Name of the floor.</param>
-		/// <param name="size">Size of the floor, must be greater than zero.</param>
-		internal Floor( string name, int size ) : this ( name, size, size ) {}
-
+		/// <param name="posX"></param>
+		/// <param name="posY"></param>
+		/// <param name="type"></param>
+		/// <param name="isHoldable"></param>
 		public void SetSquare( int posX, int posY, string type, bool isHoldable )
 		{
 			_layout[posX, posY] = new Square( type, isHoldable );

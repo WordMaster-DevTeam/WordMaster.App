@@ -24,23 +24,53 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Sets a Square in the layout of the Floor.
-		/// </summary>
-		/// <param name="posX"></param>
-		/// <param name="posY"></param>
-		/// <param name="type"></param>
-		/// <param name="isHoldable"></param>
-		public void SetSquare( int posX, int posY, string type, bool isHoldable )
-		{
-			_layout[posX, posY] = new Square( type, isHoldable );
-		}
-
-		/// <summary>
 		/// Gets the name of the instance of <see cref="Floor"/> class.
 		/// </summary>
 		public string Name
 		{
 			get { return _name; }
+		}
+
+		/// <summary>
+		/// Sets (or reset) a Square in the layout of the Floor.
+		/// </summary>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <param name="name">Name of the Squre.</param>
+		/// <param name="holdable">Holdable state of the Square.</param>
+		public void SetSquare( int lin, int col, string name, bool holdable )
+		{
+			
+			// Checking parameters
+			if( lin <= 0 || lin >= _layout.GetLength( 0 ) ) throw new IndexOutOfRangeException("Horizontal parameter is out of range");
+			if( col <= 0 || col >= _layout.GetLength( 1 ) ) throw new IndexOutOfRangeException("Vertical parameter is out of range");
+			if( !NoMagicHelper.CheckNameLength( name ) )  throw new ArgumentException( "Square's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name");
+
+			// Adding Square in Floor
+			_layout[lin, col] = new Square( name, holdable );
+		}
+
+		/// <summary>
+		/// Sets (or reset) a Square in the layout of the Floor.
+		/// Square created with not be holdable.
+		/// </summary>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <param name="name">Name of the Squre.</param>
+		public void SetSquare( int lin, int col, string name )
+		{
+			SetSquare( lin, col, name, false );
+		}
+
+		/// <summary>
+		/// Gets the holdable 
+		/// </summary>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <returns></returns>
+		public bool HoldableSquare( int lin, int col )
+		{
+			return _layout[lin, col].Holdable;
 		}
 	}
 }

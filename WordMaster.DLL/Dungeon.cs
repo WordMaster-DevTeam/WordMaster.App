@@ -17,7 +17,7 @@ namespace WordMaster.DLL
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
 		public Dungeon( string name )
 		{
-			if( NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
 
 			_name = name;
 			_floors = new Dictionary<int,Floor> ();

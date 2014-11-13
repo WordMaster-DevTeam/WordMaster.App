@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
+    [Serializable]
     public class Character
     {
         readonly string _name;
@@ -16,8 +17,6 @@ namespace WordMaster.DLL
         List<string> _book;
         List<Item> _inventory;
         int _armor;
-        //int _posX;
-        //int _posY;
         Dungeon _currentdungeon;
         Floor _currentfloor;
         Square _currentsquare;
@@ -123,7 +122,7 @@ namespace WordMaster.DLL
         /// <param name="posY">Can't be null.</param>
         public void MoveTo( int posX, int posY )
         {
-            if ( _currentfloor.Layout[ posX, posY ].Holdable != true ) throw new ArgumentException( "Moving to a non-holdable Square." );
+            if ( _currentfloor.Layout[ posX, posY ].Holdable != true ) throw new InvalidOperationException( "Moving to a non-holdable Square." );
 
             _currentsquare = _currentfloor.Layout[ posX, posY ];
         }   

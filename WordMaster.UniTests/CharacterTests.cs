@@ -134,6 +134,21 @@ namespace WordMaster.UniTests
 
             Assert.Throws<ArgumentException>( () => new Character( "tartempion", "truc", 8100, 3700, 18, book, invent, -58, testdungeon, testfloor, testsquare ) );
         }
+        
+        [Test]
+        public void Character_cant_move_to_not_holdable_square()
+        {
+            List<Item> invent = new List<Item>( );
+            List<string> book = new List<string>( );
+            Dungeon testdungeon = new Dungeon( "test dungeon" );
+            Floor testfloor = new Floor( "testfloor", 18, 24 );
+            Square testsquare = new Square( "testtype", true );
+            Character testcharacter = new Character( "plop", "zer", 10, 0, 1, book, invent, 10, testdungeon, testfloor, testsquare );
+
+            testfloor.SetSquare( 14, 22, "unholdable", false );
+
+            Assert.Throws<InvalidOperationException>( () => testcharacter.MoveTo( 14, 22 ) );            
+        }
         #endregion
     }
 }

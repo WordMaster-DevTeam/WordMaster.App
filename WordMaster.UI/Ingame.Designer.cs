@@ -30,12 +30,12 @@
         {
             this.Gameview = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
-            this.panel2 = new System.Windows.Forms.Panel();
-            this.Profilpicturebox = new System.Windows.Forms.PictureBox();
-            this.Namelbl = new System.Windows.Forms.Label();
-            this.Lifelbl = new System.Windows.Forms.Label();
-            this.Levellbl = new System.Windows.Forms.Label();
             this.Decriptionlbl = new System.Windows.Forms.Label();
+            this.Levellbl = new System.Windows.Forms.Label();
+            this.Lifelbl = new System.Windows.Forms.Label();
+            this.Namelbl = new System.Windows.Forms.Label();
+            this.Profilpicturebox = new System.Windows.Forms.PictureBox();
+            this.panel2 = new System.Windows.Forms.Panel();
             this.Wordslbl = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.Respondlaunchbtn = new System.Windows.Forms.Button();
@@ -48,8 +48,8 @@
             this.Complementarylbl = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.Gameview)).BeginInit();
             this.panel1.SuspendLayout();
-            this.panel2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profilpicturebox)).BeginInit();
+            this.panel2.SuspendLayout();
             this.SuspendLayout();
             // 
             // Gameview
@@ -78,42 +78,14 @@
             this.panel1.Size = new System.Drawing.Size(187, 302);
             this.panel1.TabIndex = 1;
             // 
-            // panel2
+            // Decriptionlbl
             // 
-            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.Wordslbl);
-            this.panel2.Location = new System.Drawing.Point(702, 12);
-            this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(188, 302);
-            this.panel2.TabIndex = 2;
-            // 
-            // Profilpicturebox
-            // 
-            this.Profilpicturebox.Location = new System.Drawing.Point(10, 9);
-            this.Profilpicturebox.Name = "Profilpicturebox";
-            this.Profilpicturebox.Size = new System.Drawing.Size(56, 62);
-            this.Profilpicturebox.TabIndex = 0;
-            this.Profilpicturebox.TabStop = false;
-            // 
-            // Namelbl
-            // 
-            this.Namelbl.AutoSize = true;
-            this.Namelbl.Location = new System.Drawing.Point(76, 13);
-            this.Namelbl.Name = "Namelbl";
-            this.Namelbl.Size = new System.Drawing.Size(32, 13);
-            this.Namelbl.TabIndex = 1;
-            this.Namelbl.Text = "Nom:";
-            // 
-            // Lifelbl
-            // 
-            this.Lifelbl.AutoSize = true;
-            this.Lifelbl.Location = new System.Drawing.Point(76, 26);
-            this.Lifelbl.Name = "Lifelbl";
-            this.Lifelbl.Size = new System.Drawing.Size(27, 13);
-            this.Lifelbl.TabIndex = 2;
-            this.Lifelbl.Text = "Life:";
+            this.Decriptionlbl.AutoSize = true;
+            this.Decriptionlbl.Location = new System.Drawing.Point(7, 74);
+            this.Decriptionlbl.Name = "Decriptionlbl";
+            this.Decriptionlbl.Size = new System.Drawing.Size(63, 13);
+            this.Decriptionlbl.TabIndex = 4;
+            this.Decriptionlbl.Text = "Description:";
             // 
             // Levellbl
             // 
@@ -125,14 +97,42 @@
             this.Levellbl.Text = "Level:";
             this.Levellbl.Click += new System.EventHandler(this.label3_Click);
             // 
-            // Decriptionlbl
+            // Lifelbl
             // 
-            this.Decriptionlbl.AutoSize = true;
-            this.Decriptionlbl.Location = new System.Drawing.Point(7, 74);
-            this.Decriptionlbl.Name = "Decriptionlbl";
-            this.Decriptionlbl.Size = new System.Drawing.Size(63, 13);
-            this.Decriptionlbl.TabIndex = 4;
-            this.Decriptionlbl.Text = "Description:";
+            this.Lifelbl.AutoSize = true;
+            this.Lifelbl.Location = new System.Drawing.Point(76, 26);
+            this.Lifelbl.Name = "Lifelbl";
+            this.Lifelbl.Size = new System.Drawing.Size(27, 13);
+            this.Lifelbl.TabIndex = 2;
+            this.Lifelbl.Text = "Life:";
+            // 
+            // Namelbl
+            // 
+            this.Namelbl.AutoSize = true;
+            this.Namelbl.Location = new System.Drawing.Point(76, 13);
+            this.Namelbl.Name = "Namelbl";
+            this.Namelbl.Size = new System.Drawing.Size(32, 13);
+            this.Namelbl.TabIndex = 1;
+            this.Namelbl.Text = "Nom:";
+            // 
+            // Profilpicturebox
+            // 
+            this.Profilpicturebox.Location = new System.Drawing.Point(10, 9);
+            this.Profilpicturebox.Name = "Profilpicturebox";
+            this.Profilpicturebox.Size = new System.Drawing.Size(56, 62);
+            this.Profilpicturebox.TabIndex = 0;
+            this.Profilpicturebox.TabStop = false;
+            // 
+            // panel2
+            // 
+            this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel2.Controls.Add(this.Wordslbl);
+            this.panel2.Location = new System.Drawing.Point(702, 12);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(188, 302);
+            this.panel2.TabIndex = 2;
             // 
             // Wordslbl
             // 
@@ -256,14 +256,15 @@
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Gameview);
             this.Name = "Ingame";
+            this.RightToLeftLayout = true;
             this.Text = "Word Master";
             this.Load += new System.EventHandler(this.Ingame_Load);
             ((System.ComponentModel.ISupportInitialize)(this.Gameview)).EndInit();
             this.panel1.ResumeLayout(false);
             this.panel1.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.Profilpicturebox)).EndInit();
             this.panel2.ResumeLayout(false);
             this.panel2.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.Profilpicturebox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

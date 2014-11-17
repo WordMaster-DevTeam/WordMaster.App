@@ -43,8 +43,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="DungeonTests.cs" />
+    <Compile Include="FloorTests.cs" />
     <Compile Include="NoMagicHelperTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SquareTests.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

@@ -1,8 +1,5 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
@@ -10,7 +7,7 @@ namespace WordMaster.DLL
     {
 		string _name;
 		string _description;
-		SortedDictionary<int, Floor> _floors;
+		SortedList<int, Floor> _floors;
 		
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
@@ -26,7 +23,7 @@ namespace WordMaster.DLL
 			// Creating Dungeon
 			_name = name;
 			_description = description;
-			_floors = new SortedDictionary<int, Floor>();
+			_floors = new SortedList<int, Floor>();
 		}
 
 		/// <summary>
@@ -45,7 +42,7 @@ namespace WordMaster.DLL
 			set
 			{
 				if( NoMagicHelper.CheckNameLength( value ) ) _name = value;
-				else throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "value" );
+				else throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "value" );
 			}
 		}
 
@@ -57,8 +54,8 @@ namespace WordMaster.DLL
 			get { return _description; }
 			set
 			{
-				if( NoMagicHelper.CheckLongStringLength( value ) ) _name = value;
-				else throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "value" );
+				if( NoMagicHelper.CheckLongStringLength( value ) ) _description = value;
+				else throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "value" );
 			}
 		}
 
@@ -75,15 +72,17 @@ namespace WordMaster.DLL
 		/// </summary>
 		/// <param name="index">Position of the Floor to add.</param>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
 		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( int index, string name, int length, int width )
+		public Floor AddFloor( int index, string name, string description, int length, int width )
 		{
 			Floor floor;
 
 			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
 			if( !NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length" );
 			if( !NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
 
@@ -94,23 +93,23 @@ namespace WordMaster.DLL
 			// Adding Floor in Dungeon
 			if( !ExistFloor( index ) ) // No index modifications needed
 			{
-				_floors.Add( index, new Floor( name, length, width ) );
+				_floors.Add( index, new Floor( name, description, length, width ) );
 			}
 			else // Index modification needed (inserting Floor between others Floors)
 			{
-				SortedDictionary<int, Floor> floors = new SortedDictionary<int, Floor>();
-				int i; Floor f;
-				
-				for( i = 0; i < index; i++ )
+				SortedList<int, Floor> floors = new SortedList<int, Floor>();
+				for( int i = 0; i < index; i++ )
 				{
+					Floor f;
 					if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
-					else throw new IndexOutOfRangeException( "No Floor found will recreating the Dungeon (before the Floor inserted)." );
+					else break;
 				}
-				floors.Add( index, new Floor( name, length, width ) );
-				for( i = index; i < _floors.Count; i++ )
+				floors.Add( index, new Floor( name, description, length, width ) );
+				for( int i = index; i < _floors.Count; i++ )
 				{
+					Floor f;
 					if( _floors.TryGetValue( i, out f ) ) floors.Add( i + 1, f );
-					else throw new IndexOutOfRangeException( "No Floor found will recreating the Dungeon (after the Floor inserted)." );
+					else break;
 				}
 				_floors = floors;
 			}
@@ -120,16 +119,17 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be put after the current last Floor.
+		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor will not have a description.
 		/// </summary>
+		/// <param name="index">Position of the Floor to add.</param>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
 		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( string name, int length, int width )
+		public Floor AddFloor( int index, string name, string description, int size )
 		{
-			return AddFloor( _floors.Count, name, length, width );
+			return AddFloor( index, name, description, size, size );
 		}
 
 		/// <summary>
@@ -138,11 +138,40 @@ namespace WordMaster.DLL
 		/// </summary>
 		/// <param name="index">Position of the Floor to add.</param>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( int index, string name , int length, int width  )
+		{
+			return AddFloor( index, name, "", length, width );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor will not have a description.
+		/// The Floor created will be cubic.
+		/// </summary>
+		/// <param name="index">Position of the Floor to add.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
 		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
 		public Floor AddFloor( int index, string name, int size )
 		{
-			return AddFloor( index, name, size, size );
+			return AddFloor( index, name, "", size, size );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, string description, int length, int width )
+		{
+			return AddFloor( _floors.Count, name, description, length, width );
 		}
 
 		/// <summary>
@@ -151,11 +180,40 @@ namespace WordMaster.DLL
 		/// The Floor created will be cubic.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, string description, int size )
+		{
+			return AddFloor( _floors.Count, name, description, size );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// The Floor will not have a description.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, int length, int width )
+		{
+			return AddFloor( _floors.Count, name, "", length, width );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// The Floor will not have a description.
+		/// The Floor created will be cubic.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
 		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
 		public Floor AddFloor( string name, int size )
 		{
-			return AddFloor( _floors.Count, name, size, size );
+			return AddFloor( _floors.Count, name, "", size, size );
 		}
 
 		/// <summary>
@@ -176,19 +234,19 @@ namespace WordMaster.DLL
 				}
 				else // Index modification needed (removing Floor between others Floors)
 				{
-					SortedDictionary<int, Floor> floors = new SortedDictionary<int, Floor>();
-					int i; Floor f;
-
-					for( i = 1; i < index; i++ )
+					SortedList<int, Floor> floors = new SortedList<int, Floor>();
+					for( int i = 0; i <= index; i++ )
 					{
+						Floor f;
 						if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
-						else throw new IndexOutOfRangeException( "No Floor found will recreating the Dungeon (before the Floor removed)." );
+						else break;
 					}
 					floors.Remove( index );
-					for( i = index + 1; i < _floors.Count; i++ )
+					for( int i = index; i < _floors.Count; i++ )
 					{
-						if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
-						else throw new IndexOutOfRangeException( "No Floor found will recreating the Dungeon (after the Floor removed)." );
+						Floor f;
+						if( _floors.TryGetValue( i + 1, out f ) ) floors.Add( i, f );
+						else break;
 					}
 					_floors = floors;
 					return true;

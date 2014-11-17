@@ -1,36 +1,51 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
 	public class Square
 	{
-		string _type;
-		bool _isHoldable;
+		string _name;
+		string _description;
+		bool _holdable;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Square"/> class.
 		/// </summary>
-		/// <param name="type">The type of the Square.</param>
-		/// <param name="isHoldable">If a Character can stand or move to this Square</param>
-		public Square( string type, bool isHoldable )
+		/// <param name="name">Type of the Square.</param>
+		/// <param name="description">Description of the Square.</param>
+		/// <param name="holdable">Holdable state of the Square.</param>
+		internal Square( string name, string description, bool holdable)
 		{
-			if( type.Trim() == string.Empty || type == null ) throw new ArgumentException( "Type must be specified.", "type" );
-
-			_type = type;
-			_isHoldable = isHoldable;
+			_name = name;
+			_description = description;
+			_holdable = holdable;
 		}
 
 		/// <summary>
-		/// Gets or sets the type of the instance of <see cref="Square"/> class.
+		/// Gets or sets the type of the Square.
 		/// </summary>
-		public string Type
+		public string Name
 		{
-			get { return _type; }
-			set { _type = value; }
+			get { return _name; }
+			set { _name = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the description of the Square.
+		/// </summary>
+		public string Description
+		{
+			get { return _description; }
+			set { _description = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the holdable state of the Square.
+		/// </summary>
+		public bool Holdable
+		{
+			get { return _holdable; }
+			set { _holdable = value; }
 		}
 
         public bool Holdable

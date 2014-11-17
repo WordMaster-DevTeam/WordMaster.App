@@ -1,34 +1,62 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
     public class Dungeon
     {
-		readonly string _name;
-		readonly Dictionary<int, Floor> _floors;
-
+		string _name;
+		string _description;
+		SortedList<int, Floor> _floors;
+		
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
-		public Dungeon( string name )
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Dungeon.</param>
+		public Dungeon( string name, string description)
 		{
+			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
 
+			// Creating Dungeon
 			_name = name;
-			_floors = new Dictionary<int,Floor> ();
+			_description = description;
+			_floors = new SortedList<int, Floor>();
 		}
 
 		/// <summary>
-		/// Gets the name of the instance of <see cref="Dungeon"/> class.
+		/// Initializes a new instance of <see cref="Dungeon"/> class.
+		/// Dungeon's description will be empty.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
+		public Dungeon( string name ) : this( name, "" ) { }
+
+		/// <summary>
+		/// Gets or sets the name of the instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public string Name
 		{
 			get { return _name; }
+			set
+			{
+				if( NoMagicHelper.CheckNameLength( value ) ) _name = value;
+				else throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "value" );
+			}
+		}
+
+		/// <summary>
+		/// Gets or sets the description of the instance of <see cref="Dungeon"/> class.
+		/// </summary>
+		public string Description
+		{
+			get { return _description; }
+			set
+			{
+				if( NoMagicHelper.CheckLongStringLength( value ) ) _description = value;
+				else throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "value" );
+			}
 		}
 
 		/// <summary>
@@ -39,50 +67,69 @@ namespace WordMaster.DLL
 			get { return _floors.Count; }
 		}
 
-		#region AddFloor methods (using set or not set index and cubic or right-angled constructor)
 		/// <summary>
 		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be right-angled.
 		/// </summary>
 		/// <param name="index">Position of the Floor to add.</param>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( int index, string name, int length, int width )
+		public Floor AddFloor( int index, string name, string description, int length, int width )
 		{
-			if( NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length" );
-			if( NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
+			Floor floor;
 
-			if( TryGetFloor( name ) != null ) throw new ArgumentException( "A floor with this name already exist.", "name" );
-			if( index < 0 || index > _floors.Count ) throw new ArgumentException( "Floor must be connected each others.", "index" );
+			// Checking parameters
+			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
+			if( !NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length" );
+			if( !NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
 
-			if( TryGetFloor( index ) == null )
+			// Checking context
+			if( ExistFloor( name ) ) throw new ArgumentException( "A floor with this name already exist.", "name" );
+			if( index < 0 || index > _floors.Count ) throw new ArgumentException( "Floors must be connected each others.", "index" );
+
+			// Adding Floor in Dungeon
+			if( !ExistFloor( index ) ) // No index modifications needed
 			{
-				// No index modifications needed
-				_floors.Add( index, new Floor( name, length, width ) );
+				_floors.Add( index, new Floor( name, description, length, width ) );
 			}
-			else
+			else // Index modification needed (inserting Floor between others Floors)
 			{
-				// Index modification: move the floor with corresponding index to upper level, and the next after, etc.
-				
+				SortedList<int, Floor> floors = new SortedList<int, Floor>();
+				for( int i = 0; i < index; i++ )
+				{
+					Floor f;
+					if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
+					else break;
+				}
+				floors.Add( index, new Floor( name, description, length, width ) );
+				for( int i = index; i < _floors.Count; i++ )
+				{
+					Floor f;
+					if( _floors.TryGetValue( i, out f ) ) floors.Add( i + 1, f );
+					else break;
+				}
+				_floors = floors;
 			}
 
-			return TryGetFloor( index );
+			if( TryGetFloor( index, out floor ) ) return floor;
+			else return null;
 		}
 
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be right-angled.
+		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor will not have a description.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
+		/// <param name="index">Position of the Floor to add.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( string name, int length, int width )
+		public Floor AddFloor( int index, string name, string description, int size )
 		{
-			return AddFloor( _floors.Count, name, length, width );
+			return AddFloor( index, name, description, size, size );
 		}
 
 		/// <summary>
@@ -90,139 +137,233 @@ namespace WordMaster.DLL
 		/// The Floor created will be cubic.
 		/// </summary>
 		/// <param name="index">Position of the Floor to add.</param>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the floor.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( int index, string name , int length, int width  )
+		{
+			return AddFloor( index, name, "", length, width );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor will not have a description.
+		/// The Floor created will be cubic.
+		/// </summary>
+		/// <param name="index">Position of the Floor to add.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
 		public Floor AddFloor( int index, string name, int size )
 		{
-			return AddFloor( index, name, size, size );
+			return AddFloor( index, name, "", size, size );
 		}
 
 		/// <summary>
 		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, string description, int length, int width )
+		{
+			return AddFloor( _floors.Count, name, description, length, width );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
 		/// The Floor created will be cubic.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the floor.</param>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, string description, int size )
+		{
+			return AddFloor( _floors.Count, name, description, size );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// The Floor will not have a description.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <returns>Reference of the new Floor.</returns>
+		public Floor AddFloor( string name, int length, int width )
+		{
+			return AddFloor( _floors.Count, name, "", length, width );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// The Floor will not have a description.
+		/// The Floor created will be cubic.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
+		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
 		public Floor AddFloor( string name, int size )
 		{
-			return AddFloor( _floors.Count, name, size, size );
-		}
-		#endregion
-
-		#region DeleteFloor methods (using reference, name or index of the Floor to remove)
-		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
-		/// </summary>
-		/// <param name="floor">Reference of the Floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( Floor floor )
-		{
-			throw new NotImplementedException();
+			return AddFloor( _floors.Count, name, "", size, size );
 		}
 
 		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
+		/// Removes an instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="Name">Name of the floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( string Name )
+		/// <param name="floor">Reference of the Floor to remove.</param>
+		/// <returns>True if the Floor has been found and remove. False if not.</returns>
+		public bool RemoveFloor( Floor floor )
 		{
-			throw new NotImplementedException();
+			int index;
+
+			if( TryGetIndex( floor, out index ) )
+			{
+				if( index == _floors.Count ) // No index modifications needed
+				{
+					_floors.Remove( index );
+					return true;
+				}
+				else // Index modification needed (removing Floor between others Floors)
+				{
+					SortedList<int, Floor> floors = new SortedList<int, Floor>();
+					for( int i = 0; i <= index; i++ )
+					{
+						Floor f;
+						if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
+						else break;
+					}
+					floors.Remove( index );
+					for( int i = index; i < _floors.Count; i++ )
+					{
+						Floor f;
+						if( _floors.TryGetValue( i + 1, out f ) ) floors.Add( i, f );
+						else break;
+					}
+					_floors = floors;
+					return true;
+				}
+			}
+			else return false;
 		}
 
 		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
+		/// Removes an instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( int index )
+		/// <param name="name">Name of the floor to remove.</param>
+		/// <returns>True if the Floor has been found and remove.</returns>
+		public bool RemoveFloor( string name )
 		{
-			throw new NotImplementedException();
-		}
-		#endregion
+			Floor floor;
 
-		#region TryGets a/next/previous Floor methods (using reference, name or index)
-		/// <summary>
-		/// Try to gets a reference of an instance of <see cref="Floor"/> class, by name.
-		/// </summary>
-		/// <param name="name">Name of the Floor to get.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetFloor( string name )
-		{
-			throw new NotImplementedException();			
+			if( TryGetFloor( name, out floor ) ) return RemoveFloor( floor );
+			else return false;
 		}
 
 		/// <summary>
-		/// Try to gets a reference of an instance of <see cref="Floor"/> class, by index.
+		/// Removes an instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the Floor to get (must be positive).</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetFloor( int index )
+		/// <param name="index">Index of the floor to remove.</param>
+		/// <returns>True if the Floor has been found and remove.</returns>
+		public bool RemoveFloor( int index )
 		{
-			throw new NotImplementedException();
+			Floor floor;
+
+			if( TryGetFloor( index, out floor ) ) return RemoveFloor( floor );
+			else return false;
 		}
 
 		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using reference of the current Floor.
+		/// Gets the index of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="currentFloor">Reference of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetNextFloor( Floor currentFloor )
+		/// <param name="name">Floor's name.</param>
+		/// <param name="index">Floor's index.</param>
+		/// <returns>True if the Floor have been found, false if not.</returns>
+		public bool TryGetIndex(string name, out int index)
 		{
-			throw new NotImplementedException();
+			foreach( KeyValuePair<int, Floor> pair in _floors )
+			{
+				if( pair.Value.Name == name )
+				{
+					index = pair.Key;
+					return true;
+				}
+			}
+
+			index = -1;
+			return false;
 		}
 
 		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using name of the current Floor.
+		/// Gets the index of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="name">Name of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetNextFloor( string name )
+		/// <param name="reference">Floor's reference.</param>
+		/// <param name="index">Floor's index.</param>
+		/// <returns>True if the Floor have been found, false if not.</returns>
+		public bool TryGetIndex( Floor reference, out int index )
 		{
-			throw new NotImplementedException();
+			return TryGetIndex( reference.Name, out index );
 		}
 
 		/// <summary>
-		/// try of gets the reference of the next instance of <see cref="Floor"/> class, using index of the current Floor.
+		/// Gets the reference of the instance of <see cref="Floor"/> class in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor GetNextFloor( int index )
+		/// <param name="name">Floor's Name.</param>
+		/// <param name="floor">Floor's reference.</param>
+		/// <returns>True if the Floor have been found, false if not.</returns>
+		public bool TryGetFloor( string name, out Floor floor )
 		{
-			throw new NotImplementedException();
+			foreach( KeyValuePair<int, Floor> pair in _floors )
+			{
+				if( pair.Value.Name == name )
+				{
+					floor = pair.Value;
+					return true;
+				}
+			}
+
+			floor = null;
+			return false;
 		}
 
 		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using reference of the current Floor.
+		/// Gets the reference of the instance of <see cref="Floor"/> class in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="currentFloor">Reference of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetPreviousFloor( Floor currentFloor )
+		/// <param name="index">Floor's index.</param>
+		/// <param name="floor">Floor's reference.</param>
+		/// <returns>True if the Floor have been found, false if not.</returns>
+		public bool TryGetFloor( int index, out Floor floor )
 		{
-			throw new NotImplementedException();
+			return _floors.TryGetValue( index, out floor );
 		}
 
 		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using name of the current Floor.
+		/// Checks if a Floor's instance exist with the specified name in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="name">Name of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetPreviousFloor( string name )
+		/// <param name="name">Floor's name.</param>
+		/// <returns>True if the Floor have been found, false if not.</returns>
+		public bool ExistFloor( string name )
 		{
-			throw new NotImplementedException();
+			foreach(KeyValuePair<int, Floor> pair in _floors) if( pair.Value.Name == name ) return true;
+			return false;
 		}
 
 		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using index of the current Floor.
+		/// Checks if a Floor's instance exist at the specified index in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the current Floor.</param>
-		/// <returns>Reference of the previous Floor.</returns>
-		public Floor TryGetPreviousFloor( int index )
+		/// <param name="index">Floor's index.</param>
+		/// <returns>True if a Floor have been found, false if not.</returns>
+		public bool ExistFloor( int index )
 		{
-			throw new NotImplementedException();
+			return _floors.ContainsKey( index );
 		}
-		#endregion
 	}
 }

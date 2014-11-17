@@ -1,8 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using NUnit.Framework;
 using WordMaster.DLL;
 
@@ -12,35 +8,86 @@ namespace WordMaster.UniTests
     public class NoMagicHelperTests
     {
 		[Test]
-		public void Name_with_correct_length_returns_true()
+		public void Checks_name_length()
 		{
-			string minLengthName = "";
-			string maxlengthName = "";
-			int i = 0;
+			// Arrange
+			string minNameLength = "", maxNameLength = "", midNameLength = "", minNameLengthMinusOne = "", maxNameLengthPlusOne = "";
 
-			for( i = 0; i < NoMagicHelper.MinNameLength; i++ ) minLengthName += "a";
-			for( i = 0; i < NoMagicHelper.MaxNameLength; i++ ) maxlengthName += "b";
+			// Act
+			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ ) minNameLength += "a";
+			for( int i = 0; i < NoMagicHelper.MaxNameLength; i++ ) maxNameLength += "b";
+			for( int i = 0; i < NoMagicHelper.MaxNameLength / 2; i++ ) midNameLength += "c";
+			for( int i = 0; i < (NoMagicHelper.MinNameLength - 1); i++ ) minNameLengthMinusOne += "e";
+			for( int i = 0; i < (NoMagicHelper.MaxNameLength + 1); i++ ) maxNameLengthPlusOne += "f";
 
-			Console.WriteLine( "Min value tested: " + minLengthName.Length );
-			Console.WriteLine( "Max value tested: " + maxlengthName.Length );
-			Assert.IsTrue( NoMagicHelper.CheckNameLength( minLengthName ) );
-			Assert.IsTrue( NoMagicHelper.CheckNameLength( maxlengthName ) );
+			// Assert
+			Assert.IsTrue( NoMagicHelper.CheckNameLength( minNameLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckNameLength( maxNameLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckNameLength( midNameLength ) );
+			Assert.IsFalse( NoMagicHelper.CheckNameLength( minNameLengthMinusOne ) );
+			Assert.IsFalse( NoMagicHelper.CheckNameLength( maxNameLengthPlusOne ) );
 		}
 
 		[Test]
-		public void Name_with_incorrect_length_returns_false()
+		public void Check_Floor_size()
 		{
-			string minLengthMinusOneName = "";
-			string maxlengthPlusOneName = "";
-			int i = 0;
+			// Arrange
+			int minFloorSize, midFloorSize, maxFloorSize, minSizeMinusOne, maxSizePlusOne;
 
-			for( i = 0; i < (NoMagicHelper.MinNameLength - 1); i++ ) minLengthMinusOneName += "c";
-			for( i = 0; i < (NoMagicHelper.MaxNameLength + 1); i++ ) maxlengthPlusOneName += "d";
+			// Act
+			minFloorSize = NoMagicHelper.MinFloorSize;
+			maxFloorSize = NoMagicHelper.MaxFloorSize;
+			midFloorSize = NoMagicHelper.MaxFloorSize / 2;
+			minSizeMinusOne = NoMagicHelper.MinFloorSize - 1;
+			maxSizePlusOne = NoMagicHelper.MaxFloorSize + 1;
 
-			Console.WriteLine( "Min value tested: " + minLengthMinusOneName.Length );
-			Console.WriteLine( "Max value tested: " + maxlengthPlusOneName.Length );
-			Assert.IsFalse( NoMagicHelper.CheckNameLength( minLengthMinusOneName ) );
-			Assert.IsFalse( NoMagicHelper.CheckNameLength( maxlengthPlusOneName ) );
+			// Assert
+			Assert.IsTrue( NoMagicHelper.CheckFloorSize( minFloorSize ) );
+			Assert.IsTrue( NoMagicHelper.CheckFloorSize( maxFloorSize ) );
+			Assert.IsTrue( NoMagicHelper.CheckFloorSize( midFloorSize ) );
+			Assert.IsFalse( NoMagicHelper.CheckFloorSize( minSizeMinusOne ) );
+			Assert.IsFalse( NoMagicHelper.CheckFloorSize( maxSizePlusOne ) );
+		}
+
+		[Test]
+		public void Check_short_string_length()
+		{
+			string minShortStringLength = "", maxShortStringLength = "", midShortStringLength = "", /*minShortStringLengthMinusOne= "",*/ maxShortStringLengthPlusOne = "";
+
+			// Act
+			for( int i = 0; i < NoMagicHelper.MinShortStringLength; i++ ) minShortStringLength += "a";
+			for( int i = 0; i < NoMagicHelper.MaxShortStringLength; i++ ) maxShortStringLength += "b";
+			for( int i = 0; i < NoMagicHelper.MaxShortStringLength / 2; i++ ) midShortStringLength += "c";
+			/*for( int i = 0; i < (NoMagicHelper.MinShortStringLength - 1); i++ ) minShortStringLengthMinusOne += "e";*/
+			for( int i = 0; i < (NoMagicHelper.MaxShortStringLength + 1); i++ ) maxShortStringLengthPlusOne += "f";
+
+			// Assert
+			Assert.IsTrue( NoMagicHelper.CheckShortStringLength( minShortStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckShortStringLength( maxShortStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckShortStringLength( midShortStringLength ) );
+			/*Assert.IsFalse( NoMagicHelper.CheckShortStringLength( minShortStringLengthMinusOne ) );*/
+			Assert.IsFalse( NoMagicHelper.CheckShortStringLength( maxShortStringLengthPlusOne ) );
+		}
+
+		[Test]
+		public void Check_Long_string_length()
+		{
+			// Arrange
+			string minLongStringLength = "", maxLongStringLength = "", midLongStringLength = "", /*minLongStringLengthMinusOne= "",*/ maxLongStringLengthPlusOne = "";
+
+			// Act
+			for( int i = 0; i < NoMagicHelper.MinLongStringLength; i++ ) minLongStringLength += "a";
+			for( int i = 0; i < NoMagicHelper.MaxLongStringLength; i++ ) maxLongStringLength += "b";
+			for( int i = 0; i < NoMagicHelper.MaxLongStringLength / 2; i++ ) midLongStringLength += "c";
+			/*for( int i = 0; i < (NoMagicHelper.MinLongStringLength - 1); i++ ) minLongStringLengthMinusOne += "e";*/
+			for( int i = 0; i < (NoMagicHelper.MaxLongStringLength + 1); i++ ) maxLongStringLengthPlusOne += "f";
+
+			// Assert
+			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( minLongStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( maxLongStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( midLongStringLength ) );
+			/*Assert.IsFalse( NoMagicHelper.CheckLongStringLength( minLongStringLengthMinusOne ) );*/
+			Assert.IsFalse( NoMagicHelper.CheckLongStringLength( maxLongStringLengthPlusOne ) );
 		}
     }
 }

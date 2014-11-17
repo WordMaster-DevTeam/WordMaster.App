@@ -117,11 +117,16 @@
             // 
             // Profilpicturebox
             // 
+            this.Profilpicturebox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.Profilpicturebox.Location = new System.Drawing.Point(10, 9);
             this.Profilpicturebox.Name = "Profilpicturebox";
             this.Profilpicturebox.Size = new System.Drawing.Size(56, 62);
+            this.Profilpicturebox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.Profilpicturebox.TabIndex = 0;
             this.Profilpicturebox.TabStop = false;
+            this.Profilpicturebox.Click += new System.EventHandler(this.Profilpicturebox_Click);
             // 
             // panel2
             // 

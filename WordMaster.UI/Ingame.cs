@@ -26,5 +26,10 @@ namespace WordMaster.UI
         {
             
         }
+
+        private void Profilpicturebox_Click( object sender, EventArgs e )
+        {
+            
+        }
     }
 }

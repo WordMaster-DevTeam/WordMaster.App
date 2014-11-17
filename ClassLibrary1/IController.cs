@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace WordMaster.IOChecks
+namespace WordMaster.Interface
 {
-    public class Class1
+    interface IController
     {
     }
 }

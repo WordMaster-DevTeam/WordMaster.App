@@ -4,11 +4,11 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{609380A8-A076-4830-8C74-C7301E385450}</ProjectGuid>
+    <ProjectGuid>{A4CCF845-F013-42E2-94C1-C96291BD70E6}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.IOChecks</RootNamespace>
-    <AssemblyName>WordMaster.IOChecks</AssemblyName>
+    <RootNamespace>WordMaster.Interface</RootNamespace>
+    <AssemblyName>ClassLibrary1</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>
@@ -32,8 +32,6 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
-    <Reference Include="System.Windows.Forms" />
-    <Reference Include="System.Workflow.ComponentModel" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -41,18 +39,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="MainController.cs" />
+    <Compile Include="IController.cs" />
+    <Compile Include="IModel.cs" />
+    <Compile Include="IView.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.DLL.csproj">
-      <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
-      <Name>WordMaster.DLL</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.UI\WordMaster.UI.csproj">
-      <Project>{e25f5c76-a174-4a19-9e5a-16908225a8a3}</Project>
-      <Name>WordMaster.UI</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

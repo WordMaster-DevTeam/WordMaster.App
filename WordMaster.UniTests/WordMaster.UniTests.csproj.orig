@@ -4,16 +4,16 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{E25F5C76-A174-4A19-9E5A-16908225A8A3}</ProjectGuid>
-    <OutputType>WinExe</OutputType>
+    <ProjectGuid>{3EC26859-CE67-46F2-B1C6-FD628769D5BD}</ProjectGuid>
+    <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.UI</RootNamespace>
-    <AssemblyName>WordMaster.UI</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <RootNamespace>WordMaster.UniTests</RootNamespace>
+    <AssemblyName>WordMaster.UniTests</AssemblyName>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
@@ -23,7 +23,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <PlatformTarget>AnyCPU</PlatformTarget>
     <DebugType>pdbonly</DebugType>
     <Optimize>true</Optimize>
     <OutputPath>bin\Release\</OutputPath>
@@ -32,65 +31,46 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="nunit.framework">
+      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
     <Reference Include="System.Data" />
-    <Reference Include="System.Deployment" />
-    <Reference Include="System.Drawing" />
-    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mainmenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Mainmenu.Designer.cs">
-      <DependentUpon>Mainmenu.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Ingame.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Ingame.Designer.cs">
-      <DependentUpon>Ingame.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Program.cs" />
+<<<<<<< HEAD
+    <Compile Include="CharacterTests.cs" />
+    <Compile Include="IOChecksTesting.cs" />
+=======
+    <Compile Include="DungeonTests.cs" />
+    <Compile Include="NoMagicHelperTests.cs" />
+>>>>>>> Dungeon
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Ingame.resx">
-      <DependentUpon>Ingame.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Mainmenu.resx">
-      <DependentUpon>Mainmenu.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Properties\Resources.resx">
-      <Generator>ResXFileCodeGenerator</Generator>
-      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </EmbeddedResource>
-    <Compile Include="Properties\Resources.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Resources.resx</DependentUpon>
-    </Compile>
-    <None Include="Properties\Settings.settings">
-      <Generator>SettingsSingleFileGenerator</Generator>
-      <LastGenOutput>Settings.Designer.cs</LastGenOutput>
-    </None>
-    <Compile Include="Properties\Settings.Designer.cs">
-      <AutoGen>True</AutoGen>
-      <DependentUpon>Settings.settings</DependentUpon>
-      <DesignTimeSharedInput>True</DesignTimeSharedInput>
-    </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
+    <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WordMaster.DLL\WordMaster.DLL.csproj">
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.DLL</Name>
     </ProjectReference>
+<<<<<<< HEAD
+    <ProjectReference Include="..\WordMaster.IOChecks\WordMaster.IOChecks.csproj">
+      <Project>{609380a8-a076-4830-8c74-c7301e385450}</Project>
+      <Name>WordMaster.IOChecks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordMaster.UI\WordMaster.UI.csproj">
+      <Project>{e25f5c76-a174-4a19-9e5a-16908225a8a3}</Project>
+      <Name>WordMaster.UI</Name>
+    </ProjectReference>
+=======
+>>>>>>> Dungeon
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

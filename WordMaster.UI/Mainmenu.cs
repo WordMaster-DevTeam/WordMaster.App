@@ -10,11 +10,16 @@ using System.Windows.Forms;
 
 namespace WordMaster.UI
 {
-	public partial class Form1 : Form
+	public partial class Mainmenu : Form
 	{
-		public Form1()
+		public Mainmenu()
 		{
 			InitializeComponent();
 		}
+
+        private void button2_Click( object sender, EventArgs e )
+        {
+
+        }
 	}
 }

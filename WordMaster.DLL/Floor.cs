@@ -61,6 +61,14 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
+		/// Gets the Floor's layout.
+		/// </summary>
+		public Square[,] Layout
+		{
+			get { return _layout; }
+		}
+
+		/// <summary>
 		/// Sets (or reset) a Square in the layout of the Floor.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
@@ -218,7 +226,7 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets the reference of the instance of <see cref="square"/> class in the current instance of <see cref="Floor"/> class.
+		/// Gets the reference of the instance of <see cref="Square"/> class in the current instance of <see cref="Floor"/> class.
 		/// </summary>
 		/// <param name="lin">Horizontal coordinate of the Square.</param>
 		/// <param name="col">Vertical coordinate of the Square.</param>
@@ -237,6 +245,65 @@ namespace WordMaster.DLL
 				return false;
 			}
 
+		}
+
+		/// <summary>
+		/// Gets the positions of the instance of <see cref="Square"/> class in the current instance of <see cref="Floor"/> class.
+		/// </summary>
+		/// <param name="currentSquare">Square's reference.</param>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <returns>True if the Square have been found, false if not.></returns>
+		public bool TryGetPositions( Square currentSquare, out int lin, out int col )
+		{
+			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
+				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
+					if( _layout[i, j].Equals( currentSquare ) )
+					{
+						lin = i;
+						col = j;
+						return true;
+					}
+			lin = -1;
+			col = -1;
+			return false;
+		}
+
+		/// <summary>
+		/// Checks if a pair of coordinates are inside the layout of the Floor.
+		/// </summary>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <returns>True if the coordinates are corrects. False if not.</returns>
+		public bool CheckBounds( int lin, int col )
+		{
+			if( lin > 0 && lin <= _layout.GetLength( 0 ) && col > 0 && col <= _layout.GetLength( 1 ) ) return true;
+			else return false;
+		}
+
+		/// <summary>
+		/// Checks if a pair of coordinates are holdable.
+		/// </summary>
+		/// <param name="lin">Horizontal coordinate of the Square.</param>
+		/// <param name="col">Vertical coordinate of the Square.</param>
+		/// <returns>True if the Square is holdable. False if not.</returns>
+		public bool CheckHoldable( int lin, int col )
+		{
+			Square square;
+
+			if( TryGetSquare( lin, col, out square ) ) return (CheckHoldable( square ));
+			else return false;
+		}
+
+		/// <summary>
+		/// Checks if a square is holdable.
+		/// </summary>
+		/// <param name="square">Square's reference.</param>
+		/// <returns>True if the Square is holdable. False if not.</returns>
+		public bool CheckHoldable( Square square )
+		{
+			if( square.Holdable ) return true;
+			else return false;
 		}
 
 		/// <summary>
@@ -263,12 +330,5 @@ namespace WordMaster.DLL
 						return false;
 			return true;
 		}
-
-        public Square[,] Layout
-        {
-            get { return _layout; }
-        }
-
-        
 	}
 }

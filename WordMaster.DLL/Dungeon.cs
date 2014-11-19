@@ -5,22 +5,25 @@ namespace WordMaster.DLL
 {
     public class Dungeon
     {
+		GlobalContext _context;
+		SortedList<int, Floor> _floors;
 		string _name;
 		string _description;
-		SortedList<int, Floor> _floors;
+		
 		
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
 		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Dungeon.</param>
-		public Dungeon( string name, string description)
+		public Dungeon( GlobalContext context, string name, string description)
 		{
 			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
 			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
 
 			// Creating Dungeon
+			_context = context;
 			_name = name;
 			_description = description;
 			_floors = new SortedList<int, Floor>();
@@ -31,7 +34,7 @@ namespace WordMaster.DLL
 		/// Dungeon's description will be empty.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
-		public Dungeon( string name ) : this( name, "" ) { }
+		public Dungeon( GlobalContext context, string name ) : this(context, name, "" ) { }
 
 		/// <summary>
 		/// Gets or sets the name of the instance of <see cref="Dungeon"/> class.
@@ -65,6 +68,20 @@ namespace WordMaster.DLL
 		public int NumberOfFloors
 		{
 			get { return _floors.Count; }
+		}
+
+		/// <summary>
+		/// Verify if the <see cref="Dungeon"/> is editable (no <see cref="Character"/> in this Dungeon).
+		/// </summary>
+		public bool Editable
+		{
+			get
+			{
+				foreach( Character character in _context.Characters )
+					if( character.Game.Dungeon.Equals( this ) )
+						return false;
+				return true;
+			}
 		}
 
 		/// <summary>

@@ -4,27 +4,70 @@ namespace WordMaster.DLL
 {
 	public class Floor
 	{
+		readonly Dungeon _dungeon;
+		int _level;
 		readonly string _name;
-		string _description;
+		readonly string _description;
 		Square[,] _layout;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Floor"/> class.
-		/// Floor created will be rigle-angled.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
-		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
-		internal Floor( string name, string description, int length, int width )
+		/// <param name="dungeon">Dungeon's reference, each Floor must be in a <see cref="Dungeon"/>.</param>
+		/// <param name="level"></param>
+		/// <param name="name">Floor's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Floor's description, <see cref="NoMagicHelper.MinLongStringLength"/> to <see cref="NoMagicHelper.MaxLongStringLength"/> characters.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		internal Floor( Dungeon dungeon, int level, string name, string description, int numberOfLines, int numberOfColumns )
 		{
+			// Checking parameters
+			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
+			if( !NoMagicHelper.CheckFloorSize( numberOfLines ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "numberOfLines" );
+			if( !NoMagicHelper.CheckFloorSize( numberOfColumns ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "numberOfColumns" );
+
+			// Checking context
+			foreach(Floor floor in dungeon.Floors)
+				if(floor.Name == name)
+					throw new ArgumentException( "Floor's name is already used in this Dungeon.", "name" );
+			if( level < 0 || level > dungeon.NumberOfFloors )
+				throw new ArgumentException( "Can not used disconnected Floor's level.", "level" );
+
+			// Updating context
+			if( level != dungeon.NumberOfFloors )
+				foreach( Floor floor in dungeon.Floors )
+					for( int i = level; level < dungeon.NumberOfFloors; i++ )
+						floor.Level += 1;
+
+			// Creating Floor
+			_dungeon = dungeon;
+			_level = level;
+			_level = level;
 			_name = name;
 			_description = description;
-			_layout = new Square[length, width];
+			_layout = new Square[numberOfLines, numberOfColumns];
 		}
 
 		/// <summary>
-		/// Gets or sets the name of the instance of <see cref="Floor"/> class.
+		/// Gets the reference of the instance <see cref="Dungeon"/> class where this instance of <see cref="Floor"/> class is.
+		/// </summary>
+		public Dungeon Dungeon
+		{
+			get { return _dungeon; }
+		}
+
+		/// <summary>
+		/// Gets or sets the level of this instance of <see cref="Floor"/> class in the instance of <see cref="Dungeon"/> which contains it.
+		/// </summary>
+		public int Level
+		{
+			get { return _level; }
+			set { _level = value; }
+		}
+
+		/// <summary>
+		/// Gets the name of this instance of <see cref="Floor"/> class.
 		/// </summary>
 		public string Name
 		{
@@ -32,36 +75,31 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets or sets the description of the instance of <see cref="Floor"/> class.
+		/// Gets the description of this instance of <see cref="Floor"/> class.
 		/// </summary>
 		public string Description
 		{
 			get { return _description; }
-			set
-			{
-				if( NoMagicHelper.CheckLongStringLength( value ) ) _description = value;
-				else throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "value" );
-			}
 		}
 
 		/// <summary>
-		/// Gets the Length of the Floor's layout.
+		/// Gets the number of lines of the layout in this instance of <see cref="Floor"/> class.
 		/// </summary>
-		public int Length
+		public int NumberOfLines
 		{
 			get { return _layout.GetLength( 0 ); }
 		}
 
 		/// <summary>
-		/// Gets the Width of the Floor's layout.
+		/// Gets the number of columns of the layout in this instance of <see cref="Floor"/> class.
 		/// </summary>
-		public int Width
+		public int NumberOfColumns
 		{
 			get { return _layout.GetLength( 1 ); }
 		}
 
 		/// <summary>
-		/// Gets the Floor's layout.
+		/// Gets the layout of this instance of <see cref="Floor"/> class.
 		/// </summary>
 		public Square[,] Layout
 		{
@@ -69,174 +107,65 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Sets (or reset) a Square in the layout of the Floor.
+		/// Sets or resets an instance of <see cref="Square"/> class in the layout of this instance of <see cref="Floor"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <return>Reference of the new Square.</return>
-		public Square SetSquare( string name, string description, bool holdable, int lin, int col )
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinLongStringLength"/> to <see cref="NoMagicHelper.MaxLongStringLength"/> characters.</param>
+		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
+		/// <param name="exit">Square's exit Square, optional and null by default.</param>
+		/// <return>New Square's reference.</return>
+		public Square SetSquare(int line, int column, string name, string description = "", bool holdable = false, Square exit = null)
 		{
 			// Checking parameters
-			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Square's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Square's description must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( lin < 0 || lin >= _layout.GetLength( 0 ) ) throw new IndexOutOfRangeException("Horizontal parameter is out of range");
-			if( col < 0 || col >= _layout.GetLength( 1 ) ) throw new IndexOutOfRangeException("Vertical parameter is out of range");
+			if( line < 0 || line >= _layout.GetLength( 0 ) ) throw new IndexOutOfRangeException("Horizontal parameter is out of range");
+			if( column < 0 || column >= _layout.GetLength( 1 ) ) throw new IndexOutOfRangeException("Vertical parameter is out of range");
 
 			// Adding Square in Floor
-			_layout[lin, col] = new Square( name, description, holdable );
-			return _layout[lin, col];
+			_layout[line, column] = new Square( this, line, column, name, description, holdable, exit );
+			return _layout[line, column];
 		}
 
 		/// <summary>
-		/// Sets (or reset) a Square in the layout of the Floor.
-		/// Square created with not be holdable.
+		/// Sets all <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <return>Reference of the new Square.</return>
-		public Square SetSquare( string name, string description, int lin, int col )
-		{
-			return SetSquare( name, description, false, lin, col );
-		}
-
-		/// <summary>
-		/// Sets (or reset) a Square in the layout of the Floor.
-		/// Square will not have a description.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <return>Reference of the new Square.</return>
-		public Square SetSquare( string name, bool holdable, int lin, int col )
-		{
-			return SetSquare( name, "", holdable, lin, col );
-		}
-
-		/// <summary>
-		/// Sets (or reset) a Square in the layout of the Floor.
-		/// Square will not have a description.
-		/// Square created with not be holdable.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <return>Reference of the new Square.</return>
-		public Square SetSquare( string name, int lin, int col )
-		{
-			return SetSquare( name, "", false, lin, col );
-		}
-
-		/// <summary>
-		/// Sets all Squares in the layout of the Floor.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		public void SetAllSquares( string name, string description, bool holdable )
+		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinLongStringLength"/> to <see cref="NoMagicHelper.MaxLongStringLength"/> characters.</param>
+		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
+		public void SetAllSquares( string name, string description, bool holdable = false )
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-					_layout[i, j] = new Square( name, description, holdable );
+					_layout[i, j] = new Square( this, i, j, name, description, holdable, null );
 		}
 
 		/// <summary>
-		/// Sets all Squares in the layout of the Floor.
-		/// Squares created with not be holdable.
+		/// Sets all uninitialized <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		public void SetAllSQuare( string name, string description)
-		{
-			SetAllSquares( name, description, false );
-		}
-
-		/// <summary>
-		/// Sets all Squares in the layout of the Floor.
-		/// Squares will not have a description.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		public void SetAllSquares( string name, bool holdable )
-		{
-			SetAllSquares( name, "", holdable );
-		}
-
-		/// <summary>
-		/// Sets all Squares in the layout of the Floor.
-		/// Squares will not have a description.
-		/// Square created with not be holdable.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		public void SetAllSquares( string name )
-		{
-			SetAllSquares( name );
-		}
-
-		/// <summary>
-		/// Sets all uninitialized Squares in the layout of the Floor.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		public void SetAllUninitializedSquares( string name, string description, bool holdable )
+		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinLongStringLength"/> to <see cref="NoMagicHelper.MaxLongStringLength"/> characters.</param>
+		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
+		public void SetAllUninitializedSquares( string name, string description, bool holdable = false )
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
 					if( !CheckSquare( i, j ) )
-						_layout[i, j] = new Square( name, description, holdable );
+						_layout[i, j] = new Square( this, i, j, name, description, holdable, null );
 		}
 
 		/// <summary>
-		/// Sets all uninitialized Squares in the layout of the Floor.
-		/// Squares created with not be holdable.
+		/// Gets the reference of the instance of <see cref="Square"/> class in this instance of <see cref="Floor"/> class at the specified coordinates.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="description">Descitpion (MinLongStringLength to MaxLongStringLength characters) of the Square</param>
-		public void SetAllUninitializedSquares( string name, string description )
+		/// <param name="line">Horizontal coordinate of the Square.</param>
+		/// <param name="column">Vertical coordinate of the Square.</param>
+		/// <param name="square">Square's reference to recover.</param>
+		/// <returns>Return true if the Square's reference have been found, false if not.</returns>
+		public bool TryGetSquare( int line, int column, out Square square )
 		{
-			SetAllUninitializedSquares( name, description, false );
-		}
-
-		/// <summary>
-		/// Sets all uninitialized Squares in the layout of the Floor.
-		/// Squares will not have a description.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		/// <param name="holdable">Holdable state of the Square.</param>
-		public void SetAllUninitializedSquares( string name, bool holdable )
-		{
-			SetAllUninitializedSquares( name, "", holdable );
-		}
-
-		/// <summary>
-		/// Sets all uninitialized Squares in the layout of the Floor.
-		/// Squares will not have a description.
-		/// Square created with not be holdable.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Square.</param>
-		public void SetAllUninitializedSquares( string name )
-		{
-			SetAllUninitializedSquares( name );
-		}
-
-		/// <summary>
-		/// Gets the reference of the instance of <see cref="Square"/> class in the current instance of <see cref="Floor"/> class.
-		/// </summary>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <param name="square">Square's reference.</param>
-		/// <returns>True if the Square have been found, false if not.></returns>
-		public bool TryGetSquare( int lin, int col, out Square square )
-		{
-			if(_layout[lin, col] != null)
+			if(_layout[line, column] != null)
 			{
-				square = _layout[lin, col];
+				square = _layout[line, column];
 				return true;
 			}
 			else
@@ -248,58 +177,58 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets the positions of the instance of <see cref="Square"/> class in the current instance of <see cref="Floor"/> class.
+		/// Gets the coordinates of the instance of <see cref="Square"/> class in this instance of <see cref="Floor"/> class with a specified reference.
 		/// </summary>
-		/// <param name="currentSquare">Square's reference.</param>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <returns>True if the Square have been found, false if not.></returns>
-		public bool TryGetPositions( Square currentSquare, out int lin, out int col )
+		/// <param name="square">Square's reference.</param>
+		/// <param name="line">Square's horizontal coordinate to recover.</param>
+		/// <param name="column">Square's vertical coordinate to recover.</param>
+		/// <returns>Return true if the Square's coordinates have been found, false if not.</returns>
+		public bool TryGetCoordinates( Square square, out int line, out int column )
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-					if( _layout[i, j].Equals( currentSquare ) )
+					if( _layout[i, j].Equals( square ) )
 					{
-						lin = i;
-						col = j;
+						line = i;
+						column = j;
 						return true;
 					}
-			lin = -1;
-			col = -1;
+			line = -1;
+			column = -1;
 			return false;
 		}
 
 		/// <summary>
-		/// Checks if a pair of coordinates are inside the layout of the Floor.
+		/// Checks if a coordinates can position something inside this instance of <see cref="Floor"/> class' layout.
 		/// </summary>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <returns>True if the coordinates are corrects. False if not.</returns>
-		public bool CheckBounds( int lin, int col )
+		/// <param name="line">Square's horizontal coordinate to recover.</param>
+		/// <param name="column">Square's vertical coordinate to recover.</param>
+		/// <returns>Return true if the coordinates are corrects, false if not.</returns>
+		public bool CheckBounds( int line, int column )
 		{
-			if( lin > 0 && lin <= _layout.GetLength( 0 ) && col > 0 && col <= _layout.GetLength( 1 ) ) return true;
+			if( line > 0 && line <= _layout.GetLength( 0 ) && column > 0 && column <= _layout.GetLength( 1 ) ) return true;
 			else return false;
 		}
 
 		/// <summary>
-		/// Checks if a pair of coordinates are holdable.
+		/// Checks if an instance of <see cref="Square"/> class exist and is holdable using coordinates.
 		/// </summary>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <returns>True if the Square is holdable. False if not.</returns>
-		public bool CheckHoldable( int lin, int col )
+		/// <param name="line">Square's horizontal coordinate to recover.</param>
+		/// <param name="column">Square's vertical coordinate to recover.</param>
+		/// <returns>Return true if the Square have been found and is holdable, false if not.</returns>
+		public bool CheckHoldable( int line, int column )
 		{
 			Square square;
 
-			if( TryGetSquare( lin, col, out square ) ) return (CheckHoldable( square ));
+			if( TryGetSquare( line, column, out square ) ) return (CheckHoldable( square ));
 			else return false;
 		}
 
 		/// <summary>
-		/// Checks if a square is holdable.
+		/// Checks if an existing instance of <see cref="Square"/> class is holdable using his reference.
 		/// </summary>
 		/// <param name="square">Square's reference.</param>
-		/// <returns>True if the Square is holdable. False if not.</returns>
+		/// <returns>Return true if the Square is holdable, false if not.</returns>
 		public bool CheckHoldable( Square square )
 		{
 			if( square.Holdable ) return true;
@@ -307,21 +236,21 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Checks if the specified Square of the current Floor's instance is initialized.
+		/// Checks if their is an initialized <see cref="Square"/> at specified coordinates.
 		/// </summary>
-		/// <param name="lin">Horizontal coordinate of the Square.</param>
-		/// <param name="col">Vertical coordinate of the Square.</param>
-		/// <returns>True if the Square have been initialized. False if not.</returns>
-		public bool CheckSquare( int lin, int col )
+		/// <param name="line">Square's horizontal coordinate to recover.</param>
+		/// <param name="column">Square's vertical coordinate to recover.</param>
+		/// <returns>Return true if the Square is initialized, false if not.</returns>
+		public bool CheckSquare( int line, int column )
 		{
-			if( _layout[lin, col] != null ) return true;
+			if( _layout[line, column] != null ) return true;
 			else return false;
 		}
 
 		/// <summary>
-		/// Checks if all Squares of the current Floor's instance are initialized.
+		/// Checks if all instances of <see cref="Square"/>s classes of this instance of <see cref="Floor"/> class' layout are initialized.
 		/// </summary>
-		/// <returns>True if all Squares have been initialized. False if not.</returns>
+		/// <returns>Return true if all Squares are initialized, false if not.</returns>
 		public bool CheckAllSquare()
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )

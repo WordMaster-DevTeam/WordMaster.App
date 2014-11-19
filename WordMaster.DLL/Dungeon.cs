@@ -6,17 +6,17 @@ namespace WordMaster.DLL
     public class Dungeon
     {
 		GlobalContext _context;
-		SortedList<int, Floor> _floors;
-		string _name;
-		string _description;
-		
+		readonly string _name;
+		readonly string _description;
+		List<Floor> _floors;
 		
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
 		/// </summary>
+		/// <param name="context">Reference of GlobalContext, the container of the Dungeons.</param>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
 		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Dungeon.</param>
-		public Dungeon( GlobalContext context, string name, string description)
+		internal Dungeon( GlobalContext context, string name, string description = "")
 		{
 			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
@@ -26,40 +26,31 @@ namespace WordMaster.DLL
 			_context = context;
 			_name = name;
 			_description = description;
-			_floors = new SortedList<int, Floor>();
+			_floors = new List<Floor>();
 		}
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="Dungeon"/> class.
-		/// Dungeon's description will be empty.
-		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
-		public Dungeon( GlobalContext context, string name ) : this(context, name, "" ) { }
-
-		/// <summary>
-		/// Gets or sets the name of the instance of <see cref="Dungeon"/> class.
+		/// Gets the name of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public string Name
 		{
 			get { return _name; }
-			set
-			{
-				if( NoMagicHelper.CheckNameLength( value ) ) _name = value;
-				else throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "value" );
-			}
 		}
 
 		/// <summary>
-		/// Gets or sets the description of the instance of <see cref="Dungeon"/> class.
+		/// Gets the description of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public string Description
 		{
 			get { return _description; }
-			set
-			{
-				if( NoMagicHelper.CheckLongStringLength( value ) ) _description = value;
-				else throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "value" );
-			}
+		}
+
+		/// <summary>
+		/// Gets the floors' list (read only) of this instance of <see cref="Dungeon"/> class.
+		/// </summary>
+		public IEnumerable<Floor> Floors
+		{
+			get { return _floors; }
 		}
 
 		/// <summary>
@@ -71,7 +62,7 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Verify if the <see cref="Dungeon"/> is editable (no <see cref="Character"/> in this Dungeon).
+		/// Checks if the <see cref="Dungeon"/> have <see cref="Character"/> using it.
 		/// </summary>
 		public bool Editable
 		{
@@ -87,52 +78,24 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Position of the Floor to add.</param>
+		/// <param name="level">Position of the Floor to add.</param>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Floor.</param>
 		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="numberOfLines">Length (MinFloorSize to MaxFloorSize size) of the Floor.</param>
+		/// <param name="numberOfColumns">Width (MinFloorSize to MaxFloorSize size) of the Floor.</param>
 		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( int index, string name, string description, int length, int width )
+		public Floor AddFloor( int level, string name, string description, int numberOfLines, int numberOfColumns )
 		{
 			Floor floor;
 
-			// Checking parameters
-			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinLongStringLength + " to " + NoMagicHelper.MaxLongStringLength + " characters.", "description" );
-			if( !NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length" );
-			if( !NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
-
 			// Checking context
 			if( ExistFloor( name ) ) throw new ArgumentException( "A floor with this name already exist.", "name" );
-			if( index < 0 || index > _floors.Count ) throw new ArgumentException( "Floors must be connected each others.", "index" );
+			if( level < 0 || level > _floors.Count ) throw new ArgumentException( "Floors must be connected each others.", "index" );
 
 			// Adding Floor in Dungeon
-			if( !ExistFloor( index ) ) // No index modifications needed
-			{
-				_floors.Add( index, new Floor( name, description, length, width ) );
-			}
-			else // Index modification needed (inserting Floor between others Floors)
-			{
-				SortedList<int, Floor> floors = new SortedList<int, Floor>();
-				for( int i = 0; i < index; i++ )
-				{
-					Floor f;
-					if( _floors.TryGetValue( i, out f ) ) floors.Add( i, f );
-					else break;
-				}
-				floors.Add( index, new Floor( name, description, length, width ) );
-				for( int i = index; i < _floors.Count; i++ )
-				{
-					Floor f;
-					if( _floors.TryGetValue( i, out f ) ) floors.Add( i + 1, f );
-					else break;
-				}
-				_floors = floors;
-			}
-
-			if( TryGetFloor( index, out floor ) ) return floor;
-			else return null;
+			floor = new Floor( this, level, name, description, numberOfLines, numberOfColumns ) );
+			_floors.Add(floor);
+			return floor;
 		}
 
 		/// <summary>
@@ -369,7 +332,13 @@ namespace WordMaster.DLL
 		/// <returns>True if the Floor have been found, false if not.</returns>
 		public bool ExistFloor( string name )
 		{
-			foreach(KeyValuePair<int, Floor> pair in _floors) if( pair.Value.Name == name ) return true;
+			foreach( KeyValuePair<int, Floor> pair in _floors )
+			{
+				if( pair.Value.Name == name )
+				{
+					return true;
+				}
+			}
 			return false;
 		}
 

@@ -14,28 +14,24 @@ namespace WordMaster.DLL
 		readonly List<string> _book;
 		readonly List<Item> _inventory;
 		readonly List<HistoricRecord> _historics;
-		Game _currentGame;
 		Dungeon _currentDungeon;
 		Floor _currentFloor;
 		Square _currentSquare;
+		Game _currentGame;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Character"/> class.
 		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="description"></param>
-		/// <param name="hp"></param>
-		/// <param name="xp"></param>
-		/// <param name="level"></param>
-		/// <param name="book"></param>
-		/// <param name="inventory"></param>
-		/// <param name="armor"></param>
-		/// <param name="currentdungeon"></param>
-		/// <param name="currentfloor"></param>
-		/// <param name="currentsquare"></param>
-		public Character( string name, string description, int hp, int xp, int level, 
-			List<string> book, List<Item> inventory, int armor, Dungeon currentDungeon, Floor currentFloor, Square currentSquare )
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Character.</param>
+		/// <param name="hp">Character's health.</param>
+		/// <param name="xp">Character's experience.</param>
+		/// <param name="level">Character's level.</param>
+		/// <param name="armor">Character's armor.</param>
+		/// </summary>
+		public Character( string name, string description, int hp, int xp, int level, int armor)
 		{
+			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Invalid Character's name length." );
 			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Invalid Character's descritpion length." );
 			if( hp <= 0 ) throw new ArgumentException( "Health Point must be greater than 0." );
@@ -43,31 +39,28 @@ namespace WordMaster.DLL
 			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
 			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
 
+			// Creation Character
 			_name = name;
 			_description = description;
 			_hp = hp;
 			_xp = xp;
 			_level = level;
-			_book = book;
-			_inventory = inventory;
 			_armor = armor;
-			_currentDungeon = currentDungeon;
-			_currentFloor = currentFloor;
-			_currentSquare = currentSquare;
+			_book = new List<string>();
+			_inventory = new List<Item>();
 			_historics = new List<HistoricRecord>();
+			_currentDungeon = null;
+			_currentFloor = null;
+			_currentSquare = null;
+			_currentGame = null;
 		}
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="Character"/> class
-		/// Create a level 1 character.
-		/// </summary>
-		/// <param name="name"></param>
-		/// <param name="description"></param>
-		/// <param name="currentDungeon"></param>
-		/// <param name="currentFloor"></param>
-		/// <param name="currentSquare"></param>
-		public Character( string name, string description, Dungeon currentDungeon, Floor currentFloor, Square currentSquare )
-			: this( name, description, 100, 0, 1, new List<string>(), new List<Item>(), 10, currentDungeon, currentFloor, currentSquare ) { }
+		/// Initializes a new instance of <see cref="Character"/> class.
+		/// Create a level 1 Character.
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
+		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Character.</param>
+		public Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
 
 		/// <summary>
 		/// Gets the Character's name.
@@ -122,7 +115,7 @@ namespace WordMaster.DLL
         }   
      
 		/// <summary>
-		/// Get the List of Item.
+		/// Gets the list (read-write) of Item.
 		/// </summary>
         public List<Item> Inventory
         {
@@ -130,7 +123,7 @@ namespace WordMaster.DLL
         }
 
 		/// <summary>
-		/// Gets the list of Books.
+		/// Gets the list (read-write) of Books.
 		/// </summary>
         public List<string> Book
         {
@@ -138,39 +131,59 @@ namespace WordMaster.DLL
         }
 
 		/// <summary>
-		/// Gets or sets the current <see cref="Game"/>.
+		/// Gets the list (readonly) of HistoricRecords.
+		/// </summary>
+		public IEnumerable<HistoricRecord> Historics
+		{
+			get { return _historics; }
+		}
+
+		/// <summary>
+		/// Gets the current <see cref="Game"/>.
 		/// </summary>
 		public Game Game
 		{
 			get { return _currentGame; }
-			set { _currentGame = value; }
 		}
 
 		/// <summary>
-		/// Gets or sets the current <see cref="Dungeon"/>.
+		/// Gets the current <see cref="Dungeon"/>.
 		/// </summary>
 		public Dungeon Dungeon
 		{
 			get { return _currentDungeon; }
-			set { _currentDungeon = value; }
 		}
 
 		/// <summary>
-		/// Gets or sets the current <see cref="Floor"/>.
+		/// Gets the current <see cref="Floor"/>.
 		/// </summary>
 		public Floor Floor
 		{
 			get { return _currentFloor; }
-			set { _currentFloor = value; }
 		}
 
 		/// <summary>
-		/// Gets or sets the current <see cref="Square"/>.
+		/// Gets the current <see cref="Square"/>.
 		/// </summary>
 		public Square Square
 		{
 			get { return _currentSquare; }
-			set { _currentSquare = value; }
+		}
+
+		internal void EnterDungeon( Dungeon dungeon, int lin, int col )
+		{
+
+		}
+
+		/// <summary>
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null.
+		/// </summary>
+		internal void LeaveDungeon()
+		{
+			_currentDungeon = null;
+			_currentFloor = null;
+			_currentSquare = null;
+			_currentGame = null;
 		}
 
         /// <summary>
@@ -192,7 +205,7 @@ namespace WordMaster.DLL
 		{
 			int lin, col;
 
-			if( _currentFloor.TryGetPositions( square, out lin, out col ) ) return MoveTo( lin, col );
+			if( _currentFloor.TryGetCoordinates( square, out lin, out col ) ) return MoveTo( lin, col );
 			else return false;
 		}
 

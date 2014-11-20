@@ -60,7 +60,7 @@ namespace WordMaster.DLL
 		/// Create a level 1 Character.
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
 		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
-		public Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
+		internal Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
 
 		/// <summary>
 		/// Gets the Character's name.

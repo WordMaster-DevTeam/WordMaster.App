@@ -11,37 +11,31 @@ namespace WordMaster.UniTests
 	[TestFixture]
     public class CharacterTests
     {
-        #region Character builder tests
-        
-        [Test]
-		public void Create_Character_with_name_null_empty_string_or_whitespace()
+		[Test]
+		public void Create_Character_with_name_null_or_empty_string_or_filled_with_whitespace_only_throws_argument()
 		{
-            List<Item> invent= new List<Item>();
-            List<string> book = new List<string>( );
-            Dungeon testdungeon = new Dungeon( "test dungeon" );
-            Floor testfloor = new Floor( "testfloor", 18, 25 );
-            Square testsquare = new Square( "testtype", true );
+			// Arrange
+			GlobalContext context;
 
-            Assert.Throws<ArgumentException>( ()=>new Character(" ", "zer",10,0,1, book, invent,10,testdungeon,testfloor,testsquare) );
-            Assert.Throws<ArgumentException>( () => new Character(null, "zer", 10, 0, 1, book, invent, 10, testdungeon,testfloor,testsquare) );
-            Assert.Throws<ArgumentException>( () => new Character(string.Empty, "zer", 10, 0, 1, book, invent, 10, testdungeon,testfloor,testsquare) );
+			// Act
+			context = new GlobalContext();
+
+			// Assert
+            Assert.Throws<ArgumentException>( () => context.AddCharacter( "" ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( null ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( string.Empty );
         }
 
         [Test]
-        public void Create_character_with_null_description()
+        public void Create_character_with_incorrect_stats()
         {
-            List<Item> invent = new List<Item>();
-            List<string> book = new List<string>( );
-            Dungeon testdungeon = new Dungeon( "test dungeon" );
-            Floor testfloor = new Floor( "testfloor", 18, 25 );
-            Square testsquare = new Square( "testtype", true );
+			// Arrange
+			GlobalContext context;
 
-            Assert.Throws<ArgumentException>( () => new Character( "zer", null, 10, 0, 1, book, invent, 10, testdungeon, testfloor, testsquare ) );
-        }
+			// Act
+			context = new GlobalContext();
 
-        [Test]
-        public void Create_character_with_no_hp()
-        {
+			// Assert
             List<Item> invent = new List<Item>();
             List<string> book = new List<string>( );
             Dungeon testdungeon = new Dungeon( "test dungeon" );
@@ -149,6 +143,5 @@ namespace WordMaster.UniTests
 
             Assert.Throws<InvalidOperationException>( () => testcharacter.MoveTo( 14, 22 ) );            
         }
-        #endregion
     }
 }

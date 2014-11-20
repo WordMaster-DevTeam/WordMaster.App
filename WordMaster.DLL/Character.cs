@@ -23,7 +23,7 @@ namespace WordMaster.DLL
 		/// Initializes a new instance of <see cref="Character"/> class.
 		/// </summary>
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
-		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Character.</param>
+		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
 		/// <param name="hp">Character's health.</param>
 		/// <param name="xp">Character's experience.</param>
 		/// <param name="level">Character's level.</param>
@@ -59,7 +59,7 @@ namespace WordMaster.DLL
 		/// Initializes a new instance of <see cref="Character"/> class.
 		/// Create a level 1 Character.
 		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
-		/// <param name="description">Description (MinLongStringLength to MaxLongStringLength characters) of the Character.</param>
+		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
 		public Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
 
 		/// <summary>
@@ -139,11 +139,12 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets the current <see cref="Game"/>.
+		/// Gets or set the current <see cref="Game"/>.
 		/// </summary>
 		public Game Game
 		{
 			get { return _currentGame; }
+			set { _currentGame = value; }
 		}
 
 		/// <summary>
@@ -170,9 +171,28 @@ namespace WordMaster.DLL
 			get { return _currentSquare; }
 		}
 
-		internal void EnterDungeon( Dungeon dungeon, int lin, int col )
+		/// <summary>
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
+		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="line"></param>
+		/// <param name="column"></param>
+		internal void EnterDungeon( Dungeon dungeon, Game game, HistoricRecord record )
 		{
-
+			Floor floor;
+			int line, column;
+				
+			if( dungeon.TryGetFloor( 0, out floor ) )
+				if( floor.TryGetCoordinates( dungeon.Entrance, out line, out column ) )
+				{
+					this._currentDungeon = dungeon;
+					this._currentFloor = floor;
+					this._currentSquare = dungeon.Entrance;
+					this._currentGame = game;
+					this._historics.Add( record );
+				}
+				else throw new ArgumentException("No entrance.", "dungeon");
+			else throw new ArgumentException("Empty Dungeon.", "dungeon");
 		}
 
 		/// <summary>
@@ -189,13 +209,13 @@ namespace WordMaster.DLL
         /// <summary>
         /// Moves an instance of <see cref="Character"/> class to a different Square.
         /// </summary>
-        /// <param name="lin">Can't be null.</param>
-        /// <param name="col">Can't be null.</param>
-		public bool MoveTo( int lin, int col )
+        /// <param name="line">Can't be null.</param>
+        /// <param name="column">Can't be null.</param>
+		public bool MoveTo( int line, int column )
         {
-			if( _currentFloor.CheckBounds( lin, col ) && _currentFloor.CheckHoldable( lin, col ) )
+			if( _currentFloor.CheckBounds( line, column ) && _currentFloor.CheckHoldable( line, column ) )
 			{
-				_currentSquare = _currentFloor.Layout[lin, col];
+				_currentSquare = _currentFloor.Layout[line, column];
 				return true;
 			}
 			else return false;
@@ -203,9 +223,9 @@ namespace WordMaster.DLL
 
 		public bool MoveTo( Square square )
 		{
-			int lin, col;
+			int line, column;
 
-			if( _currentFloor.TryGetCoordinates( square, out lin, out col ) ) return MoveTo( lin, col );
+			if( _currentFloor.TryGetCoordinates( square, out line, out column ) ) return MoveTo( line, column );
 			else return false;
 		}
 

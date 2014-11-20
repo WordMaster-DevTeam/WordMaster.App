@@ -8,7 +8,7 @@ namespace WordMaster.DLL
 		readonly int _line, _column;
 		readonly string _name, _description;
 		bool _holdable;
-		Square _exit;
+		Square _teleportTo;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Square"/> class.
@@ -17,10 +17,10 @@ namespace WordMaster.DLL
 		/// <param name="line">Square's horizontal coordinate.</param>
 		/// <param name="column">Square's vertical coordinate.</param>
 		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
-		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinLongStringLength"/> to <see cref="NoMagicHelper.MaxLongStringLength"/> characters.</param>
-		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
-		/// <param name="exit">Square's exit Square, optional and null by default.</param>
-		internal Square( Floor floor, int line, int column, string name, string description, bool holdable = false, Square exit = null)
+		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
+		/// <param name="holdable">Square's Holdable state.</param>
+		/// <param name="exit">Square's exit Square.</param>
+		internal Square( Floor floor, int line, int column, string name, string description, bool holdable, Square exit)
 		{
 			// Checking parameters
 			if( line < 0 || line > floor.NumberOfLines ) throw new ArgumentException( "Square's horizontale coordinate can not be outside the Floor's layout.", "line" );
@@ -35,7 +35,7 @@ namespace WordMaster.DLL
 			_name = name;
 			_description = description;
 			_holdable = holdable;
-			_exit = exit;
+			_teleportTo = exit;
 		}
 
 		/// <summary>
@@ -72,13 +72,13 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets or sets the exit Square of this instance <see cref="Square"/> class.
-		/// Exit's Square are link to another Square, maybe in another instance of <see cref="Floor"/> class than where this instance of Square is.
+		/// Gets or sets the teleport Square's reference of this instance <see cref="Square"/> class.
+		/// Square with teleportTo field not set to null are uni or bi-directional link to another Square, maybe in another instance of <see cref="Floor"/> class than the one of this instance of <see cref="Square"/> class.
 		/// </summary>
-		public Square Exit
+		public Square TeleportTo
 		{
-			get { return _exit; }
-			set { _exit = value; }
+			get { return _teleportTo; }
+			set { _teleportTo = value; }
 		}
 	}
 }

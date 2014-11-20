@@ -34,45 +34,28 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Creates news instances of <see cref="Game"/> class and <see cref="HistoricRecord"/> classes.
+		/// Adds an instance of <see cref="Character"/> class in this instance of <see cref="GlobalContext"/> class.
 		/// </summary>
-		/// <param name="character">Used Character's reference.</param>
-		/// <param name="dungeon">Used Dungeon's reference.</param>
-		/// <param name="historic">Historic's reference.</param>
-		/// <returns>The reference of the Game created.</returns>
-		public Game StartNewGame( Character character, Dungeon dungeon)
+		/// <param name="name">Character's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Character's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters, optional and empty by default.</param>
+		/// <param name="hp">Character's health.</param>
+		/// <param name="xp">Character's< experience./param>
+		/// <param name="level">Character's level.</param>
+		/// <param name="armor">Character's armor value.</param>
+		/// <returns>New Character's reference.</returns>
+		public Character AddCharacter( string name, string description = "", int hp = 100, int xp = 0, int level = 1, int armor = 10 )
 		{
-			HistoricRecord record;
-
-			Game game = new Game( character, dungeon, out record );
-			character.Historics.Add( record );
-			character.
-
-			return game;
-		}
-
-
-		public void EndGame( Character character )
-		{
-			character.LeaveDungeon();
-		}
-
-
-		public Character AddCharacter(string name, string description = "")
-		{
-			Character character;
-
-			_characters.Add( new Character( name, description,  ) );
-			if( TryGetCharacter( name, out character ) ) return character;
-			else return null;
+			Character character = new Character( name, description, hp, xp, level, armor ) ;
+			_characters.Add( character );
+			return character;
 		}
 
 		/// <summary>
 		/// Gets the reference of the instance of <see cref="Character"/> class in the current instance of <see cref="GlobalContext"/> class.
 		/// </summary>
-		/// <param name="name">Character's name.</param>
-		/// <param name="dungeon">Character's reference.</param>
-		/// <returns>True if the Character have been found, false if not.</returns>
+		/// <param name="name">Character's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="dungeon">Character's reference to recover.</param>
+		/// <returns>If the Character have been found.</returns>
 		public bool TryGetCharacter( string name, out Character character )
 		{
 			foreach( Character aCharacter in _characters )
@@ -90,24 +73,22 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Adds an instance of <see cref="Dungeon"/> class in this instance of <see cref="GlobalContext"/> class.
 		/// </summary>
-		/// <param name="name">Dungeon's name.</param>
-		/// <param name="description">(Optional) Dungeon's description. Empty by default.</param>
-		/// <returns>Dungeon's reference.</returns>
-		public Dungeon AddDungeon(string name, string description = "")
+		/// <param name="name">Dungeon's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Dungeon's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters, optional and empty by default.</param>
+		/// <returns>New Dungeon's reference.</returns>
+		public Dungeon AddDungeon(string name, string description = "" )
 		{
-			Dungeon dungeon;
-
-			_dungeons.Add( new Dungeon( this, name, description ) );
-			if( TryGetDungeon( name, out dungeon ) ) return dungeon;
-			else return null;
+			Dungeon dungeon = new Dungeon( this, name, description );
+			_dungeons.Add( dungeon );
+			return dungeon;
 		}
 
 		/// <summary>
 		/// Gets the reference of the instance of <see cref="Dungeon"/> class in the current instance of <see cref="GlobalContext"/> class.
 		/// </summary>
-		/// <param name="name">Dungeon's name.</param>
-		/// <param name="dungeon">Dungeon's reference.</param>
-		/// <returns>True if the Dungeon have been found, false if not.</returns>
+		/// <param name="name">Dungeon's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="dungeon">Dungeon's reference to recover.</param>
+		/// <returns>If the Dungeon have been found.</returns>
 		public bool TryGetDungeon( string name, out Dungeon dungeon )
 		{
 			foreach( Dungeon aDungeon in _dungeons )
@@ -120,6 +101,45 @@ namespace WordMaster.DLL
 			}
 			dungeon = null;
 			return false;
+		}
+
+		/// <summary>
+		/// Creates news instances of <see cref="Game"/> class and <see cref="HistoricRecord"/> classes.
+		/// </summary>
+		/// <param name="character">Character's reference.</param>
+		/// <param name="dungeon">Dungeon's reference.</param>
+		/// <returns>New Game's reference.</returns>
+		public Game StartNewGame( Character character, Dungeon dungeon)
+		{
+			if( dungeon.Entrance == null || dungeon.Exit == null ) throw new ArgumentException( "Dungeon's entrance and exit or not set", "dungeon" );
+
+			HistoricRecord record;
+			Game game = new Game( character, dungeon, out record );
+			character.EnterDungeon( dungeon , game, record );
+
+			return game;
+		}
+
+		/// <summary>
+		/// Finishs a <see cref="Game"/>.
+		/// The player have used the exit <see cref="Square"/>.
+		/// </summary>
+		/// <param name="character">Character's reference.</param>
+		public void FinishGame( Character character )
+		{
+			character.Game.Historic.Finished = true;
+			character.LeaveDungeon();
+		}
+
+		/// <summary>
+		/// Ends a <see cref="Game"/> .
+		/// The player who have use the exit function.
+		/// </summary>
+		/// <param name="character">Character's reference.</param>
+		public void EndGame( Character character )
+		{
+			character.Game.Historic.Cancelled = true;
+			character.LeaveDungeon();
 		}
 	}
 }

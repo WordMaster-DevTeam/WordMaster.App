@@ -99,10 +99,94 @@ namespace WordMaster.UniTests
         }
 
         [Test]
-        public void StartNewGame_behave_as_expected()
+        public void StartNewGame_set_a_a_game_as_expected()
         {
+            //Arrange
+            GlobalContext testContext = new GlobalContext( );
+            Character testCharacter;
+            Dungeon testDungeon;
+            Floor testFloor;
+            Square testEntrance, testExit;
+            Game testGame;
+            
+            //Act
+            testDungeon=testContext.AddDungeon( "test" );
+            testCharacter=testContext.AddCharacter( "testchar" );
+            testFloor = testDungeon.AddFloor( 0, "testFloor", "", 3, 3 );
+            testEntrance = testFloor.SetSquare( 0, 0, "testentrance", "", true, null );
+            testExit = testFloor.SetSquare( 2, 2, "testExit", "", true, null );
+            testFloor.SetAllUninitializedSquares( "eee", "", true );
+            testDungeon.Entrance = testEntrance;
+            testDungeon.Exit = testExit;               
+            testGame=testContext.StartNewGame( testCharacter, testDungeon );
 
+            //Assert
+            Assert.That( testGame.Character is Character );
+            Assert.That( testGame.Character, Is.EqualTo( testCharacter ) );
+            Assert.That( testGame.Dungeon is Dungeon );
+            Assert.That( testGame.Dungeon, Is.EqualTo( testDungeon ) );
+            Assert.That( testGame.Historic is HistoricRecord );          
+            
         }
+
+        [Test]
+        public void GlobalContext_finish_a_game_as_expected()
+        {
+            //Arrange
+            GlobalContext testContext = new GlobalContext( );
+            Character testCharacter;
+            Dungeon testDungeon;
+            Floor testFloor;
+            Square testEntrance, testExit;
+            Game testGame;
+
+            //Act
+            testDungeon = testContext.AddDungeon( "test" );
+            testCharacter = testContext.AddCharacter( "testchar" );
+            testFloor = testDungeon.AddFloor( 0, "testFloor", "", 3, 3 );
+            testEntrance = testFloor.SetSquare( 0, 0, "testentrance", "", true, null );
+            testExit = testFloor.SetSquare( 2, 2, "testExit", "", true, null );
+            testFloor.SetAllUninitializedSquares( "eee", "", true );
+            testDungeon.Entrance = testEntrance;
+            testDungeon.Exit = testExit;
+            testGame = testContext.StartNewGame( testCharacter, testDungeon );
+            testContext.FinishGame(testCharacter);
+
+            //Assert            
+            Assert.That( testCharacter.Dungeon, Is.Null );
+            Assert.That( testCharacter.Floor, Is.Null );
+            Assert.That( testCharacter.Square, Is.Null );
+            Assert.That( testCharacter.Game, Is.Null );
+            Assert.That( testCharacter.Historics.Last( ).Finished, Is.True );
+        }
+
+        [Test]
+        public void GlobalContext_End_a_game_as_expected()
+        {
+            //Arrange
+            GlobalContext testContext = new GlobalContext( );
+            Character testCharacter;
+            Dungeon testDungeon;
+            Floor testFloor;
+            Square testEntrance, testExit;
+            Game testGame;
+
+            //Act
+            testDungeon = testContext.AddDungeon( "test" );
+            testCharacter = testContext.AddCharacter( "testchar" );
+            testFloor = testDungeon.AddFloor( 0, "testFloor", "", 3, 3 );
+            testEntrance = testFloor.SetSquare( 0, 0, "testentrance", "", true, null );
+            testExit = testFloor.SetSquare( 2, 2, "testExit", "", true, null );
+            testFloor.SetAllUninitializedSquares( "eee", "", true );
+            testDungeon.Entrance = testEntrance;
+            testDungeon.Exit = testExit;
+            testGame = testContext.StartNewGame( testCharacter, testDungeon );
+            testContext.EndGame( testCharacter );
+
+            //Assert
+            Assert.That( testCharacter.Historics.Last( ).Cancelled, Is.True );
+        }
+           
         
     }
 }

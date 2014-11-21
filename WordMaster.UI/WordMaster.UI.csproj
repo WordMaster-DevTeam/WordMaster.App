@@ -44,6 +44,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CreateCharacter.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CreateCharacter.Designer.cs">
+      <DependentUpon>CreateCharacter.cs</DependentUpon>
+    </Compile>
     <Compile Include="Mainmenu.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -58,6 +64,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CreateCharacter.resx">
+      <DependentUpon>CreateCharacter.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Ingame.resx">
       <DependentUpon>Ingame.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,7 +81,6 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
-      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -92,9 +100,6 @@
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.DLL</Name>
     </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\Anti ronflement.PNG" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

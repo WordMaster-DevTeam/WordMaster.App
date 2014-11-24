@@ -26,6 +26,14 @@ namespace WordMaster.UI
             context.AddCharacter( "default character" );
 
             //DataGridView initialisation
+
+            CharacterDataGridView.DataSource = context.Characters;
+            CharacterDataGridView.Columns.Remove( "Experience" );
+            CharacterDataGridView.Columns.Remove( "Armor" );
+            CharacterDataGridView.Columns.Remove( "Historics" );
+            CharacterDataGridView.Columns.Remove( "Game" );
+            CharacterDataGridView.Columns.Remove( "Square" );
+            
         }
 
         private void CreateCharacterBtn_Click( object sender, EventArgs e )
@@ -38,6 +46,11 @@ namespace WordMaster.UI
         {
             Ingame ingameform = new Ingame( );
             ingameform.Show( );
+        }
+
+        private void QuitBtn_Click( object sender, EventArgs e )
+        {
+            Application.Exit();
         }       
 	}
 }

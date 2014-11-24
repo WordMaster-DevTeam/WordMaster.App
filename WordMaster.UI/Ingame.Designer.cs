@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Ingame));
             this.Gameview = new System.Windows.Forms.PictureBox();
             this.panel1 = new System.Windows.Forms.Panel();
             this.Decriptionlbl = new System.Windows.Forms.Label();
@@ -43,9 +44,10 @@
             this.Lastsavepointbtn = new System.Windows.Forms.Button();
             this.Savenquitbtn = new System.Windows.Forms.Button();
             this.WDversionlbl = new System.Windows.Forms.Label();
-            this.Autouselbl = new System.Windows.Forms.Label();
-            this.difficultylbl = new System.Windows.Forms.Label();
-            this.Complementarylbl = new System.Windows.Forms.Label();
+            this.LeftBtn = new System.Windows.Forms.Button();
+            this.DownBtn = new System.Windows.Forms.Button();
+            this.RightBtn = new System.Windows.Forms.Button();
+            this.UpBtn = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.Gameview)).BeginInit();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Profilpicturebox)).BeginInit();
@@ -59,7 +61,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Gameview.Location = new System.Drawing.Point(12, 12);
             this.Gameview.Name = "Gameview";
-            this.Gameview.Size = new System.Drawing.Size(491, 451);
+            this.Gameview.Size = new System.Drawing.Size(491, 440);
             this.Gameview.TabIndex = 0;
             this.Gameview.TabStop = false;
             // 
@@ -75,7 +77,7 @@
             this.panel1.Controls.Add(this.Profilpicturebox);
             this.panel1.Location = new System.Drawing.Point(509, 12);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(187, 302);
+            this.panel1.Size = new System.Drawing.Size(187, 311);
             this.panel1.TabIndex = 1;
             // 
             // Decriptionlbl
@@ -136,7 +138,7 @@
             this.panel2.Controls.Add(this.Wordslbl);
             this.panel2.Location = new System.Drawing.Point(702, 12);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(188, 302);
+            this.panel2.Size = new System.Drawing.Size(188, 311);
             this.panel2.TabIndex = 2;
             // 
             // Wordslbl
@@ -167,18 +169,18 @@
             this.Respondlaunchbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Respondlaunchbtn.Location = new System.Drawing.Point(508, 361);
+            this.Respondlaunchbtn.Location = new System.Drawing.Point(508, 355);
             this.Respondlaunchbtn.Name = "Respondlaunchbtn";
-            this.Respondlaunchbtn.Size = new System.Drawing.Size(188, 48);
+            this.Respondlaunchbtn.Size = new System.Drawing.Size(191, 97);
             this.Respondlaunchbtn.TabIndex = 4;
             this.Respondlaunchbtn.Text = "Respond/launch";
             this.Respondlaunchbtn.UseVisualStyleBackColor = true;
             // 
             // mapbtn
             // 
-            this.mapbtn.Location = new System.Drawing.Point(702, 361);
+            this.mapbtn.Location = new System.Drawing.Point(702, 355);
             this.mapbtn.Name = "mapbtn";
-            this.mapbtn.Size = new System.Drawing.Size(188, 48);
+            this.mapbtn.Size = new System.Drawing.Size(191, 97);
             this.mapbtn.TabIndex = 5;
             this.mapbtn.Text = "Look to the map";
             this.mapbtn.UseVisualStyleBackColor = true;
@@ -188,9 +190,9 @@
             this.Lastsavepointbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Lastsavepointbtn.Location = new System.Drawing.Point(508, 415);
+            this.Lastsavepointbtn.Location = new System.Drawing.Point(509, 458);
             this.Lastsavepointbtn.Name = "Lastsavepointbtn";
-            this.Lastsavepointbtn.Size = new System.Drawing.Size(188, 48);
+            this.Lastsavepointbtn.Size = new System.Drawing.Size(191, 93);
             this.Lastsavepointbtn.TabIndex = 6;
             this.Lastsavepointbtn.Text = "Return to last save point";
             this.Lastsavepointbtn.UseVisualStyleBackColor = true;
@@ -200,9 +202,9 @@
             this.Savenquitbtn.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.Savenquitbtn.Location = new System.Drawing.Point(702, 415);
+            this.Savenquitbtn.Location = new System.Drawing.Point(702, 458);
             this.Savenquitbtn.Name = "Savenquitbtn";
-            this.Savenquitbtn.Size = new System.Drawing.Size(188, 48);
+            this.Savenquitbtn.Size = new System.Drawing.Size(191, 93);
             this.Savenquitbtn.TabIndex = 7;
             this.Savenquitbtn.Text = "Save and quit";
             this.Savenquitbtn.UseVisualStyleBackColor = true;
@@ -210,47 +212,58 @@
             // WDversionlbl
             // 
             this.WDversionlbl.AutoSize = true;
-            this.WDversionlbl.Location = new System.Drawing.Point(12, 466);
+            this.WDversionlbl.Location = new System.Drawing.Point(9, 541);
             this.WDversionlbl.Name = "WDversionlbl";
             this.WDversionlbl.Size = new System.Drawing.Size(94, 13);
             this.WDversionlbl.TabIndex = 5;
             this.WDversionlbl.Text = "Word Master vX.X";
+            this.WDversionlbl.Click += new System.EventHandler(this.WDversionlbl_Click);
             // 
-            // Autouselbl
+            // LeftBtn
             // 
-            this.Autouselbl.AutoSize = true;
-            this.Autouselbl.Location = new System.Drawing.Point(266, 466);
-            this.Autouselbl.Name = "Autouselbl";
-            this.Autouselbl.Size = new System.Drawing.Size(84, 13);
-            this.Autouselbl.TabIndex = 8;
-            this.Autouselbl.Text = "Auto use potion:";
+            this.LeftBtn.Location = new System.Drawing.Point(116, 458);
+            this.LeftBtn.Name = "LeftBtn";
+            this.LeftBtn.Size = new System.Drawing.Size(87, 34);
+            this.LeftBtn.TabIndex = 10;
+            this.LeftBtn.Text = "Left";
+            this.LeftBtn.UseVisualStyleBackColor = true;
             // 
-            // difficultylbl
+            // DownBtn
             // 
-            this.difficultylbl.AutoSize = true;
-            this.difficultylbl.Location = new System.Drawing.Point(149, 466);
-            this.difficultylbl.Name = "difficultylbl";
-            this.difficultylbl.Size = new System.Drawing.Size(75, 13);
-            this.difficultylbl.TabIndex = 9;
-            this.difficultylbl.Text = "Difficulty level:";
+            this.DownBtn.Location = new System.Drawing.Point(209, 498);
+            this.DownBtn.Name = "DownBtn";
+            this.DownBtn.Size = new System.Drawing.Size(87, 34);
+            this.DownBtn.TabIndex = 11;
+            this.DownBtn.Text = "Down";
+            this.DownBtn.UseVisualStyleBackColor = true;
             // 
-            // Complementarylbl
+            // RightBtn
             // 
-            this.Complementarylbl.AutoSize = true;
-            this.Complementarylbl.Location = new System.Drawing.Point(387, 466);
-            this.Complementarylbl.Name = "Complementarylbl";
-            this.Complementarylbl.Size = new System.Drawing.Size(116, 13);
-            this.Complementarylbl.TabIndex = 10;
-            this.Complementarylbl.Text = "Favorite chocolate bar:";
+            this.RightBtn.Location = new System.Drawing.Point(302, 458);
+            this.RightBtn.Name = "RightBtn";
+            this.RightBtn.Size = new System.Drawing.Size(87, 34);
+            this.RightBtn.TabIndex = 12;
+            this.RightBtn.Text = "Right";
+            this.RightBtn.UseVisualStyleBackColor = true;
+            // 
+            // UpBtn
+            // 
+            this.UpBtn.Location = new System.Drawing.Point(209, 458);
+            this.UpBtn.Name = "UpBtn";
+            this.UpBtn.Size = new System.Drawing.Size(87, 34);
+            this.UpBtn.TabIndex = 13;
+            this.UpBtn.Text = "Up";
+            this.UpBtn.UseVisualStyleBackColor = true;
             // 
             // Ingame
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(905, 487);
-            this.Controls.Add(this.Complementarylbl);
-            this.Controls.Add(this.difficultylbl);
-            this.Controls.Add(this.Autouselbl);
+            this.ClientSize = new System.Drawing.Size(905, 563);
+            this.Controls.Add(this.UpBtn);
+            this.Controls.Add(this.RightBtn);
+            this.Controls.Add(this.DownBtn);
+            this.Controls.Add(this.LeftBtn);
             this.Controls.Add(this.WDversionlbl);
             this.Controls.Add(this.Savenquitbtn);
             this.Controls.Add(this.Lastsavepointbtn);
@@ -260,6 +273,7 @@
             this.Controls.Add(this.panel2);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.Gameview);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "Ingame";
             this.RightToLeftLayout = true;
             this.Text = "Word Master";
@@ -292,8 +306,9 @@
         private System.Windows.Forms.Button Lastsavepointbtn;
         private System.Windows.Forms.Button Savenquitbtn;
         private System.Windows.Forms.Label WDversionlbl;
-        private System.Windows.Forms.Label Autouselbl;
-        private System.Windows.Forms.Label difficultylbl;
-        private System.Windows.Forms.Label Complementarylbl;
+        private System.Windows.Forms.Button LeftBtn;
+        private System.Windows.Forms.Button DownBtn;
+        private System.Windows.Forms.Button RightBtn;
+        private System.Windows.Forms.Button UpBtn;
     }
 }

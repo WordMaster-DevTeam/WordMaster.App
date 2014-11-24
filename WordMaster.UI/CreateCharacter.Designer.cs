@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateCharacter));
             this.AvatarLbl = new System.Windows.Forms.Label();
             this.NameLbl = new System.Windows.Forms.Label();
             this.DescriptionLbl = new System.Windows.Forms.Label();
@@ -149,6 +150,7 @@
             this.Controls.Add(this.NameLbl);
             this.Controls.Add(this.AvatarLbl);
             this.Controls.Add(this.pictureBox1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CreateCharacter";
             this.Text = "CreateCharacter";
             this.Load += new System.EventHandler(this.CreateCharacter_Load);

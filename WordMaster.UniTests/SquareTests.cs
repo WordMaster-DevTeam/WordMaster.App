@@ -30,9 +30,9 @@ namespace WordMaster.UniTests
 			{
 				squareDescription += "d";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 0, 0, squareName, squareDescription );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
+			floor.TrySetSquare( 0, 0, squareName, squareDescription, true, null, out square );
 
 			// Assert
 			Assert.AreEqual( square.Name, squareName );
@@ -62,13 +62,13 @@ namespace WordMaster.UniTests
 			}
 			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ )
 			{
-				squareDescription2 += "1";
-				squareDescription2 += "2";
+				squareDescription1 += "3";
+				squareDescription2 += "4";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square1 = floor.SetSquare( 0, 0, squareName1, squareDescription1, true );
-			square2 = floor.SetSquare( 0, 1, squareName2, squareDescription2, false );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
+			floor.TrySetSquare( 0, 0, squareName1, squareDescription1, true, null, out square1 );
+			floor.TrySetSquare( 0, 1, squareName2, squareDescription2, false, null, out square2 );
 			square2.Holdable = true;
 			square2.TeleportTo = square1;
 

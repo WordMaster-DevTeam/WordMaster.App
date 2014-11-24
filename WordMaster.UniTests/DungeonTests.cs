@@ -20,7 +20,7 @@ namespace WordMaster.UniTests
 			dungeonName = "";
 			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
 				dungeonName += "a";
-			dungeon = context.AddDungeon( dungeonName );
+			context.TryAddDungeon( dungeonName, out dungeon );
 
 			// Assert
 			Assert.AreEqual( dungeon.Name, dungeonName );
@@ -41,7 +41,7 @@ namespace WordMaster.UniTests
 				dungeonName += "a";
 			for( int i = 0; i < NoMagicHelper.MinDescriptionLength; i++ )
 				dungeonDescription += "b";
-			dungeon = context.AddDungeon( dungeonName, dungeonDescription );
+			context.TryAddDungeon( dungeonName, dungeonDescription, out dungeon );
 
 			// Assert
 			Assert.AreEqual( dungeon.Description, dungeonDescription );
@@ -65,9 +65,9 @@ namespace WordMaster.UniTests
 				floorName1 += "b";
 				floorName2 += "c";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor1 = dungeon.AddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
-			floor2 = dungeon.AddFloor( floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize, out floor1 );
+			dungeon.TryAddFloor( floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize, out floor2 );
 
 			// Assert
 			Assert.AreEqual( floor1.Name, floorName1 );
@@ -79,12 +79,13 @@ namespace WordMaster.UniTests
 		}
 
 		[Test]
-		public void Adds_a_Floor_while_another_with_the_same_name_already_exist_throws_ArgumentException()
+		public void Can_not_adds_a_Floor_while_another_with_the_same_name_already_exist()
 		{
 			// Arrange
 			GlobalContext context;
 			string dungeonName, floorName;
 			Dungeon dungeon;
+			Floor trash;
 
 			// Act
 			context = new GlobalContext();
@@ -94,20 +95,21 @@ namespace WordMaster.UniTests
 				dungeonName += "a";
 				floorName += "b";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out trash );
 
 			// Assert
-			Assert.Throws<ArgumentException>( () => dungeon.AddFloor( floorName, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize ) );
+			Assert.IsFalse( dungeon.TryAddFloor( floorName, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize, out trash ) );
 		}
 
 		[Test]
-		public void Adds_a_Floor_with_a_negative_index_throws_ArgumentException()
+		public void Can_not_adds_a_Floor_with_a_negative_index()
 		{
 			// Arrange
 			GlobalContext context;
 			string dungeonName, floorName;
 			Dungeon dungeon;
+			Floor trash;
 
 			// Act
 			context = new GlobalContext();
@@ -117,19 +119,20 @@ namespace WordMaster.UniTests
 				dungeonName += "a";
 				floorName += "b";
 			}
-			dungeon = context.AddDungeon( dungeonName );
+			context.TryAddDungeon( dungeonName, out dungeon );
 
 			// Assert
-			Assert.Throws<ArgumentException>( () => dungeon.AddFloor( -1, floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize ) );
+			Assert.IsFalse( dungeon.TryAddFloor( -1, floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out trash ) );
 		}
 
 		[Test]
-		public void Adds_a_Floor_with_a_detached_index_throws_ArgumentException()
+		public void Can_not_adds_a_Floor_with_a_detached_index()
 		{
 			// Arrange
 			GlobalContext context;
 			string dungeonName, floorName1, floorName2;
 			Dungeon dungeon;
+			Floor trash;
 
 			// Act
 			context = new GlobalContext();
@@ -140,11 +143,11 @@ namespace WordMaster.UniTests
 				floorName1 += "b";
 				floorName2 += "b";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			dungeon.AddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out trash );
 
 			// Assert
-			Assert.Throws<ArgumentException>( () => dungeon.AddFloor( 42, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize ) );
+			Assert.IsFalse( dungeon.TryAddFloor( 42, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out trash ) );
 		}
 
 		[Test]
@@ -154,6 +157,7 @@ namespace WordMaster.UniTests
 			GlobalContext context;
 			string dungeonName, floorName1, floorName2;
 			Dungeon dungeon;
+			Floor trash;
 
 			// Act
 			context = new GlobalContext();
@@ -164,9 +168,9 @@ namespace WordMaster.UniTests
 				floorName1 += "b";
 				floorName2 += "c";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			dungeon.AddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			dungeon.AddFloor( 1, floorName2, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out trash );
+			dungeon.TryAddFloor( 1, floorName2, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize, out trash );
 
 			// Assert
 			Assert.AreEqual( dungeon.NumberOfFloors, 2 );
@@ -191,10 +195,10 @@ namespace WordMaster.UniTests
 				floorName1 += "c";
 				floorName2 += "d";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor1 = dungeon.AddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			floor2 = dungeon.AddFloor( floorName2, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize );
-			insertedFloor = dungeon.AddFloor( 1, insertedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor1 );
+			dungeon.TryAddFloor( floorName2, NoMagicHelper.MaxFloorSize, NoMagicHelper.MaxFloorSize, out floor2 );
+			dungeon.TryAddFloor( 0, insertedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize, out insertedFloor );
 
 			// Assert
 			if( dungeon.TryGetFloor( 0, out floorCheck1 ) ) Assert.AreSame( insertedFloor, floorCheck1 );
@@ -224,11 +228,11 @@ namespace WordMaster.UniTests
 				floorName1 += "c";
 				floorName2 += "d";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor1 = dungeon.AddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			floor2 = dungeon.AddFloor( 1, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
-			removedFloor = dungeon.AddFloor( 2, removedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			dungeon.RemoveFloor( removedFloor );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor1 );
+			dungeon.TryAddFloor( 1, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize, out floor2 );
+			dungeon.TryAddFloor( 2, removedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out removedFloor );
+			dungeon.TryRemoveFloor( removedFloor );
 
 			// Assert
 			Assert.IsTrue( dungeon.ExistFloor( floorName1 ) );
@@ -255,11 +259,11 @@ namespace WordMaster.UniTests
 				floorName1 += "c";
 				floorName2 += "d";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor1 = dungeon.AddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			removedFloor = dungeon.AddFloor( 1, removedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			floor2 = dungeon.AddFloor( 2, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			dungeon.RemoveFloor( removedFloor );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( 0, floorName1, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor1 );
+			dungeon.TryAddFloor( 1, removedFloorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out removedFloor );
+			dungeon.TryAddFloor( 2, floorName2, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor2 );
+			dungeon.TryRemoveFloor( removedFloor );
 
 			// Assert
 			Assert.IsTrue( dungeon.ExistFloor( floorName1 ) );

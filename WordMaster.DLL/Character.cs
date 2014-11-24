@@ -9,7 +9,7 @@ namespace WordMaster.DLL
     [Serializable]
     public class Character
     {
-		readonly string _name, _description;
+		string _name, _description;
 		int _hp, _xp, _level, _armor;
 		readonly List<string> _book;
 		readonly List<Item> _inventory;
@@ -22,24 +22,20 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Initializes a new instance of <see cref="Character"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
-		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
+		/// <param name="name">Character's name.</param>
+		/// <param name="description">Character's description.</param>
 		/// <param name="hp">Character's health.</param>
 		/// <param name="xp">Character's experience.</param>
 		/// <param name="level">Character's level.</param>
 		/// <param name="armor">Character's armor.</param>
 		/// </summary>
-		public Character( string name, string description, int hp, int xp, int level, int armor)
+		internal Character( string name, string description, int hp, int xp, int level, int armor)
 		{
-			// Checking parameters
-			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Invalid Character's name length." );
-			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Invalid Character's descritpion length." );
 			if( hp <= 0 ) throw new ArgumentException( "Health Point must be greater than 0." );
-			if( xp < 0 ) throw new ArgumentException( "Expérience point must be greater than 0." );
+			if( xp < 0 ) throw new ArgumentException( "Experience point must be positive." );
 			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
 			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
 
-			// Creation Character
 			_name = name;
 			_description = description;
 			_hp = hp;
@@ -56,18 +52,12 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="Character"/> class.
-		/// Create a level 1 Character.
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
-		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
-		public Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
-
-		/// <summary>
 		/// Gets the Character's name.
 		/// </summary>
         public string Name
         {
             get { return _name; }
+			internal set { _name = value; }
         }
 
 		/// <summary>
@@ -76,6 +66,7 @@ namespace WordMaster.DLL
         public string Description
         {
             get { return _description; }
+			set { _description = value; }
         }
 
 		/// <summary>
@@ -174,9 +165,9 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
 		/// </summary>
-		/// <param name="dungeon"></param>
-		/// <param name="line"></param>
-		/// <param name="column"></param>
+		/// <param name="dungeon">Dungeon's reference.</param>
+		/// <param name="game">Game's reference.</param>
+		/// <param name="record">HistoricRecord's reference.</param>
 		internal void EnterDungeon( Dungeon dungeon, Game game, HistoricRecord record )
 		{
 			Floor floor;
@@ -196,7 +187,7 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null.
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null, effectively leaving the Dungeon
 		/// </summary>
 		internal void LeaveDungeon()
 		{
@@ -209,40 +200,48 @@ namespace WordMaster.DLL
         /// <summary>
         /// Moves an instance of <see cref="Character"/> class to a different Square.
         /// </summary>
-        /// <param name="line">Can't be null.</param>
-        /// <param name="column">Can't be null.</param>
-		public bool MoveTo( int line, int column )
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="finalLocaltion">Current Character's Square at the end of the call.</param>
+		/// <returns>If the Character have moved.</returns>
+		public bool TryMoveTo( int line, int column, out Square finalLocaltion )
         {
 			if( _currentFloor.CheckBounds( line, column ) && _currentFloor.CheckHoldable( line, column ) )
 			{
-				_currentSquare = _currentFloor.Layout[line, column];
+				if( _currentFloor.Layout[line, column].TeleportTo != null )
+					_currentSquare = _currentFloor.Layout[line, column].TeleportTo;
+				else
+					_currentSquare = _currentFloor.Layout[line, column];
+
+				finalLocaltion = _currentSquare;
 				return true;
 			}
-			else return false;
+			else
+			{
+				finalLocaltion = _currentSquare;
+				return false;
+			}
         }
 
-		public bool MoveTo( Square square )
+		/// <summary>
+		/// Moves an instance of <see cref="Character"/> class to a different Square.
+		/// </summary>
+		/// <param name="desiredLocation">Square's reference.</param>
+		/// <param name="finalLocaltion">Current Character's Square at the end of the call.</param>
+		/// <returns>If the Character have moved.</returns>
+		public bool TryMoveTo( Square desiredLocation, out Square finalLocaltion )
 		{
 			int line, column;
 
-			if( _currentFloor.TryGetCoordinates( square, out line, out column ) ) return MoveTo( line, column );
-			else return false;
-		}
-
-        /// <summary>
-        /// Uses an Item from the inventory.
-        /// </summary>
-        public void UseItem()
-        {
-            throw new NotImplementedException( );
-        }
-
-        /// <summary>
-        /// Makes the Character attack.
-        /// </summary>
-        public void Attack()
-        {
-            throw new NotImplementedException();
-        }       
+			if( _currentFloor.TryGetCoordinates( desiredLocation, out line, out column ) )
+			{
+				return TryMoveTo( line, column, out finalLocaltion );
+			}
+			else
+			{
+				finalLocaltion = _currentSquare;
+				return false;
+			}
+		}   
     }
 }

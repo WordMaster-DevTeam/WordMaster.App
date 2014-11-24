@@ -28,8 +28,8 @@ namespace WordMaster.UniTests
 			{
 				floorDescription += "c";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, floorDescription, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, floorDescription, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize, out floor );
 
 			//Assert
 			Assert.AreEqual( floor.Name, floorName );
@@ -60,9 +60,9 @@ namespace WordMaster.UniTests
 			{
 				squaresDescription += "d";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			floor.SetAllSquares(squaresName, squaresDescription, true);
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
+			floor.TrySetAllSquares(squaresName, squaresDescription, true);
 
 			// Assert
 			Assert.IsTrue( floor.CheckAllSquare() );
@@ -87,9 +87,9 @@ namespace WordMaster.UniTests
 				floorName += "b";
 				squareName += "c";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 1, 1 , squareName );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
+			floor.TrySetSquare( 1, 1, squareName, out square );
 			
 			// Assert
 			if( floor.TryGetSquare( 1, 1, out squareCheck ) ) Assert.AreSame( square, squareCheck );
@@ -116,10 +116,10 @@ namespace WordMaster.UniTests
 				squaresName += "1";
 				anotherSquareName += "2";
 			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 1, 1, anotherSquareName );
-			floor.SetAllUninitializedSquares( squaresName );
+			context.TryAddDungeon( dungeonName, out dungeon );
+			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
+			floor.TrySetSquare( 1, 1, anotherSquareName, out square );
+			floor.TrySetAllUninitializedSquares( squaresName );
 
 			// Assert
 			Assert.IsTrue( floor.CheckAllSquare() );

@@ -42,11 +42,11 @@ namespace WordMaster.UniTests
 			for( int i = 0; i < (NoMagicHelper.MaxDescriptionLength + 1); i++ ) maxLongStringLengthPlusOne += "f";
 
 			// Assert
-			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( minLongStringLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( maxLongStringLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckLongStringLength( midLongStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( minLongStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( maxLongStringLength ) );
+			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( midLongStringLength ) );
 			/*Assert.IsFalse( NoMagicHelper.CheckLongStringLength( minLongStringLengthMinusOne ) );*/
-			Assert.IsFalse( NoMagicHelper.CheckLongStringLength( maxLongStringLengthPlusOne ) );
+			Assert.IsFalse( NoMagicHelper.CheckDescriptionLength( maxLongStringLengthPlusOne ) );
 		}
 		[Test]
 		public void Check_Floor_size()

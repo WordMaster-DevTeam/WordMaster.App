@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordMaster.DLL;
 
 namespace WordMaster.UI
 {
@@ -22,7 +23,12 @@ namespace WordMaster.UI
             base.OnLoad( e );
         }
 
-        private void button2_Click( object sender, EventArgs e )
+        private void CreateCharacterBtn_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void LaunchBtn_Click( object sender, EventArgs e )
         {
 
         }

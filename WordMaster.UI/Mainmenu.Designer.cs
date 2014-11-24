@@ -28,82 +28,83 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            this.button3 = new System.Windows.Forms.Button();
-            this.button4 = new System.Windows.Forms.Button();
-            this.button5 = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
-            this.button7 = new System.Windows.Forms.Button();
+            this.LaunchBtn = new System.Windows.Forms.Button();
+            this.CreateCharacterBtn = new System.Windows.Forms.Button();
+            this.TutorialBTn = new System.Windows.Forms.Button();
+            this.OptionBtn = new System.Windows.Forms.Button();
+            this.ScoresBtn = new System.Windows.Forms.Button();
+            this.CreditsBtn = new System.Windows.Forms.Button();
+            this.QuitBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
             this.panel1 = new System.Windows.Forms.Panel();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1.SuspendLayout();
             this.SuspendLayout();
             // 
-            // button1
+            // LaunchBtn
             // 
-            this.button1.Location = new System.Drawing.Point(22, 15);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(133, 45);
-            this.button1.TabIndex = 0;
-            this.button1.Text = "Launch game";
-            this.button1.UseVisualStyleBackColor = true;
+            this.LaunchBtn.Location = new System.Drawing.Point(22, 15);
+            this.LaunchBtn.Name = "LaunchBtn";
+            this.LaunchBtn.Size = new System.Drawing.Size(133, 45);
+            this.LaunchBtn.TabIndex = 0;
+            this.LaunchBtn.Text = "Launch game";
+            this.LaunchBtn.UseVisualStyleBackColor = true;
+            this.LaunchBtn.Click += new System.EventHandler(this.LaunchBtn_Click);
             // 
-            // button2
+            // CreateCharacterBtn
             // 
-            this.button2.Location = new System.Drawing.Point(22, 66);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(133, 45);
-            this.button2.TabIndex = 2;
-            this.button2.Text = "Create new character";
-            this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.CreateCharacterBtn.Location = new System.Drawing.Point(22, 66);
+            this.CreateCharacterBtn.Name = "CreateCharacterBtn";
+            this.CreateCharacterBtn.Size = new System.Drawing.Size(133, 45);
+            this.CreateCharacterBtn.TabIndex = 2;
+            this.CreateCharacterBtn.Text = "Create new character";
+            this.CreateCharacterBtn.UseVisualStyleBackColor = true;
+            this.CreateCharacterBtn.Click += new System.EventHandler(this.CreateCharacterBtn_Click);
             // 
-            // button3
+            // TutorialBTn
             // 
-            this.button3.Location = new System.Drawing.Point(22, 117);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(133, 45);
-            this.button3.TabIndex = 3;
-            this.button3.Text = "Tutorial";
-            this.button3.UseVisualStyleBackColor = true;
+            this.TutorialBTn.Location = new System.Drawing.Point(22, 117);
+            this.TutorialBTn.Name = "TutorialBTn";
+            this.TutorialBTn.Size = new System.Drawing.Size(133, 45);
+            this.TutorialBTn.TabIndex = 3;
+            this.TutorialBTn.Text = "Tutorial";
+            this.TutorialBTn.UseVisualStyleBackColor = true;
             // 
-            // button4
+            // OptionBtn
             // 
-            this.button4.Location = new System.Drawing.Point(22, 168);
-            this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(133, 45);
-            this.button4.TabIndex = 4;
-            this.button4.Text = "Option";
-            this.button4.UseVisualStyleBackColor = true;
+            this.OptionBtn.Location = new System.Drawing.Point(22, 168);
+            this.OptionBtn.Name = "OptionBtn";
+            this.OptionBtn.Size = new System.Drawing.Size(133, 45);
+            this.OptionBtn.TabIndex = 4;
+            this.OptionBtn.Text = "Option";
+            this.OptionBtn.UseVisualStyleBackColor = true;
             // 
-            // button5
+            // ScoresBtn
             // 
-            this.button5.Location = new System.Drawing.Point(22, 219);
-            this.button5.Name = "button5";
-            this.button5.Size = new System.Drawing.Size(133, 45);
-            this.button5.TabIndex = 5;
-            this.button5.Text = "Scores";
-            this.button5.UseVisualStyleBackColor = true;
+            this.ScoresBtn.Location = new System.Drawing.Point(22, 219);
+            this.ScoresBtn.Name = "ScoresBtn";
+            this.ScoresBtn.Size = new System.Drawing.Size(133, 45);
+            this.ScoresBtn.TabIndex = 5;
+            this.ScoresBtn.Text = "Scores";
+            this.ScoresBtn.UseVisualStyleBackColor = true;
             // 
-            // button6
+            // CreditsBtn
             // 
-            this.button6.Location = new System.Drawing.Point(22, 270);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(133, 45);
-            this.button6.TabIndex = 6;
-            this.button6.Text = "Credits";
-            this.button6.UseVisualStyleBackColor = true;
+            this.CreditsBtn.Location = new System.Drawing.Point(22, 270);
+            this.CreditsBtn.Name = "CreditsBtn";
+            this.CreditsBtn.Size = new System.Drawing.Size(133, 45);
+            this.CreditsBtn.TabIndex = 6;
+            this.CreditsBtn.Text = "Credits";
+            this.CreditsBtn.UseVisualStyleBackColor = true;
             // 
-            // button7
+            // QuitBtn
             // 
-            this.button7.Location = new System.Drawing.Point(22, 321);
-            this.button7.Name = "button7";
-            this.button7.Size = new System.Drawing.Size(133, 45);
-            this.button7.TabIndex = 7;
-            this.button7.Text = "Quit";
-            this.button7.UseVisualStyleBackColor = true;
+            this.QuitBtn.Location = new System.Drawing.Point(22, 321);
+            this.QuitBtn.Name = "QuitBtn";
+            this.QuitBtn.Size = new System.Drawing.Size(133, 45);
+            this.QuitBtn.TabIndex = 7;
+            this.QuitBtn.Text = "Quit";
+            this.QuitBtn.UseVisualStyleBackColor = true;
             // 
             // label1
             // 
@@ -117,13 +118,13 @@
             // 
             // panel1
             // 
-            this.panel1.Controls.Add(this.button7);
-            this.panel1.Controls.Add(this.button6);
-            this.panel1.Controls.Add(this.button5);
-            this.panel1.Controls.Add(this.button4);
-            this.panel1.Controls.Add(this.button3);
-            this.panel1.Controls.Add(this.button2);
-            this.panel1.Controls.Add(this.button1);
+            this.panel1.Controls.Add(this.QuitBtn);
+            this.panel1.Controls.Add(this.CreditsBtn);
+            this.panel1.Controls.Add(this.ScoresBtn);
+            this.panel1.Controls.Add(this.OptionBtn);
+            this.panel1.Controls.Add(this.TutorialBTn);
+            this.panel1.Controls.Add(this.CreateCharacterBtn);
+            this.panel1.Controls.Add(this.LaunchBtn);
             this.panel1.Location = new System.Drawing.Point(12, 71);
             this.panel1.Name = "panel1";
             this.panel1.Size = new System.Drawing.Size(179, 381);
@@ -135,7 +136,7 @@
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.51485F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.48515F));
             this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 103F));
+            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
             this.tableLayoutPanel1.Location = new System.Drawing.Point(224, 71);
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 4;
@@ -164,13 +165,13 @@
 
 		#endregion
 
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
-        private System.Windows.Forms.Button button3;
-        private System.Windows.Forms.Button button4;
-        private System.Windows.Forms.Button button5;
-        private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.Button button7;
+        private System.Windows.Forms.Button LaunchBtn;
+        private System.Windows.Forms.Button CreateCharacterBtn;
+        private System.Windows.Forms.Button TutorialBTn;
+        private System.Windows.Forms.Button OptionBtn;
+        private System.Windows.Forms.Button ScoresBtn;
+        private System.Windows.Forms.Button CreditsBtn;
+        private System.Windows.Forms.Button QuitBtn;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;

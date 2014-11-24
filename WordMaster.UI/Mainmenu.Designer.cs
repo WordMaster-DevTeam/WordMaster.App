@@ -36,14 +36,13 @@
             this.CreditsBtn = new System.Windows.Forms.Button();
             this.QuitBtn = new System.Windows.Forms.Button();
             this.label1 = new System.Windows.Forms.Label();
-            this.panel1 = new System.Windows.Forms.Panel();
-            this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
-            this.panel1.SuspendLayout();
+            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.SuspendLayout();
             // 
             // LaunchBtn
             // 
-            this.LaunchBtn.Location = new System.Drawing.Point(22, 15);
+            this.LaunchBtn.Location = new System.Drawing.Point(44, 90);
             this.LaunchBtn.Name = "LaunchBtn";
             this.LaunchBtn.Size = new System.Drawing.Size(133, 45);
             this.LaunchBtn.TabIndex = 0;
@@ -53,7 +52,7 @@
             // 
             // CreateCharacterBtn
             // 
-            this.CreateCharacterBtn.Location = new System.Drawing.Point(22, 66);
+            this.CreateCharacterBtn.Location = new System.Drawing.Point(44, 141);
             this.CreateCharacterBtn.Name = "CreateCharacterBtn";
             this.CreateCharacterBtn.Size = new System.Drawing.Size(133, 45);
             this.CreateCharacterBtn.TabIndex = 2;
@@ -63,7 +62,7 @@
             // 
             // TutorialBTn
             // 
-            this.TutorialBTn.Location = new System.Drawing.Point(22, 117);
+            this.TutorialBTn.Location = new System.Drawing.Point(44, 192);
             this.TutorialBTn.Name = "TutorialBTn";
             this.TutorialBTn.Size = new System.Drawing.Size(133, 45);
             this.TutorialBTn.TabIndex = 3;
@@ -72,7 +71,7 @@
             // 
             // OptionBtn
             // 
-            this.OptionBtn.Location = new System.Drawing.Point(22, 168);
+            this.OptionBtn.Location = new System.Drawing.Point(44, 243);
             this.OptionBtn.Name = "OptionBtn";
             this.OptionBtn.Size = new System.Drawing.Size(133, 45);
             this.OptionBtn.TabIndex = 4;
@@ -81,7 +80,7 @@
             // 
             // ScoresBtn
             // 
-            this.ScoresBtn.Location = new System.Drawing.Point(22, 219);
+            this.ScoresBtn.Location = new System.Drawing.Point(44, 294);
             this.ScoresBtn.Name = "ScoresBtn";
             this.ScoresBtn.Size = new System.Drawing.Size(133, 45);
             this.ScoresBtn.TabIndex = 5;
@@ -90,7 +89,7 @@
             // 
             // CreditsBtn
             // 
-            this.CreditsBtn.Location = new System.Drawing.Point(22, 270);
+            this.CreditsBtn.Location = new System.Drawing.Point(44, 345);
             this.CreditsBtn.Name = "CreditsBtn";
             this.CreditsBtn.Size = new System.Drawing.Size(133, 45);
             this.CreditsBtn.TabIndex = 6;
@@ -99,7 +98,7 @@
             // 
             // QuitBtn
             // 
-            this.QuitBtn.Location = new System.Drawing.Point(22, 321);
+            this.QuitBtn.Location = new System.Drawing.Point(44, 396);
             this.QuitBtn.Name = "QuitBtn";
             this.QuitBtn.Size = new System.Drawing.Size(133, 45);
             this.QuitBtn.TabIndex = 7;
@@ -116,48 +115,31 @@
             this.label1.TabIndex = 8;
             this.label1.Text = "Word Master";
             // 
-            // panel1
+            // dataGridView1
             // 
-            this.panel1.Controls.Add(this.QuitBtn);
-            this.panel1.Controls.Add(this.CreditsBtn);
-            this.panel1.Controls.Add(this.ScoresBtn);
-            this.panel1.Controls.Add(this.OptionBtn);
-            this.panel1.Controls.Add(this.TutorialBTn);
-            this.panel1.Controls.Add(this.CreateCharacterBtn);
-            this.panel1.Controls.Add(this.LaunchBtn);
-            this.panel1.Location = new System.Drawing.Point(12, 71);
-            this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(179, 381);
-            this.panel1.TabIndex = 9;
-            // 
-            // tableLayoutPanel1
-            // 
-            this.tableLayoutPanel1.ColumnCount = 4;
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 48.51485F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 51.48515F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel1.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 104F));
-            this.tableLayoutPanel1.Location = new System.Drawing.Point(224, 71);
-            this.tableLayoutPanel1.Name = "tableLayoutPanel1";
-            this.tableLayoutPanel1.RowCount = 4;
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 49.46809F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.53191F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 100F));
-            this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Absolute, 92F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(407, 381);
-            this.tableLayoutPanel1.TabIndex = 10;
+            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView1.Location = new System.Drawing.Point(201, 90);
+            this.dataGridView1.Name = "dataGridView1";
+            this.dataGridView1.Size = new System.Drawing.Size(443, 350);
+            this.dataGridView1.TabIndex = 9;
             // 
             // Mainmenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(660, 464);
-            this.Controls.Add(this.tableLayoutPanel1);
-            this.Controls.Add(this.panel1);
+            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.QuitBtn);
+            this.Controls.Add(this.CreditsBtn);
             this.Controls.Add(this.label1);
+            this.Controls.Add(this.ScoresBtn);
+            this.Controls.Add(this.LaunchBtn);
+            this.Controls.Add(this.OptionBtn);
+            this.Controls.Add(this.CreateCharacterBtn);
+            this.Controls.Add(this.TutorialBTn);
             this.Name = "Mainmenu";
             this.Text = "Word Master";
-            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -173,8 +155,7 @@
         private System.Windows.Forms.Button CreditsBtn;
         private System.Windows.Forms.Button QuitBtn;
         private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Panel panel1;
-        private System.Windows.Forms.TableLayoutPanel tableLayoutPanel1;
+        private System.Windows.Forms.DataGridView dataGridView1;
 	}
 }
 

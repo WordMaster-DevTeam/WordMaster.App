@@ -21,16 +21,23 @@ namespace WordMaster.UI
         protected override void OnLoad( EventArgs e )
         {
             base.OnLoad( e );
+            GlobalContext context = new GlobalContext( );
+
+            context.AddCharacter( "default character" );
+
+            //DataGridView initialisation
         }
 
         private void CreateCharacterBtn_Click( object sender, EventArgs e )
         {
-
+            CreateCharacter createCharacterForm = new CreateCharacter( );
+            createCharacterForm.Show( );
         }
 
         private void LaunchBtn_Click( object sender, EventArgs e )
         {
-
-        }
+            Ingame ingameform = new Ingame( );
+            ingameform.Show( );
+        }       
 	}
 }

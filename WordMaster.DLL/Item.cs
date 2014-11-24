@@ -14,16 +14,16 @@ namespace WordMaster.DLL
         bool _isEquiped;
 
         /// <summary>
-        /// Initialize a new instance of <see cref="Item"/>, base builder.
+        /// Initializes a new instance of <see cref="Item"/> class.
         /// </summary>
-        /// <param name="name">Can't be null, whitespace or empty.</param>
-        /// <param name="description">Can't be null.</param>
+        /// <param name="name"></param>
+        /// <param name="description"></param>
         /// <param name="equipable"></param>
         /// <param name="equiped"></param>
         public Item(string name, string description, bool equipable, bool equiped)
         {
-            if ( name == string.Empty || name == null || name == " " ) throw new ArgumentException( "Name can't be empty or null." );
-            if ( description == null ) throw new ArgumentException( "Description can't be null" );
+			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Name can't be empty or null." );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Description can't be null" );
 
             _name = name;
             _description = description;

@@ -1,30 +1,38 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
     public class Dungeon
     {
+		GlobalContext _context;
 		readonly string _name;
-		readonly Dictionary<int, Floor> _floors;
-
+		readonly string _description;
+		List<Floor> _floors;
+		Square _entrance;
+		Square _exit;
+		
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Dungeon.</param>
-		public Dungeon( string name )
+		/// <param name="context">GlobalContext's reference, all Dungeons must be in a <see cref="GlobalContext"/>.</param>
+		/// <param name="name">Dungeon's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Dungeon's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
+		internal Dungeon( GlobalContext context, string name, string description)
 		{
+			// Checking parameters
 			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Dungeon's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Dungeon's description must be a string of " + NoMagicHelper.MinDescriptionLength + " to " + NoMagicHelper.MaxDescriptionLength + " characters.", "description" );
 
+			// Creating Dungeon
+			_context = context;
 			_name = name;
-			_floors = new Dictionary<int,Floor> ();
+			_description = description;
+			_floors = new List<Floor>();
 		}
 
 		/// <summary>
-		/// Gets the name of the instance of <see cref="Dungeon"/> class.
+		/// Gets the name of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public string Name
 		{
@@ -32,197 +40,206 @@ namespace WordMaster.DLL
 		}
 
 		/// <summary>
-		/// Gets the number of floors in the instance of <see cref="Dungeon"/> class.
+		/// Gets the description of this instance of <see cref="Dungeon"/> class.
+		/// </summary>
+		public string Description
+		{
+			get { return _description; }
+		}
+
+		/// <summary>
+		/// Gets the floors' list (read only) of this instance of <see cref="Dungeon"/> class.
+		/// </summary>
+		public IEnumerable<Floor> Floors
+		{
+			get { return _floors; }
+		}
+
+		/// <summary>
+		/// Gets the number of floors of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public int NumberOfFloors
 		{
 			get { return _floors.Count; }
 		}
 
-		#region AddFloor methods (using set or not set index and cubic or right-angled constructor)
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be right-angled.
+		/// Gets the entrance's <see cref="Square"/> of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Position of the Floor to add.</param>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( int index, string name, int length, int width )
+		public Square Entrance
 		{
-			if( NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( NoMagicHelper.CheckFloorSize( length ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "length" );
-			if( NoMagicHelper.CheckFloorSize( width ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "width" );
-
-			if( TryGetFloor( name ) != null ) throw new ArgumentException( "A floor with this name already exist.", "name" );
-			if( index < 0 || index > _floors.Count ) throw new ArgumentException( "Floor must be connected each others.", "index" );
-
-			if( TryGetFloor( index ) == null )
-			{
-				// No index modifications needed
-				_floors.Add( index, new Floor( name, length, width ) );
-			}
-			else
-			{
-				// Index modification: move the floor with corresponding index to upper level, and the next after, etc.
-				
-			}
-
-			return TryGetFloor( index );
+			get { return _entrance; }
+			set { _entrance = value; }
 		}
 
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be right-angled.
+		/// Gets the exit's <see cref="Square"/> of this instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="length">Length (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <param name="width">Width (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <returns>Reference of the new Floor.</returns>
+		public Square Exit
+		{
+			get { return _exit; }
+			set { _exit = value; }
+		}
+
+		/// <summary>
+		/// Checks if the <see cref="Dungeon"/> have <see cref="Character"/> using it.
+		/// </summary>
+		public bool Editable
+		{
+			get
+			{
+				foreach( Character character in _context.Characters )
+					if( character.Game.Dungeon.Equals( this ) )
+						return false;
+				return true;
+			}
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to this instance of <see cref="Dungeon"/> class.
+		/// </summary>
+		/// <param name="level">Floor's position.</param>
+		/// <param name="name">Floor's name,  <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Floor's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <returns>New Floor's reference.</returns>
+		public Floor AddFloor( int level, string name, string description, int numberOfLines, int numberOfColumns )
+		{
+			// Checking context
+			if( ExistFloor( name ) ) throw new ArgumentException( "A floor with this name already exist in this dungeon.", "name" );
+			if( level < 0 || level > this._floors.Count ) throw new ArgumentException( "Can not used disconnected Floor's level.", "level" );
+
+			// Updating Floors' level in case of insertion
+			foreach( Floor aFloor in this._floors )
+				if(aFloor.Level >= level) aFloor.Level += 1;
+
+			Floor floor = new Floor( this, level, name, description, numberOfLines, numberOfColumns );
+			_floors.Add(floor);
+			return floor;
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to this instance of <see cref="Dungeon"/> class.
+		/// The Floor will have an empty description.
+		/// </summary>
+		/// <param name="level">Floor's position.</param>
+		/// <param name="name">Floor's name,  <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/>
+		/// <returns>New Floor's reference.</returns>
+		public Floor AddFloor( int level, string name, int numberOfLines, int numberOfColumns )
+		{
+			return AddFloor( level, name, "", numberOfLines, numberOfColumns );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to this instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// </summary>
+		/// <param name="name">Floor's name,  <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="description">Floor's description, <see cref="NoMagicHelper.MinDescritptionLength"/> to <see cref="NoMagicHelper.MaxDescritptionLength"/> characters.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/>
+		/// <returns>New Floor's reference.</returns>
+		public Floor AddFloor( string name, string description, int numberOfLines, int numberOfColumns )
+		{
+			return AddFloor( _floors.Count, name, description, numberOfLines, numberOfColumns );
+		}
+
+		/// <summary>
+		/// Adds a new instance of <see cref="Floor"/> class to this instance of <see cref="Dungeon"/> class.
+		/// The Floor created will be put after the current last Floor.
+		/// The Floor will have an empty description.
+		/// </summary>
+		/// <param name="name">Floor's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/>
+		/// <returns>New Floor's reference.</returns>
 		public Floor AddFloor( string name, int length, int width )
 		{
-			return AddFloor( _floors.Count, name, length, width );
+			return AddFloor( _floors.Count, name, "", length, width );
 		}
 
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be cubic.
+		/// Removes an instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Position of the Floor to add.</param>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( int index, string name, int size )
+		/// <param name="floor">Reference of the Floor to remove.</param>
+		/// <returns>If the Floor has been found and removed.</returns>
+		public void RemoveFloor( Floor floor )
 		{
-			return AddFloor( index, name, size, size );
+			foreach( Floor aFloor in this._floors )
+				if(aFloor.Level > floor.Level) aFloor.Level -= 1;
+
+			_floors.Remove( floor );
 		}
 
 		/// <summary>
-		/// Adds a new instance of <see cref="Floor"/> class after the last Floor to the current instance of <see cref="Dungeon"/> class.
-		/// The Floor created will be cubic.
+		/// Gets the reference of the instance of <see cref="Floor"/> class in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the floor.</param>
-		/// <param name="size">Size (MinFloorSize to MaxFloorSize size) of the floor.</param>
-		/// <returns>Reference of the new Floor.</returns>
-		public Floor AddFloor( string name, int size )
+		/// <param name="name">Floor's Name.</param>
+		/// <param name="floor">Floor's reference to recover.</param>
+		/// <returns>If the Floor have been found.</returns>
+		public bool TryGetFloor( string name, out Floor floor )
 		{
-			return AddFloor( _floors.Count, name, size, size );
-		}
-		#endregion
+			foreach( Floor aFloor in _floors )
+			{
+				if( aFloor.Name == name )
+				{
+					floor = aFloor;
+					return true;
+				}
+			}
 
-		#region DeleteFloor methods (using reference, name or index of the Floor to remove)
-		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
-		/// </summary>
-		/// <param name="floor">Reference of the Floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( Floor floor )
-		{
-			throw new NotImplementedException();
+			floor = null;
+			return false;
 		}
 
 		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
+		/// Gets the reference of the instance of <see cref="Floor"/> class in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="Name">Name of the floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( string Name )
+		/// <param name="level">Floor's level.</param>
+		/// <param name="floor">Floor's reference to recover.</param>
+		/// <returns>If the Floor have been found.</returns>
+		public bool TryGetFloor( int level, out Floor floor )
 		{
-			throw new NotImplementedException();
+			foreach( Floor aFloor in _floors )
+			{
+				if( aFloor.Level == level )
+				{
+					floor = aFloor;
+					return true;
+				}
+			}
+
+			floor = null;
+			return false;
 		}
 
 		/// <summary>
-		/// Deletes an old instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
+		/// Checks if a Floor's instance exist with the specified name in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the floor to delete.</param>
-		/// <returns>True if the Floor has been found and delete.</returns>
-		public bool DeleteFloor( int index )
+		/// <param name="name">Floor's name.</param>
+		/// <returns>If the Floor have been found.</returns>
+		public bool ExistFloor( string name )
 		{
-			throw new NotImplementedException();
-		}
-		#endregion
-
-		#region TryGets a/next/previous Floor methods (using reference, name or index)
-		/// <summary>
-		/// Try to gets a reference of an instance of <see cref="Floor"/> class, by name.
-		/// </summary>
-		/// <param name="name">Name of the Floor to get.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetFloor( string name )
-		{
-			throw new NotImplementedException();			
+			foreach( Floor floor in _floors )
+				if( floor.Name == name )
+					return true;
+			return false;
 		}
 
 		/// <summary>
-		/// Try to gets a reference of an instance of <see cref="Floor"/> class, by index.
+		/// Checks if a Floor's instance exist at the specified index in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="index">Index of the Floor to get (must be positive).</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetFloor( int index )
+		/// <param name="index">Floor's index.</param>
+		/// <returns>If a Floor have been found.</returns>
+		public bool ExistFloor( int level )
 		{
-			throw new NotImplementedException();
+			foreach( Floor floor in _floors )
+				if( floor.Level == level )
+					return true;
+			return false;
 		}
-
-		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using reference of the current Floor.
-		/// </summary>
-		/// <param name="currentFloor">Reference of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetNextFloor( Floor currentFloor )
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using name of the current Floor.
-		/// </summary>
-		/// <param name="name">Name of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetNextFloor( string name )
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// try of gets the reference of the next instance of <see cref="Floor"/> class, using index of the current Floor.
-		/// </summary>
-		/// <param name="index">Index of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor GetNextFloor( int index )
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using reference of the current Floor.
-		/// </summary>
-		/// <param name="currentFloor">Reference of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetPreviousFloor( Floor currentFloor )
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using name of the current Floor.
-		/// </summary>
-		/// <param name="name">Name of the current Floor.</param>
-		/// <returns>Reference of the next Floor. Or Null if not found.</returns>
-		public Floor TryGetPreviousFloor( string name )
-		{
-			throw new NotImplementedException();
-		}
-
-		/// <summary>
-		/// Try to gets the reference of the next instance of <see cref="Floor"/> class, using index of the current Floor.
-		/// </summary>
-		/// <param name="index">Index of the current Floor.</param>
-		/// <returns>Reference of the previous Floor.</returns>
-		public Floor TryGetPreviousFloor( int index )
-		{
-			throw new NotImplementedException();
-		}
-		#endregion
 	}
 }

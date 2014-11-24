@@ -1,17 +1,28 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.DLL
 {
 	static public class NoMagicHelper
 	{
+		#region Name's length
 		readonly static int _minLengthName = 3;
 		readonly static int _maxLengthName = 30;
-		readonly static int _minFloorSize = 3;
-		readonly static int _maxFloorSize = 100;
+
+		/// <summary>
+		/// Gets the minimun length for a name.
+		/// </summary>
+		static public int MinNameLength
+		{
+			get { return _minLengthName; }
+		}
+
+		/// <summary>
+		/// Gets the maximum length for a name.
+		/// </summary>
+		static public int MaxNameLength
+		{
+			get { return _maxLengthName; }
+		}
 
 		/// <summary>
 		/// Checks if a name is between MinNameLength and MaxNameLength.
@@ -20,8 +31,61 @@ namespace WordMaster.DLL
 		/// <returns>True if the name's length is correct, false if not.</returns>
 		static public bool CheckNameLength( string name )
 		{
-			if( name.Length >= _minLengthName && name.Length <= _maxLengthName ) return true;
+			if( name.Trim().Length >= _minLengthName && name.Trim().Length <= _maxLengthName ) return true;
 			else return false;
+		}
+		#endregion
+
+		#region Description's length
+		readonly static int _minDescritpionLength = 0;
+		readonly static int _maxDescriptionLength = 255;
+
+		/// <summary>
+		/// Gets the minimun length for a description.
+		/// </summary>
+		static public int MinDescriptionLength
+		{
+			get { return _minDescritpionLength; }
+		}
+
+		/// <summary>
+		/// Gets the maximum length for a description.
+		/// </summary>
+		static public int MaxDescriptionLength
+		{
+			get { return _maxDescriptionLength; }
+		}
+
+		/// <summary>
+		/// Checks if a long string is between MinDescritptionLength and MaxDescritptionLength.
+		/// </summary>
+		/// <param name="shortString">The long string to check.</param>
+		/// <returns>True if the long string's length is correct, false if not.</returns>
+		static public bool CheckLongStringLength( string longString )
+		{
+			if( longString.Trim().Length >= _minDescritpionLength && longString.Trim().Length <= _maxDescriptionLength ) return true;
+			else return false;
+		}
+		#endregion
+
+		#region Floor's size
+		readonly static int _minFloorSize = 3;
+		readonly static int _maxFloorSize = 100;
+
+		/// <summary>
+		/// Gets the minimum size for a Floor.
+		/// </summary>
+		static public int MinFloorSize
+		{
+			get { return _minFloorSize; }
+		}
+
+		/// <summary>
+		/// Gets the maximum size for a Floor.
+		/// </summary>
+		static public int MaxFloorSize
+		{
+			get { return _maxFloorSize; }
 		}
 
 		/// <summary>
@@ -34,37 +98,6 @@ namespace WordMaster.DLL
 			if( size >= _minFloorSize && size <= _maxFloorSize ) return true;
 			else return false;
 		}
-
-		/// <summary>
-		/// Gets the MinNameLength's value.
-		/// </summary>
-		static public int MinNameLength
-		{
-			get { return _minLengthName; }
-		}
-
-		/// <summary>
-		/// Gets the MaxNameLength's value.
-		/// </summary>
-		static public int MaxNameLength
-		{
-			get { return _maxLengthName; }
-		}
-
-		/// <summary>
-		/// Gets the MinFloorSize's value
-		/// </summary>
-		static public int MinFloorSize
-		{
-			get { return _minFloorSize; }
-		}
-
-		/// <summary>
-		/// Gets the MaxFloorSize's value
-		/// </summary>
-		static public int MaxFloorSize
-		{
-			get { return _maxFloorSize; }
-		}
+		#endregion
 	}
 }

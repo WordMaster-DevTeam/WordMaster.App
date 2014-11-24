@@ -9,126 +9,228 @@ namespace WordMaster.DLL
     [Serializable]
     public class Character
     {
-        readonly string _name;
-        readonly string _description;
-        int _hp;
-        int _xp;
-        int _level;
-        List<string> _book;
-        List<Item> _inventory;
-        int _armor;
-        Dungeon _currentdungeon;
-        Floor _currentfloor;
-        Square _currentsquare;
+		readonly string _name, _description;
+		int _hp, _xp, _level, _armor;
+		readonly List<string> _book;
+		readonly List<Item> _inventory;
+		readonly List<HistoricRecord> _historics;
+		Dungeon _currentDungeon;
+		Floor _currentFloor;
+		Square _currentSquare;
+		Game _currentGame;
 
+		/// <summary>
+		/// Initializes a new instance of <see cref="Character"/> class.
+		/// </summary>
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
+		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
+		/// <param name="hp">Character's health.</param>
+		/// <param name="xp">Character's experience.</param>
+		/// <param name="level">Character's level.</param>
+		/// <param name="armor">Character's armor.</param>
+		/// </summary>
+		public Character( string name, string description, int hp, int xp, int level, int armor)
+		{
+			// Checking parameters
+			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Invalid Character's name length." );
+			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Invalid Character's descritpion length." );
+			if( hp <= 0 ) throw new ArgumentException( "Health Point must be greater than 0." );
+			if( xp < 0 ) throw new ArgumentException( "Expérience point must be greater than 0." );
+			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
+			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
+
+			// Creation Character
+			_name = name;
+			_description = description;
+			_hp = hp;
+			_xp = xp;
+			_level = level;
+			_armor = armor;
+			_book = new List<string>();
+			_inventory = new List<Item>();
+			_historics = new List<HistoricRecord>();
+			_currentDungeon = null;
+			_currentFloor = null;
+			_currentSquare = null;
+			_currentGame = null;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="Character"/> class.
+		/// Create a level 1 Character.
+		/// <param name="name">Name (MinNameLength to MaxNameLength characters) of the Character.</param>
+		/// <param name="description">Description (MinDescritptionLength to MaxDescritptionLength characters) of the Character.</param>
+		internal Character( string name, string description ) : this( name, description, 100, 0, 1, 10 ) { }
+
+		/// <summary>
+		/// Gets the Character's name.
+		/// </summary>
         public string Name
         {
             get { return _name; }
         }
 
-        public string Descritption
+		/// <summary>
+		/// Gets the Character's descriptions.
+		/// </summary>
+        public string Description
         {
             get { return _description; }
         }
 
+		/// <summary>
+		/// Gets or sets the Character's health points (HP).
+		/// </summary>
         public int Health
         {
             get { return _hp; }
             set { _hp = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the Character's experience points.
+		/// </summary>
         public int Experience
         {
             get { return _xp; }
             set { _xp = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the Character's level.
+		/// </summary>
         public int Level
         {
             get { return _level; }
             set { _level = value; }
         }
 
+		/// <summary>
+		/// Gets or sets the Character's armor.
+		/// </summary>
         public int Armor
         {
             get { return _armor; }
             set { _armor = value; }
         }   
      
+		/// <summary>
+		/// Gets the list (read-write) of Item.
+		/// </summary>
         public List<Item> Inventory
         {
             get { return _inventory; }
         }
 
+		/// <summary>
+		/// Gets the list (read-write) of Books.
+		/// </summary>
         public List<string> Book
         {
             get { return _book; }
         }
 
+		/// <summary>
+		/// Gets the list (readonly) of HistoricRecords.
+		/// </summary>
+		public IEnumerable<HistoricRecord> Historics
+		{
+			get { return _historics; }
+		}
+
+		/// <summary>
+		/// Gets or set the current <see cref="Game"/>.
+		/// </summary>
+		public Game Game
+		{
+			get { return _currentGame; }
+			set { _currentGame = value; }
+		}
+
+		/// <summary>
+		/// Gets the current <see cref="Dungeon"/>.
+		/// </summary>
+		public Dungeon Dungeon
+		{
+			get { return _currentDungeon; }
+		}
+
+		/// <summary>
+		/// Gets the current <see cref="Floor"/>.
+		/// </summary>
+		public Floor Floor
+		{
+			get { return _currentFloor; }
+		}
+
+		/// <summary>
+		/// Gets the current <see cref="Square"/>.
+		/// </summary>
+		public Square Square
+		{
+			get { return _currentSquare; }
+		}
+
+		/// <summary>
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
+		/// </summary>
+		/// <param name="dungeon"></param>
+		/// <param name="line"></param>
+		/// <param name="column"></param>
+		internal void EnterDungeon( Dungeon dungeon, Game game, HistoricRecord record )
+		{
+			Floor floor;
+			int line, column;
+				
+			if( dungeon.TryGetFloor( 0, out floor ) )
+				if( floor.TryGetCoordinates( dungeon.Entrance, out line, out column ) )
+				{
+					this._currentDungeon = dungeon;
+					this._currentFloor = floor;
+					this._currentSquare = dungeon.Entrance;
+					this._currentGame = game;
+					this._historics.Add( record );
+				}
+				else throw new ArgumentException("No entrance.", "dungeon");
+			else throw new ArgumentException("Empty Dungeon.", "dungeon");
+		}
+
+		/// <summary>
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null.
+		/// </summary>
+		internal void LeaveDungeon()
+		{
+			_currentDungeon = null;
+			_currentFloor = null;
+			_currentSquare = null;
+			_currentGame = null;
+		}
+
         /// <summary>
-        /// Initialize a new instance of <see cref="Character"/>, base massive builder.
+        /// Moves an instance of <see cref="Character"/> class to a different Square.
         /// </summary>
-        /// <param name="name">Can't be empty or null.</param>
-        /// <param name="descript">CAN be empty but not null.</param>
-        /// <param name="hp">Must be greater than 0.</param>
-        /// <param name="xp">Must be equal or greater than 0.</param>
-        /// <param name="lvl">Must be greater than 0.</param>
-        /// <param name="invent">Can't be null.</param>
-        /// <param name="armor">Must be greater than 0.</param>
-        /// <param name="posX">Can't be null.</param>
-        /// <param name="posY">Can't be null.</param>
-        public Character(string name, string descript, int hp, int xp, int lvl,List<string> book, List<Item> invent, int armor, Dungeon currentdungeon, Floor currentfloor, Square currentsquare)
+        /// <param name="line">Can't be null.</param>
+        /// <param name="column">Can't be null.</param>
+		public bool MoveTo( int line, int column )
         {
-            if (name == string.Empty || name == null || name== " " ) throw new ArgumentException("Name can't be empty or null.");
-            if ( NoMagicHelper.CheckNameLength( name ) != true ) throw new ArgumentException( "Invalid name length" );
-            if (descript == null) throw new ArgumentException("Description can't be null");
-            if (hp <= 0) throw new ArgumentException("Health Point must be greater than 0.");
-            if (xp < 0) throw new ArgumentException("Expérience point can't be negative.");
-            if (lvl <= 0) throw new ArgumentException("Level must be greater than 0.");
-            if (invent == null) throw new ArgumentException("Inventory can't be null.");
-            if (armor <= 0) throw new ArgumentException("Armor must be greater than 0.");      
-
-            _name = name;
-            _description = descript;
-            _hp = hp;
-            _xp = xp;
-            _level = lvl;
-            _book = book;
-            _inventory = invent;
-            _armor = armor;            
-            _currentdungeon = currentdungeon;
-            _currentfloor = currentfloor;
-            _currentsquare = currentsquare;
-
+			if( _currentFloor.CheckBounds( line, column ) && _currentFloor.CheckHoldable( line, column ) )
+			{
+				_currentSquare = _currentFloor.Layout[line, column];
+				return true;
+			}
+			else return false;
         }
 
-        /// <summary>
-        /// Initialize a new instance of <see cref="Character"/> class, create a level 1 character.
-        /// </summary>
-        /// <param name="name">Can't be empty or null.</param>
-        /// <param name="descript">CAN be empty but not null.</param>
-        /// <param name="invent">Can't be null.</param>
-        /// <param name="posX">Can't be null.</param>
-        /// <param name="posY">Can't be null.</param>
-        public Character( string name, string descript, Dungeon currentdungeon, Floor currentfloor, Square currentsquare )
-            : this( name, descript, 100, 0, 1, new List<string>( ), new List<Item>( ), 10, currentdungeon,currentfloor,currentsquare )
-        {
-        }
+		public bool MoveTo( Square square )
+		{
+			int line, column;
+
+			if( _currentFloor.TryGetCoordinates( square, out line, out column ) ) return MoveTo( line, column );
+			else return false;
+		}
 
         /// <summary>
-        /// Move <see cref="Character"/> to a different square.
-        /// </summary>
-        /// <param name="posX">Can't be null.</param>
-        /// <param name="posY">Can't be null.</param>
-        public void MoveTo( int posX, int posY )
-        {
-            if ( _currentfloor.Layout[ posX, posY ].Holdable != true ) throw new InvalidOperationException( "Moving to a non-holdable Square." );
-
-            _currentsquare = _currentfloor.Layout[ posX, posY ];
-        }   
-
-        /// <summary>
-        /// Use an item from the inventory.
+        /// Uses an Item from the inventory.
         /// </summary>
         public void UseItem()
         {
@@ -136,7 +238,7 @@ namespace WordMaster.DLL
         }
 
         /// <summary>
-        /// Make the Character attack.
+        /// Makes the Character attack.
         /// </summary>
         public void Attack()
         {

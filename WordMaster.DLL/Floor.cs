@@ -6,28 +6,20 @@ namespace WordMaster.DLL
 	{
 		readonly Dungeon _dungeon;
 		int _level;
-		readonly string _name;
-		readonly string _description;
+		string _name, _description;
 		Square[,] _layout;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Floor"/> class.
 		/// </summary>
 		/// <param name="dungeon">Dungeon's reference, all Floors must be in a <see cref="Dungeon"/>.</param>
-		/// <param name="level"></param>
-		/// <param name="name">Floor's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
-		/// <param name="description">Floor's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
-		/// <param name="numberOfLines">Floor's number of line in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
-		/// <param name="numberOfColumns">Floor's number of column in the layout, <see cref="NoMagicHelper.MinFloorSize"/> to <see cref="NoMagicHelper.MaxFloorSize"/> size.</param>
+		/// <param name="level">Floor's position, must be superior or equal to zero.</param>
+		/// <param name="name">Floor's name, must be unique in this Dungeon.</param>
+		/// <param name="description">Floor's description.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout, each Floor must have at least two Squares.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout, each Floor must have at least two Squares.</param>
 		internal Floor( Dungeon dungeon, int level, string name, string description, int numberOfLines, int numberOfColumns )
 		{
-			// Checking parameters
-			if( !NoMagicHelper.CheckNameLength( name ) ) throw new ArgumentException( "Floor's name must be a string of " + NoMagicHelper.MinNameLength + " to " + NoMagicHelper.MaxNameLength + " characters.", "name" );
-			if( !NoMagicHelper.CheckLongStringLength( description ) ) throw new ArgumentException( "Floor's description must be a string of " + NoMagicHelper.MinDescriptionLength + " to " + NoMagicHelper.MaxDescriptionLength + " characters.", "description" );
-			if( !NoMagicHelper.CheckFloorSize( numberOfLines ) ) throw new ArgumentException( "Floor's length must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "numberOfLines" );
-			if( !NoMagicHelper.CheckFloorSize( numberOfColumns ) ) throw new ArgumentException( "Floor's width must be included in " + NoMagicHelper.MinFloorSize + " to " + NoMagicHelper.MaxFloorSize + ".", "numberOfColumns" );
-
-			// Creating Floor
 			_dungeon = dungeon;
 			_level = level;
 			_level = level;
@@ -59,6 +51,7 @@ namespace WordMaster.DLL
 		public string Name
 		{
 			get { return _name; }
+			internal set { _name = value; }
 		}
 
 		/// <summary>
@@ -67,6 +60,7 @@ namespace WordMaster.DLL
 		public string Description
 		{
 			get { return _description; }
+			set { _description = value; }
 		}
 
 		/// <summary>
@@ -95,50 +89,162 @@ namespace WordMaster.DLL
 
 		/// <summary>
 		/// Sets or resets an instance of <see cref="Square"/> class in the layout of this instance of <see cref="Floor"/> class.
+		/// WARNING: Dungeon must be editable, line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
 		/// </summary>
 		/// <param name="line">Square's horizontal coordinate.</param>
 		/// <param name="column">Square's vertical coordinate.</param>
-		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
-		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
-		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
-		/// <param name="exit">Square's teleport to Square, optional and null by default.</param>
-		/// <return>New Square's reference.</return>
-		public Square SetSquare(int line, int column, string name, string description = "", bool holdable = false, Square exit = null)
+		/// <param name="name">Square's name.</param>
+		/// <param name="description">Square's description.</param>
+		/// <param name="holdable">Square's Holdable state.</param>
+		/// <param name="teleportTo">Square's teleport to Square.</param>
+		/// <returns>New Square's reference.</returns>
+		public Square SetSquare(int line, int column, string name, string description, bool holdable, Square teleportTo)
 		{
-			// Checking parameters
-			if( line < 0 || line >= _layout.GetLength( 0 ) ) throw new IndexOutOfRangeException("Horizontal parameter is out of range");
-			if( column < 0 || column >= _layout.GetLength( 1 ) ) throw new IndexOutOfRangeException("Vertical parameter is out of range");
+			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
+			if( !CheckBounds( line, column ) ) throw new IndexOutOfRangeException( "Coordinates out of range." );
 
-			// Adding Square in Floor
-			_layout[line, column] = new Square( this, line, column, name, description, holdable, exit );
+			_layout[line, column] = new Square( this, line, column, name, description, holdable, teleportTo );
 			return _layout[line, column];
 		}
 
 		/// <summary>
-		/// Sets all <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
+		/// Sets or resets an instance of <see cref="Square"/> class in the layout of this instance of <see cref="Floor"/> class.
+		/// NOTE: The Square created will have an empty description, will not be holdable and will not teleport to another Square.
+		/// WARNING: Dungeon must be editable, line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
 		/// </summary>
-		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
-		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
-		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="name">Square's name.</param>
+		/// <returns>New Square's reference.</returns>
+		public Square SetSquare( int line, int column, string name )
+		{
+			return SetSquare( line, column, name, "", false, null );
+		}
+
+		/// <summary>
+		/// Sets or resets an instance of <see cref="Square"/> class in the layout of this instance of <see cref="Floor"/> class.
+		/// </summary>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="name">Square's name.</param>
+		/// <param name="description">Square's description.</param>
+		/// <param name="holdable">Square's Holdable state.</param>
+		/// <param name="teleportTo">Square's teleport to Square.</param>
+		/// <param name="square">Square's reference to recover.</param>
+		/// <returns>If the Squares have been set.</returns>
+		public bool TrySetSquare(int line, int column, string name, string description, bool holdable, Square teleportTo, out Square square)
+		{
+			try
+			{
+				square = SetSquare(line, column, name, description, holdable, teleportTo);
+				return true;
+			}
+			catch
+			{
+				square = null;
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Sets or resets an instance of <see cref="Square"/> class in the layout of this instance of <see cref="Floor"/> class.
+		/// NOTE: The Square created will have an empty description, will not be holdable and will not teleport to another Square.
+		/// </summary>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="name">Square's name.</param>
+		/// <param name="square">Square's reference to recover.</param>
+		/// <returns>If the Squares have been set.</returns>
+		public bool TrySetSquare( int line, int column, string name, out Square square )
+		{
+			return TrySetSquare( line, column, name, "", false, null, out square );
+		}
+
+		/// <summary>
+		/// Sets all <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
+		/// WARNING: Dungeon must be editable.
+		/// </summary>
+		/// <param name="name">Squares' name.</param>
+		/// <param name="description">Squares' description, optional and empty by default.</param>
+		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
 		public void SetAllSquares( string name, string description = "", bool holdable = false )
 		{
+			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
+
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
 					_layout[i, j] = new Square( this, i, j, name, description, holdable, null );
 		}
 
 		/// <summary>
+		/// Sets all <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
+		/// </summary>
+		/// <param name="name">Squares' name.</param>
+		/// <param name="description">Squares' description, optional and empty by default.</param>
+		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
+		/// <returns>If the Squares have been set.</returns>
+		public bool TrySetAllSquares( string name, string description = "", bool holdable = false )
+		{
+			try
+			{
+				SetAllSquares( name, description, holdable );
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Sets all uninitialized <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
+		/// Warning: Dungeon must be editable.
+		/// </summary>
+		/// <param name="name">Squares' name.</param>
+		/// <param name="description">Squares' description, optional and empty by default.</param>
+		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
+		public void SetAllUninitializedSquares(string name, string description = "", bool holdable = false) 
+		{
+			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
+
+			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
+						for( int j = 0; j < _layout.GetLength( 1 ); j++ )
+							if( !CheckSquare( i, j ) )
+								_layout[i, j] = new Square( this, i, j, name, description = "", holdable, null );
+		}
+
+		/// <summary>
 		/// Sets all uninitialized <see cref="Square"/>s in the layout of this instance of <see cref="Floor"/> class.
 		/// </summary>
-		/// <param name="name">Square's name, <see cref="NoMagicHelper.MinNameLength"/> to <see cref="NoMagicHelper.MaxNameLength"/> characters.</param>
-		/// <param name="description">Square's description, <see cref="NoMagicHelper.MinDescriptionLength"/> to <see cref="NoMagicHelper.MaxDescriptionLength"/> characters.</param>
-		/// <param name="holdable">Square's Holdable state, optional and false by default.</param>
-		public void SetAllUninitializedSquares( string name, string description = "", bool holdable = false )
+		/// <param name="name">Squares' name.</param>
+		/// <param name="description">Squares' description, optional and empty by default..</param>
+		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
+		/// <returns>If the Squares have been set.</returns>
+		public bool TrySetAllUninitializedSquares( string name, string description = "", bool holdable = false )
 		{
-			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-					if( !CheckSquare( i, j ) )
-						_layout[i, j] = new Square( this, i, j, name, description = "", holdable, null );
+			try
+			{
+				SetAllUninitializedSquares( name, description, holdable );
+				return true;
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		/// <summary>
+		/// Gets the reference of the instance of <see cref="Square"/> class in this instance of <see cref="Floor"/> class at the specified coordinates.
+		/// WARNING: Coordinates must be inside the layout.
+		/// </summary>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <returns>Square's reference.</returns>
+		public Square GetSquare( int line, int column )
+		{
+			if( !CheckBounds( line, column ) ) throw new IndexOutOfRangeException( "Coordinates out of range." );
+
+			return _layout[line, column];
 		}
 
 		/// <summary>
@@ -150,12 +256,12 @@ namespace WordMaster.DLL
 		/// <returns>If the Square's reference have been found.</returns>
 		public bool TryGetSquare( int line, int column, out Square square )
 		{
-			if( _layout[line, column] != null )
+			try
 			{
-				square = _layout[line, column];
+				square = GetSquare( line, column );
 				return true;
 			}
-			else
+			catch
 			{
 				square = null;
 				return false;
@@ -171,14 +277,22 @@ namespace WordMaster.DLL
 		/// <returns>If the Square's coordinates have been found.</returns>
 		public bool TryGetCoordinates( Square square, out int line, out int column )
 		{
-			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-					if( _layout[i, j].Equals( square ) )
+			if( square != null )
+			{
+				for( int i = 0; i < _layout.GetLength( 0 ); i++ )
+				{
+					for( int j = 0; j < _layout.GetLength( 1 ); j++ )
 					{
-						line = i;
-						column = j;
-						return true;
+						if( _layout[i, j].Equals( square ) )
+						{
+							line = i;
+							column = j;
+							return true;
+						}
 					}
+				}
+			}
+
 			line = -1;
 			column = -1;
 			return false;
@@ -187,38 +301,15 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Checks if a coordinates can position something inside this instance of <see cref="Floor"/> class' layout.
 		/// </summary>
-		/// <param name="line">Square's horizontal coordinate to recover.</param>
-		/// <param name="column">Square's vertical coordinate to recover.</param>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
 		/// <returns>If the coordinates are corrects.</returns>
 		public bool CheckBounds( int line, int column )
 		{
-			if( line > 0 && line <= _layout.GetLength( 0 ) && column > 0 && column <= _layout.GetLength( 1 ) ) return true;
-			else return false;
-		}
-
-		/// <summary>
-		/// Checks if an instance of <see cref="Square"/> class exist and is holdable using coordinates.
-		/// </summary>
-		/// <param name="line">Square's horizontal coordinate to recover.</param>
-		/// <param name="column">Square's vertical coordinate to recover.</param>
-		/// <returns>If the Square have been found and is holdable.</returns>
-		public bool CheckHoldable( int line, int column )
-		{
-			Square square;
-
-			if( TryGetSquare( line, column, out square ) ) return (CheckHoldable( square ));
-			else return false;
-		}
-
-		/// <summary>
-		/// Checks if an existing instance of <see cref="Square"/> class is holdable using his reference.
-		/// </summary>
-		/// <param name="square">Square's reference.</param>
-		/// <returns>If the Square is holdable.</returns>
-		public bool CheckHoldable( Square square )
-		{
-			if( square.Holdable ) return true;
-			else return false;
+			if( line >= 0 && line < _layout.GetLength( 0 ) && column >= 0 && column < _layout.GetLength( 1 ) )
+				return true;
+			else
+				return false;
 		}
 
 		/// <summary>
@@ -229,15 +320,17 @@ namespace WordMaster.DLL
 		/// <returns>If the Square is initialized.</returns>
 		public bool CheckSquare( int line, int column )
 		{
-			if( _layout[line, column] != null ) return true;
-			else return false;
+			if( CheckBounds( line, column ) )
+				if( _layout[line, column] != null)
+					return true;
+			return false;
 		}
 
 		/// <summary>
 		/// Checks if all instances of <see cref="Square"/>s classes of this instance of <see cref="Floor"/> class' layout are initialized.
 		/// </summary>
 		/// <returns>If all Squares are initialized.</returns>
-		public bool CheckAllSquare()
+		public bool CheckAllSquares()
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )

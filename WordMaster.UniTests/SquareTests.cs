@@ -11,71 +11,87 @@ namespace WordMaster.UniTests
 		public void Gets_all_properties_of_a_Square()
 		{
 			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, squareName, squareDescription;
+			GlobalContext context = new GlobalContext();
 			Dungeon dungeon;
 			Floor floor;
 			Square square;
+			string dungeonName = "a dungeon";
+			string floorName = "a floor";
+			string squareName = "a square";
+			string squareDescription = "a description for a square";
 
 			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = squareName = squareDescription = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-				squareName += "c";
-			}
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ )
-			{
-				squareDescription += "d";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 0, 0, squareName, squareDescription );
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			square = floor.SetSquare( 0, 0, squareName, squareDescription, true, null );
 
 			// Assert
+			Assert.AreSame( square, floor.GetSquare( 0, 0 ) );
 			Assert.AreEqual( square.Name, squareName );
 			Assert.AreEqual( square.Description, squareDescription );
 			Assert.AreEqual( square.Holdable, true );
+			Assert.AreEqual( square.TeleportTo, null );
 		}
 
 		[Test]
-		public void Resets_and_gets_properties_of_a_Square()
+		public void Resets_and_checks_properties_of_a_Square()
 		{
 			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, squareName1, squareName2, squareDescription1, squareDescription2;
+			GlobalContext context = new GlobalContext();
 			Dungeon dungeon;
 			Floor floor;
-			Square square1, square2;
+			Square square;
+			string dungeonName = "a dungeon";
+			string floorName = "a floor";
+			string squareName1 = "a square";
+			string squareName2 = "another square";
+			string squareDescription1 = "a description for a square";
+			string squareDescription2 = "another description for a square";
 
 			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = squareName1 = squareName2 = squareDescription1 = squareDescription2 = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-				squareName1 += "1";
-				squareName2 += "2";
-			}
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ )
-			{
-				squareDescription2 += "1";
-				squareDescription2 += "2";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square1 = floor.SetSquare( 0, 0, squareName1, squareDescription1, true );
-			square2 = floor.SetSquare( 0, 1, squareName2, squareDescription2, false );
-			square2.Holdable = true;
-			square2.TeleportTo = square1;
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			square = floor.SetSquare( 0, 0, squareName1, squareDescription1, false, null );
+			square.Name = squareName2;
+			square.Description = squareDescription2;
+			square.Holdable = true;
+			square.TeleportTo = square;
 
 			// Assert
-			Assert.AreEqual( square2.Holdable, true );
-			Assert.AreEqual( square2.TeleportTo, square1 );
-			Assert.AreEqual( square1.TeleportTo, null );
+			Assert.AreEqual( square.Name, squareName2 );
+			Assert.AreEqual( square.Description, squareDescription2 );
+			Assert.AreEqual( square.Holdable, true );
+			Assert.AreEqual( square.TeleportTo, square );
+		}
+
+		[Test]
+		public void Checks_holdable_property_relation_with_teleport_to_property()
+		{
+			// Arrange
+			GlobalContext context = new GlobalContext();
+			Dungeon dungeon;
+			Floor floor;
+			Square squareA, squareB, squareC;
+			string dungeonName = "a dungeon";
+			string floorName = "a floor";
+			string squareName = "a square";
+
+			// Act
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			squareA = floor.SetSquare( 0, 0, squareName, "", false, null );
+			squareB = floor.SetSquare( 0, 1, squareName, "", false, squareA );
+			squareC = floor.SetSquare( 0, 2, squareName, "", true, squareB );
+			squareA.TeleportTo = squareB;
+			squareC.Holdable = false;
+
+			// Assert
+			Assert.AreSame( squareA.TeleportTo, squareB );
+			Assert.AreSame( squareB.TeleportTo, squareA );
+			Assert.AreSame( squareC.TeleportTo, null );
+			Assert.AreEqual( squareA.Holdable, true );
+			Assert.AreEqual( squareB.Holdable, true );
+			Assert.AreEqual( squareC.Holdable, false );
 		}
 	}
 }

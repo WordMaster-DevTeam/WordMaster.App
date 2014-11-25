@@ -37,7 +37,7 @@ namespace WordMaster.DLL
 		#endregion
 
 		#region Description's length
-		readonly static int _minDescritpionLength = 0;
+		readonly static int _minDescriptionLength = 0;
 		readonly static int _maxDescriptionLength = 255;
 
 		/// <summary>
@@ -45,7 +45,7 @@ namespace WordMaster.DLL
 		/// </summary>
 		static public int MinDescriptionLength
 		{
-			get { return _minDescritpionLength; }
+			get { return _minDescriptionLength; }
 		}
 
 		/// <summary>
@@ -59,11 +59,11 @@ namespace WordMaster.DLL
 		/// <summary>
 		/// Checks if a long string is between MinDescritptionLength and MaxDescritptionLength.
 		/// </summary>
-		/// <param name="shortString">The long string to check.</param>
+		/// <param name="description">The long string to check.</param>
 		/// <returns>True if the long string's length is correct, false if not.</returns>
-		static public bool CheckLongStringLength( string longString )
+		static public bool CheckDescriptionLength( string description )
 		{
-			if( longString.Trim().Length >= _minDescritpionLength && longString.Trim().Length <= _maxDescriptionLength ) return true;
+			if( description.Trim().Length >= _minDescriptionLength && description.Trim().Length <= _maxDescriptionLength ) return true;
 			else return false;
 		}
 		#endregion

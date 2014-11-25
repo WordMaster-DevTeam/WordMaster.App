@@ -11,121 +11,69 @@ namespace WordMaster.UniTests
 		public void Gets_all_properties_of_a_Floor()
 		{
 			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, floorDescription;
+			GlobalContext context = new GlobalContext();
 			Dungeon dungeon;
 			Floor floor;
+			string dungeonName = "a dungeon";
+			string floorName = "a floor";
+			string floorDescription = "a description for a floor";
 
 			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = floorDescription = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-			}
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ )
-			{
-				floorDescription += "c";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, floorDescription, NoMagicHelper.MinFloorSize, NoMagicHelper.MaxFloorSize );
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, floorDescription, 3, 3 );
 
 			//Assert
 			Assert.AreEqual( floor.Name, floorName );
 			Assert.AreEqual( floor.Description, floorDescription );
-			Assert.AreEqual( floor.NumberOfLines, NoMagicHelper.MinFloorSize );
-			Assert.AreEqual( floor.NumberOfColumns, NoMagicHelper.MaxFloorSize );
+			Assert.AreEqual( floor.NumberOfLines, 3 );
+			Assert.AreEqual( floor.NumberOfColumns, 3);
 		}
 
 		[Test]
 		public void Initializes_all_Squares_and_checks_initialisation()
 		{
 			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, squaresName, squaresDescription;
+			GlobalContext context = new GlobalContext();
 			Dungeon dungeon;
 			Floor floor;
+			string dungeonName = "a dungeon";
+			string floorName= "a floor";
+			string squaresName = "a square";
+			string squaresDescription = "a description for a square";
 
 			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = squaresName = squaresDescription = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-				squaresName += "c";
-			}
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ )
-			{
-				squaresDescription += "d";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			floor.SetAllSquares(squaresName, squaresDescription, true);
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			floor.TrySetAllSquares(squaresName, squaresDescription, true);
 
 			// Assert
-			Assert.IsTrue( floor.CheckAllSquare() );
-		}
-
-		[Test]
-		public void Gets_a_Square_reference()
-		{
-			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, squareName;
-			Dungeon dungeon;
-			Floor floor;
-			Square square, squareCheck;
-
-			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = squareName = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-				squareName += "c";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 1, 1 , squareName );
-			
-			// Assert
-			if( floor.TryGetSquare( 1, 1, out squareCheck ) ) Assert.AreSame( square, squareCheck );
-			else throw new Exception( "Can not recover Square." );
+			Assert.AreNotSame( floor.GetSquare( 0, 0 ), null );
+			Assert.IsTrue( floor.CheckAllSquares() );
 		}
 
 		[Test]
 		public void Initializes_all_uninitializes_Squares_and_checks_initialisation()
 		{
 			// Arrange
-			GlobalContext context;
-			string dungeonName, floorName, squaresName, anotherSquareName;
+			GlobalContext context = new GlobalContext();
 			Dungeon dungeon;
 			Floor floor;
-			Square square, anotherSquare;
+			Square square;
+			string dungeonName = "a dungeon";
+			string floorName = " a floor";
+			string squaresName = "a square";
+			string aSquareName = "another square";
 
 			// Act
-			context = new GlobalContext();
-			dungeonName = floorName = squaresName = anotherSquareName = "";
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ )
-			{
-				dungeonName += "a";
-				floorName += "b";
-				squaresName += "1";
-				anotherSquareName += "2";
-			}
-			dungeon = context.AddDungeon( dungeonName );
-			floor = dungeon.AddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize );
-			square = floor.SetSquare( 1, 1, anotherSquareName );
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			square = floor.SetSquare( 1, 1, aSquareName );
 			floor.SetAllUninitializedSquares( squaresName );
 
 			// Assert
-			Assert.IsTrue( floor.CheckAllSquare() );
-			Assert.AreEqual( square.Name, anotherSquareName );
-			if( floor.TryGetSquare( 0, 0, out anotherSquare ) ) Assert.AreNotEqual( square.Name, anotherSquare.Name );
-			else throw new Exception( "Cannot recover Square's reference" );
+			Assert.IsTrue( floor.CheckAllSquares() );
+			Assert.AreEqual( square.Name, aSquareName );
+			Assert.AreNotEqual( square.Name, floor.GetSquare( 0, 0 ).Name );
 		}
 	}
 }

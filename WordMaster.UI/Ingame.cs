@@ -36,5 +36,20 @@ namespace WordMaster.UI
         {
 
         }
+
+		private void Lifelbl_Click( object sender, EventArgs e )
+		{
+
+		}
+
+		private void panel1_Paint( object sender, PaintEventArgs e )
+		{
+
+		}
+
+		private void Namelbl_Click( object sender, EventArgs e )
+		{
+
+		}
     }
 }

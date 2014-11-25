@@ -13,43 +13,51 @@ namespace WordMaster.UI
 {
     public partial class Ingame : Form
     {
-        GlobalContext context = new GlobalContext( );      
-        Character character;
-        Dungeon dungeon;
+        GlobalContext _context = new GlobalContext( );      
+        Character _character;
+        Dungeon _dungeon;
+        Game _game;
 
         public Ingame()
         {
             InitializeComponent( );
-
         }
 
+        private void Ingame_Load( object sender, EventArgs e )
+        {
+            _character = _context.AddDefaultCharacter("Olivier");
+            _dungeon = _context.AddDefaultDungeon( "The Cage" );
+            _game = _context.StartNewGame(_character, _dungeon);
+
+            // Dungeon panel
+            DungeonLabel.Text += "  " + _dungeon.Name;
+            FloorLabel.Text += "  " + _character.Floor.Name;
+            SquareLabel.Text += "  " + _character.Square.Name;
+
+            // Character panel
+            NameLabel.Text +=  "  " + _character.Name;
+            LifeLabel.Text += "  " + _character.Health;
+            LeveLabel.Text += "  " + _character.Level;
+            ArmorLabel.Text += "  " + _character.Armor;
+            DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + _character.Description;   
+        }
+       
+        private void QuitTheGame_Click( object sender, EventArgs e )
+        {
+            Application.Exit( );
+        }
+
+        private void GoToLeftButton_Click( object sender, EventArgs e )
+        {
+           
+        }
+        #region Empty methods
         private void label3_Click( object sender, EventArgs e )
         {
 
         }
 
-        private void Ingame_Load( object sender, EventArgs e )
-        {
-            character = context.AddDefaultCharacter("Olivier");
-            dungeon = context.AddDefaultDungeon( "The Cage" );
-            context.StartNewGame(character, dungeon);
-
-            // Dungeon panel
-            DungeonLabel.Text += "  " + dungeon.Name;
-            FloorLabel.Text += "  " + character.Floor.Name;
-            SquareLabel.Text += "  " + character.Square.Name;
-
-            // Character panel
-            NameLabel.Text +=  "  " + character.Name;
-            LifeLabel.Text += "  " + character.Health;
-            LeveLabel.Text += "  " + character.Level;
-            ArmorLabel.Text += "  " + character.Armor;
-            DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + character.Description;
-            
-        }
-
-        #region Empty methods
-        private void Profilpicturebox_Click( object sender, EventArgs e )
+       private void Profilpicturebox_Click( object sender, EventArgs e )
         {
             
         }
@@ -73,18 +81,6 @@ namespace WordMaster.UI
 		{
 
 		}
-        #endregion
-
-        private void QuitTheGame_Click( object sender, EventArgs e )
-        {
-            Application.Exit( );
-        }
-
-        private void GoToLeftButton_Click( object sender, EventArgs e )
-        {
-           
-        }
-
         private void DescriptionLabel_Click( object sender, EventArgs e )
         {
 
@@ -94,5 +90,7 @@ namespace WordMaster.UI
         {
 
         }
+        #endregion
+        
     }
 }

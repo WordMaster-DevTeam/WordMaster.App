@@ -11,27 +11,15 @@ using WordMaster.DLL;
 
 namespace WordMaster.UI
 {
-    public partial class CharacterResume : UserControl
+    public partial class FloorView : UserControl
     {
-        public string name { get; set; }
-
-        public int level { get; set; }
-
-        public int health { get; set; }
-
-        public string dungeon { get; set; }
-
-        public CharacterResume()
+        public FloorView()
         {
             InitializeComponent( );
         }
 
         protected override void OnLoad( EventArgs e )
         {
-            NameLbl.Text += name;
-            LevelLbl.Text += level;
-            HealthLbl.Text += health;
-            DungeonLbl.Text += dungeon;
 
         }
     }

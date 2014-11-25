@@ -47,11 +47,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CharacterResume.cs">
+    <Compile Include="FloorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CharacterResume.Designer.cs">
-      <DependentUpon>CharacterResume.cs</DependentUpon>
+    <Compile Include="FloorView.Designer.cs">
+      <DependentUpon>FloorView.cs</DependentUpon>
     </Compile>
     <Compile Include="CreateCharacter.cs">
       <SubType>Form</SubType>
@@ -73,8 +73,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CharacterResume.resx">
-      <DependentUpon>CharacterResume.cs</DependentUpon>
+    <EmbeddedResource Include="FloorView.resx">
+      <DependentUpon>FloorView.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="CreateCharacter.resx">
       <DependentUpon>CreateCharacter.cs</DependentUpon>

@@ -30,22 +30,21 @@ namespace WordMaster.UI
 
         private void Ingame_Load( object sender, EventArgs e )
         {
-            context.AddCharacter( "Default Character", "Some description here" );
-            context.AddDungeon( "Default Dungeon" );
+            character = context.AddDefaultCharacter("Olivier");
+            dungeon = context.AddDefaultDungeon( "The Cage" );
+            context.StartNewGame(character, dungeon);
 
-            string error="";
-            
-            if(context.TryGetCharacter("Default Character", out character))
-            {                
-                NameLabel.Text = NameLabel.Text + " \t " + character.Name;
-                LifeLabel.Text = LifeLabel.Text + " \t " + character.Health;
-                LeveLabel.Text = LeveLabel.Text + " \t " + character.Level;
-                DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + character.Description;
-            }
-            else
-            {
-                error = error + "The Character cannot be retrieved.";
-            }
+            // Dungeon panel
+            DungeonLabel.Text += "  " + dungeon.Name;
+            FloorLabel.Text += "  " + character.Floor.Name;
+            SquareLabel.Text += "  " + character.Square.Name;
+
+            // Character panel
+            NameLabel.Text +=  "  " + character.Name;
+            LifeLabel.Text += "  " + character.Health;
+            LeveLabel.Text += "  " + character.Level;
+            ArmorLabel.Text += "  " + character.Armor;
+            DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + character.Description;
             
         }
 
@@ -84,6 +83,16 @@ namespace WordMaster.UI
         private void GoToLeftButton_Click( object sender, EventArgs e )
         {
            
+        }
+
+        private void DescriptionLabel_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void FloorLabel_Click( object sender, EventArgs e )
+        {
+
         }
     }
 }

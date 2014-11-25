@@ -23,7 +23,7 @@ namespace WordMaster.UI
             base.OnLoad( e );
             GlobalContext context = new GlobalContext( );
 
-            context.AddCharacter( "default character" );
+            context.AddCharacter( "default character", "" );
 
             //DataGridView initialisation
 

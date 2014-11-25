@@ -41,8 +41,18 @@
             this.GoToLeftButton = new System.Windows.Forms.Button();
             this.LifeLabel = new System.Windows.Forms.Label();
             this.NameLabel = new System.Windows.Forms.Label();
+            this.ArmorLabel = new System.Windows.Forms.Label();
+            this.DungeonLabel = new System.Windows.Forms.Label();
+            this.FloorLabel = new System.Windows.Forms.Label();
+            this.SquareLabel = new System.Windows.Forms.Label();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.panel2 = new System.Windows.Forms.Panel();
+            this.panel3 = new System.Windows.Forms.Panel();
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).BeginInit();
             this.UserControls.SuspendLayout();
+            this.panel1.SuspendLayout();
+            this.panel2.SuspendLayout();
+            this.panel3.SuspendLayout();
             this.SuspendLayout();
             // 
             // GameView
@@ -52,7 +62,7 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.GameView.Location = new System.Drawing.Point(12, 12);
             this.GameView.Name = "GameView";
-            this.GameView.Size = new System.Drawing.Size(560, 542);
+            this.GameView.Size = new System.Drawing.Size(571, 542);
             this.GameView.TabIndex = 0;
             this.GameView.TabStop = false;
             // 
@@ -61,19 +71,16 @@
             this.UserControls.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.UserControls.BackColor = System.Drawing.SystemColors.ControlDarkDark;
+            this.UserControls.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.UserControls.Controls.Add(this.panel3);
+            this.UserControls.Controls.Add(this.panel2);
+            this.UserControls.Controls.Add(this.panel1);
             this.UserControls.Controls.Add(this.NumVerLabel);
-            this.UserControls.Controls.Add(this.GoToUpButton);
             this.UserControls.Controls.Add(this.QuitTheGame);
-            this.UserControls.Controls.Add(this.DescriptionLabel);
-            this.UserControls.Controls.Add(this.GoToRightButton);
-            this.UserControls.Controls.Add(this.GoToDownButton);
-            this.UserControls.Controls.Add(this.LeveLabel);
-            this.UserControls.Controls.Add(this.GoToLeftButton);
-            this.UserControls.Controls.Add(this.LifeLabel);
-            this.UserControls.Controls.Add(this.NameLabel);
-            this.UserControls.Location = new System.Drawing.Point(578, 12);
+            this.UserControls.Location = new System.Drawing.Point(589, 12);
             this.UserControls.Name = "UserControls";
-            this.UserControls.Size = new System.Drawing.Size(315, 542);
+            this.UserControls.Size = new System.Drawing.Size(304, 542);
             this.UserControls.TabIndex = 1;
             this.UserControls.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -81,7 +88,7 @@
             // 
             this.NumVerLabel.AutoSize = true;
             this.NumVerLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Italic, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NumVerLabel.Location = new System.Drawing.Point(229, 526);
+            this.NumVerLabel.Location = new System.Drawing.Point(216, 524);
             this.NumVerLabel.Name = "NumVerLabel";
             this.NumVerLabel.Size = new System.Drawing.Size(83, 13);
             this.NumVerLabel.TabIndex = 5;
@@ -90,7 +97,7 @@
             // 
             // GoToUpButton
             // 
-            this.GoToUpButton.Location = new System.Drawing.Point(112, 363);
+            this.GoToUpButton.Location = new System.Drawing.Point(96, 3);
             this.GoToUpButton.Name = "GoToUpButton";
             this.GoToUpButton.Size = new System.Drawing.Size(87, 34);
             this.GoToUpButton.TabIndex = 13;
@@ -102,9 +109,9 @@
             this.QuitTheGame.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.QuitTheGame.Location = new System.Drawing.Point(10, 508);
+            this.QuitTheGame.Location = new System.Drawing.Point(10, 509);
             this.QuitTheGame.Name = "QuitTheGame";
-            this.QuitTheGame.Size = new System.Drawing.Size(98, 31);
+            this.QuitTheGame.Size = new System.Drawing.Size(85, 29);
             this.QuitTheGame.TabIndex = 7;
             this.QuitTheGame.Text = "Quit the game";
             this.QuitTheGame.UseVisualStyleBackColor = true;
@@ -114,15 +121,16 @@
             // 
             this.DescriptionLabel.AutoSize = true;
             this.DescriptionLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.DescriptionLabel.Location = new System.Drawing.Point(11, 83);
+            this.DescriptionLabel.Location = new System.Drawing.Point(15, 107);
             this.DescriptionLabel.Name = "DescriptionLabel";
             this.DescriptionLabel.Size = new System.Drawing.Size(71, 13);
             this.DescriptionLabel.TabIndex = 4;
             this.DescriptionLabel.Text = "Description";
+            this.DescriptionLabel.Click += new System.EventHandler(this.DescriptionLabel_Click);
             // 
             // GoToRightButton
             // 
-            this.GoToRightButton.Location = new System.Drawing.Point(205, 381);
+            this.GoToRightButton.Location = new System.Drawing.Point(189, 21);
             this.GoToRightButton.Name = "GoToRightButton";
             this.GoToRightButton.Size = new System.Drawing.Size(87, 34);
             this.GoToRightButton.TabIndex = 12;
@@ -131,7 +139,7 @@
             // 
             // GoToDownButton
             // 
-            this.GoToDownButton.Location = new System.Drawing.Point(112, 403);
+            this.GoToDownButton.Location = new System.Drawing.Point(96, 43);
             this.GoToDownButton.Name = "GoToDownButton";
             this.GoToDownButton.Size = new System.Drawing.Size(87, 34);
             this.GoToDownButton.TabIndex = 11;
@@ -142,7 +150,7 @@
             // 
             this.LeveLabel.AutoSize = true;
             this.LeveLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LeveLabel.Location = new System.Drawing.Point(11, 61);
+            this.LeveLabel.Location = new System.Drawing.Point(15, 58);
             this.LeveLabel.Name = "LeveLabel";
             this.LeveLabel.Size = new System.Drawing.Size(42, 13);
             this.LeveLabel.TabIndex = 3;
@@ -151,7 +159,7 @@
             // 
             // GoToLeftButton
             // 
-            this.GoToLeftButton.Location = new System.Drawing.Point(19, 381);
+            this.GoToLeftButton.Location = new System.Drawing.Point(3, 21);
             this.GoToLeftButton.Name = "GoToLeftButton";
             this.GoToLeftButton.Size = new System.Drawing.Size(87, 34);
             this.GoToLeftButton.TabIndex = 10;
@@ -163,7 +171,7 @@
             // 
             this.LifeLabel.AutoSize = true;
             this.LifeLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.LifeLabel.Location = new System.Drawing.Point(11, 39);
+            this.LifeLabel.Location = new System.Drawing.Point(15, 36);
             this.LifeLabel.Name = "LifeLabel";
             this.LifeLabel.Size = new System.Drawing.Size(32, 13);
             this.LifeLabel.TabIndex = 2;
@@ -174,12 +182,92 @@
             // 
             this.NameLabel.AutoSize = true;
             this.NameLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NameLabel.Location = new System.Drawing.Point(11, 17);
+            this.NameLabel.Location = new System.Drawing.Point(15, 14);
             this.NameLabel.Name = "NameLabel";
             this.NameLabel.Size = new System.Drawing.Size(43, 13);
             this.NameLabel.TabIndex = 1;
             this.NameLabel.Text = "Name ";
             this.NameLabel.Click += new System.EventHandler(this.Namelbl_Click);
+            // 
+            // ArmorLabel
+            // 
+            this.ArmorLabel.AutoSize = true;
+            this.ArmorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.ArmorLabel.Location = new System.Drawing.Point(15, 82);
+            this.ArmorLabel.Name = "ArmorLabel";
+            this.ArmorLabel.Size = new System.Drawing.Size(39, 13);
+            this.ArmorLabel.TabIndex = 14;
+            this.ArmorLabel.Text = "Armor";
+            // 
+            // DungeonLabel
+            // 
+            this.DungeonLabel.AutoSize = true;
+            this.DungeonLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.DungeonLabel.Location = new System.Drawing.Point(14, 12);
+            this.DungeonLabel.Name = "DungeonLabel";
+            this.DungeonLabel.Size = new System.Drawing.Size(58, 13);
+            this.DungeonLabel.TabIndex = 15;
+            this.DungeonLabel.Text = "Dungeon";
+            // 
+            // FloorLabel
+            // 
+            this.FloorLabel.AutoSize = true;
+            this.FloorLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.FloorLabel.Location = new System.Drawing.Point(14, 36);
+            this.FloorLabel.Name = "FloorLabel";
+            this.FloorLabel.Size = new System.Drawing.Size(35, 13);
+            this.FloorLabel.TabIndex = 16;
+            this.FloorLabel.Text = "Floor";
+            this.FloorLabel.Click += new System.EventHandler(this.FloorLabel_Click);
+            // 
+            // SquareLabel
+            // 
+            this.SquareLabel.AutoSize = true;
+            this.SquareLabel.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.SquareLabel.Location = new System.Drawing.Point(14, 60);
+            this.SquareLabel.Name = "SquareLabel";
+            this.SquareLabel.Size = new System.Drawing.Size(47, 13);
+            this.SquareLabel.TabIndex = 17;
+            this.SquareLabel.Text = "Square";
+            // 
+            // panel1
+            // 
+            this.panel1.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel1.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel1.Controls.Add(this.NameLabel);
+            this.panel1.Controls.Add(this.LifeLabel);
+            this.panel1.Controls.Add(this.LeveLabel);
+            this.panel1.Controls.Add(this.DescriptionLabel);
+            this.panel1.Controls.Add(this.ArmorLabel);
+            this.panel1.Location = new System.Drawing.Point(10, 123);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(282, 203);
+            this.panel1.TabIndex = 18;
+            // 
+            // panel2
+            // 
+            this.panel2.BackColor = System.Drawing.SystemColors.AppWorkspace;
+            this.panel2.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel2.Controls.Add(this.DungeonLabel);
+            this.panel2.Controls.Add(this.FloorLabel);
+            this.panel2.Controls.Add(this.SquareLabel);
+            this.panel2.Location = new System.Drawing.Point(10, 7);
+            this.panel2.Name = "panel2";
+            this.panel2.Size = new System.Drawing.Size(282, 110);
+            this.panel2.TabIndex = 19;
+            // 
+            // panel3
+            // 
+            this.panel3.BackColor = System.Drawing.SystemColors.ActiveCaption;
+            this.panel3.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.panel3.Controls.Add(this.GoToUpButton);
+            this.panel3.Controls.Add(this.GoToLeftButton);
+            this.panel3.Controls.Add(this.GoToDownButton);
+            this.panel3.Controls.Add(this.GoToRightButton);
+            this.panel3.Location = new System.Drawing.Point(10, 366);
+            this.panel3.Name = "panel3";
+            this.panel3.Size = new System.Drawing.Size(282, 81);
+            this.panel3.TabIndex = 20;
             // 
             // Ingame
             // 
@@ -196,6 +284,11 @@
             ((System.ComponentModel.ISupportInitialize)(this.GameView)).EndInit();
             this.UserControls.ResumeLayout(false);
             this.UserControls.PerformLayout();
+            this.panel1.ResumeLayout(false);
+            this.panel1.PerformLayout();
+            this.panel2.ResumeLayout(false);
+            this.panel2.PerformLayout();
+            this.panel3.ResumeLayout(false);
             this.ResumeLayout(false);
 
         }
@@ -214,5 +307,12 @@
         private System.Windows.Forms.Button GoToDownButton;
         private System.Windows.Forms.Button GoToRightButton;
         private System.Windows.Forms.Button GoToUpButton;
+        private System.Windows.Forms.Label ArmorLabel;
+        private System.Windows.Forms.Label SquareLabel;
+        private System.Windows.Forms.Label FloorLabel;
+        private System.Windows.Forms.Label DungeonLabel;
+        private System.Windows.Forms.Panel panel2;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.Panel panel3;
     }
 }

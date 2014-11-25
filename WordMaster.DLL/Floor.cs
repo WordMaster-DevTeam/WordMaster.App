@@ -134,16 +134,15 @@ namespace WordMaster.DLL
 		/// <returns>If the Squares have been set.</returns>
 		public bool TrySetSquare(int line, int column, string name, string description, bool holdable, Square teleportTo, out Square square)
 		{
-			if( !Dungeon.Editable || !CheckBounds( line, column) )
+			try
+			{
+				square = SetSquare(line, column, name, description, holdable, teleportTo);
+				return true;
+			}
+			catch
 			{
 				square = null;
 				return false;
-			}
-			else
-			{
-				square = new Square( this, line, column, name, description, holdable, teleportTo );
-				_layout[line, column] = square;
-				return true;
 			}
 		}
 
@@ -186,16 +185,14 @@ namespace WordMaster.DLL
 		/// <returns>If the Squares have been set.</returns>
 		public bool TrySetAllSquares( string name, string description = "", bool holdable = false )
 		{
-			if( !Dungeon.Editable )
+			try
+			{
+				SetAllSquares( name, description, holdable );
+				return true;
+			}
+			catch
 			{
 				return false;
-			}
-			else
-			{
-				for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-					for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-						_layout[i, j] = new Square( this, i, j, name, description, holdable, null );
-				return true;
 			}
 		}
 
@@ -225,17 +222,14 @@ namespace WordMaster.DLL
 		/// <returns>If the Squares have been set.</returns>
 		public bool TrySetAllUninitializedSquares( string name, string description = "", bool holdable = false )
 		{
-			if( !Dungeon.Editable )
+			try
+			{
+				SetAllUninitializedSquares( name, description, holdable );
+				return true;
+			}
+			catch
 			{
 				return false;
-			}
-			else
-			{
-				for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-					for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-						if( !CheckSquare( i, j ) )
-							_layout[i, j] = new Square( this, i, j, name, description = "", holdable, null );
-				return true;
 			}
 		}
 
@@ -262,12 +256,12 @@ namespace WordMaster.DLL
 		/// <returns>If the Square's reference have been found.</returns>
 		public bool TryGetSquare( int line, int column, out Square square )
 		{
-			if( !CheckBounds(line, column) )
+			try
 			{
-				square = _layout[line, column];
+				square = GetSquare( line, column );
 				return true;
 			}
-			else
+			catch
 			{
 				square = null;
 				return false;
@@ -283,14 +277,22 @@ namespace WordMaster.DLL
 		/// <returns>If the Square's coordinates have been found.</returns>
 		public bool TryGetCoordinates( Square square, out int line, out int column )
 		{
-			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-					if( _layout[i, j].Equals( square ) )
+			if( square != null )
+			{
+				for( int i = 0; i < _layout.GetLength( 0 ); i++ )
+				{
+					for( int j = 0; j < _layout.GetLength( 1 ); j++ )
 					{
-						line = i;
-						column = j;
-						return true;
+						if( _layout[i, j].Equals( square ) )
+						{
+							line = i;
+							column = j;
+							return true;
+						}
 					}
+				}
+			}
+
 			line = -1;
 			column = -1;
 			return false;
@@ -304,33 +306,10 @@ namespace WordMaster.DLL
 		/// <returns>If the coordinates are corrects.</returns>
 		public bool CheckBounds( int line, int column )
 		{
-			if( line > 0 && line <= _layout.GetLength( 0 ) && column > 0 && column <= _layout.GetLength( 1 ) ) return true;
-			else return false;
-		}
-
-		/// <summary>
-		/// Checks if an instance of <see cref="Square"/> class exist and is holdable using coordinates.
-		/// </summary>
-		/// <param name="line">Square's horizontal coordinate.</param>
-		/// <param name="column">Square's vertical coordinate.</param>
-		/// <returns>If the Square have been found and is holdable.</returns>
-		public bool CheckHoldable( int line, int column )
-		{
-			Square square;
-
-			if( TryGetSquare( line, column, out square ) ) return (CheckHoldable( square ));
-			else return false;
-		}
-
-		/// <summary>
-		/// Checks if an existing instance of <see cref="Square"/> class is holdable using his reference.
-		/// </summary>
-		/// <param name="square">Square's reference.</param>
-		/// <returns>If the Square is holdable.</returns>
-		public bool CheckHoldable( Square square )
-		{
-			if( square.Holdable ) return true;
-			else return false;
+			if( line >= 0 && line < _layout.GetLength( 0 ) && column >= 0 && column < _layout.GetLength( 1 ) )
+				return true;
+			else
+				return false;
 		}
 
 		/// <summary>
@@ -341,15 +320,17 @@ namespace WordMaster.DLL
 		/// <returns>If the Square is initialized.</returns>
 		public bool CheckSquare( int line, int column )
 		{
-			if( _layout[line, column] != null ) return true;
-			else return false;
+			if( CheckBounds( line, column ) )
+				if( _layout[line, column] != null)
+					return true;
+			return false;
 		}
 
 		/// <summary>
 		/// Checks if all instances of <see cref="Square"/>s classes of this instance of <see cref="Floor"/> class' layout are initialized.
 		/// </summary>
 		/// <returns>If all Squares are initialized.</returns>
-		public bool CheckAllSquare()
+		public bool CheckAllSquares()
 		{
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 				for( int j = 0; j < _layout.GetLength( 1 ); j++ )

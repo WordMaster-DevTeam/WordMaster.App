@@ -98,8 +98,9 @@ namespace WordMaster.DLL
 			get
 			{
 				foreach( Character character in _context.Characters ) // Any Character in it ?
-					if( character.Game.Dungeon.Equals( this ) )
-						return false;
+					if( character.Game != null ) // The Character is in a Dungeon
+						if( character.Game.Dungeon.Equals( this ) )
+							return false;
 				return true;
 			}
 		}
@@ -116,7 +117,7 @@ namespace WordMaster.DLL
 					return false;
 				else
 					foreach( Floor floor in Floors ) // All Squares set ?
-						if( floor.CheckAllSquare() ) 
+						if( floor.CheckAllSquares() ) 
 							return false;
 				return true;
 			}
@@ -128,10 +129,10 @@ namespace WordMaster.DLL
 		/// </summary>
 		/// <param name="floor">Floor's reference.</param>
 		/// <param name="newName">Floor's new name.</param>
-		public void RenaneFloor( Floor floor, string newName )
+		public void RenameFloor( Floor floor, string newName )
 		{
 			if( !Editable ) throw new InvalidOperationException( "Can not add a Floor in not editable Dungeon" );
-			if( ExistFloor(newName) ) throw new ArgumentException( "A floor with this name already exist", "newName" );
+			if( ExistFloor(newName) ) throw new ArgumentException( "A Floor with this name already exist.", "newName" );
 
 			floor.Name = newName;
 		}
@@ -142,12 +143,14 @@ namespace WordMaster.DLL
 		/// </summary>
 		/// <param name="oldName">Floor's old name.</param>
 		/// <param name="newName">Floor's new name.</param>
-		public void RenaneFloor( string oldName, string newName )
+		public void RenameFloor( string oldName, string newName )
 		{
 			Floor floor;
 
-			if(TryGetFloor(oldName, out floor))
-				RenaneFloor(floor, newName);
+			if( TryGetFloor( oldName, out floor ) )
+				RenameFloor( floor, newName );
+			else
+				throw new ArgumentException( "No Floor with this name already exist.", "oldName" );
 		}
 
 		/// <summary>
@@ -158,15 +161,14 @@ namespace WordMaster.DLL
 		/// <returns>If the Floor have been renamed.</returns>
 		public bool TryRenameFloor( Floor floor, string newName )
 		{
-
-			if( !Editable || _floors.ContainsKey( newName ) )
-				return false;
-			else
+			try
 			{
-				_floors.Remove( floor.Name );
-				floor.Name = newName;
-				_floors.Add( floor.Name, floor );
+				RenameFloor( floor, newName );
 				return true;
+			}
+			catch
+			{
+				return false;
 			}
 		}
 
@@ -242,22 +244,15 @@ namespace WordMaster.DLL
 		/// <returns>If the Floor have been created and added.</returns>
 		public bool TryAddFloor( int level, string name, string description, int numberOfLines, int numberOfColumns, out Floor floor )
 		{
-			if( !Editable || ExistFloor( name ) || level < 0 || level > NumberOfFloors|| (numberOfLines * numberOfColumns) < 2 )
+			try
+			{
+				floor = AddFloor( level, name, description, numberOfLines, numberOfColumns );
+				return true;
+			}
+			catch
 			{
 				floor = null;
 				return false;
-			}
-			else
-			{
-				floor = new Floor( this, level, name, description, numberOfLines, numberOfColumns );
-
-				 // Updating Floors' level
-				foreach( Floor aFloor in Floors )
-					if( aFloor.Level >= level )
-						aFloor.Level += 1;
-			
-				_floors.Add( name, floor );
-				return true;
 			}
 		}
 
@@ -300,20 +295,14 @@ namespace WordMaster.DLL
 		/// <returns>If the Floor has been found and removed.</returns>
 		public bool TryRemoveFloor( Floor floor )
 		{
-			if( !Editable )
+			try
 			{
-				floor = null;
-				return false;
-			}
-			else
-			{
-				// Updating Floors' level
-				foreach( Floor aFloor in Floors )
-					if(aFloor.Level > floor.Level)
-						aFloor.Level -= 1;
-
-				_floors.Remove( floor.Name );
+				RemoveFloor( floor );
 				return true;
+			}
+			catch
+			{
+				return false;
 			}
 		}
 

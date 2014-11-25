@@ -31,11 +31,6 @@ namespace WordMaster.DLL
 		/// </summary>
 		internal Character( string name, string description, int hp, int xp, int level, int armor)
 		{
-			if( hp <= 0 ) throw new ArgumentException( "Health Point must be greater than 0." );
-			if( xp < 0 ) throw new ArgumentException( "Experience point must be positive." );
-			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
-			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
-
 			_name = name;
 			_description = description;
 			_hp = hp;
@@ -171,19 +166,15 @@ namespace WordMaster.DLL
 		internal void EnterDungeon( Dungeon dungeon, Game game, HistoricRecord record )
 		{
 			Floor floor;
-			int line, column;
-				
-			if( dungeon.TryGetFloor( 0, out floor ) )
-				if( floor.TryGetCoordinates( dungeon.Entrance, out line, out column ) )
-				{
-					this._currentDungeon = dungeon;
-					this._currentFloor = floor;
-					this._currentSquare = dungeon.Entrance;
-					this._currentGame = game;
-					this._historics.Add( record );
-				}
-				else throw new ArgumentException("No entrance.", "dungeon");
-			else throw new ArgumentException("Empty Dungeon.", "dungeon");
+
+			if( dungeon.TryGetFloor( 0, out floor ) == false ) throw new ArgumentException( "Empty Dungeon.", "dungeon" );
+			if( dungeon.Entrance == null ) throw new ArgumentException( "No entrance.", "dungeon" );
+		
+			_currentDungeon = dungeon;
+			_currentFloor = floor;
+			_currentSquare = dungeon.Entrance;
+			_currentGame = game;
+			_historics.Add( record );
 		}
 
 		/// <summary>
@@ -197,51 +188,52 @@ namespace WordMaster.DLL
 			_currentGame = null;
 		}
 
-        /// <summary>
-        /// Moves an instance of <see cref="Character"/> class to a different Square.
-        /// </summary>
-		/// <param name="line">Square's horizontal coordinate.</param>
-		/// <param name="column">Square's vertical coordinate.</param>
-		/// <param name="finalLocaltion">Current Character's Square at the end of the call.</param>
-		/// <returns>If the Character have moved.</returns>
-		public bool TryMoveTo( int line, int column, out Square finalLocaltion )
-        {
-			if( _currentFloor.CheckBounds( line, column ) && _currentFloor.CheckHoldable( line, column ) )
-			{
-				if( _currentFloor.Layout[line, column].TeleportTo != null )
-					_currentSquare = _currentFloor.Layout[line, column].TeleportTo;
-				else
-					_currentSquare = _currentFloor.Layout[line, column];
-
-				finalLocaltion = _currentSquare;
-				return true;
-			}
-			else
-			{
-				finalLocaltion = _currentSquare;
-				return false;
-			}
-        }
-
 		/// <summary>
 		/// Moves an instance of <see cref="Character"/> class to a different Square.
 		/// </summary>
-		/// <param name="desiredLocation">Square's reference.</param>
-		/// <param name="finalLocaltion">Current Character's Square at the end of the call.</param>
+		/// <param name="target">Target Square's reference.</param>
+		/// <param name="final">Final Character's Square at the end of the call.</param>
 		/// <returns>If the Character have moved.</returns>
-		public bool TryMoveTo( Square desiredLocation, out Square finalLocaltion )
+		public bool TryMoveTo( Square target, out Square final )
 		{
-			int line, column;
-
-			if( _currentFloor.TryGetCoordinates( desiredLocation, out line, out column ) )
+			if( target == null ) // Target not set
 			{
-				return TryMoveTo( line, column, out finalLocaltion );
+				final = _currentSquare;
+				return false;
+			}
+			else if( target.Holdable == false ) // Target not holdable
+			{
+					final = _currentSquare;
+					return false;
 			}
 			else
 			{
-				finalLocaltion = _currentSquare;
-				return false;
+					if( target.TeleportTo == null ) final = target; // Case 1: No teleport, final equal target
+					else final = target.TeleportTo; // Case 2: Teleport, final equal teleport's target
+
+					_currentFloor = final.Floor;
+					_currentSquare = final;
+					return true;
 			}
 		}   
+
+        /// <summary>
+        /// Moves an instance of <see cref="Character"/> class to a different Square.
+        /// </summary>
+		/// <param name="line">Target Square's horizontal coordinate.</param>
+		/// <param name="column">Target Square's vertical coordinate.</param>
+		/// <param name="final">Final Character's Square at the end of the call.</param>
+		/// <returns>If the Character have moved.</returns>
+		public bool TryMoveTo( int line, int column, out Square final )
+        {
+			Square square;
+
+			if( _currentFloor.TryGetSquare( line, column, out square ) ) return TryMoveTo( square, out final );
+			else
+			{
+				final = _currentSquare;
+				return false;
+			}
+        }
     }
 }

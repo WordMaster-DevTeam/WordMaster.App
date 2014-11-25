@@ -11,103 +11,79 @@ namespace WordMaster.UniTests
 	[TestFixture]
     public class CharacterTests
     {
-        //[Test]
-        //public void Create_Character_with_name_null_or_empty_string_or_filled_with_whitespace_only_throws_argument()
-        //{
-        //    // Arrange
-        //    GlobalContext context;
-			Character character;
-
-        //    // Act
-        //    context = new GlobalContext();
-
-        //    // Assert
-            Assert.Throws<ArgumentException>( () => context.TryAddCharacter( "", out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( string.Empty, out character ) );
-        //}
-
-        //[Test]
-        //public void Create_character_with_incorrect_stats()
-        //{
-        //    // Arrange
-        //    GlobalContext context;
-			string characterName, characterDescription;
-			Character character;
-
-        //    // Act
-        //    context = new GlobalContext();
-			characterName = characterDescription = "";
-			for( int i = 0; i < NoMagicHelper.MaxNameLength; i++ ) characterName += "a";
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ ) characterDescription += "b";
-
-        //    // Assert
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 0, 0, 1, 10, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, -1, 0, 1, 10, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 100, -1, 1, 10, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 100, 0, 0, 10, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 100, 0, -1, 10, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 100, 0, 1, 0, out character ) );
-			Assert.Throws<ArgumentException>( () => context.TryAddCharacter( characterName, characterDescription, 100, 0, 1, -1, out character ) );
-        //}
-
-        //[Test]
-        public void All_parameters_used_in_building_method_create_character_properly()
-        //{
+        [Test]
+        public void Gets_all_properties_of_Character()
+        {
 			// Arrange
-			GlobalContext context;
-			string characterName, characterDescription;
+			GlobalContext context =  new GlobalContext();
 			Character character;
+			string characterName = "a character";
+			string characterDescription = "a description of a character";
+			int hp = 150, xp = 500, lvl = 3, armor = 25;
 
 			// Act
-			context = new GlobalContext();
-			characterName = characterDescription = "";
-			for( int i = 0; i < NoMagicHelper.MaxNameLength; i++ ) characterName += "a";
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ ) characterDescription += "b";
-			context.TryAddCharacter( characterName, characterDescription, 999, 9000, 42, 300, out character );
+			character = context.AddCharacter(characterName, characterDescription, hp, xp, lvl, armor);
 
 			// Assert
-			Assert.That( character.Name, Is.EqualTo( characterName ) );
-			Assert.That( character.Description, Is.EqualTo( characterDescription ) );
-			Assert.That( character.Health, Is.EqualTo( 999 ) );
-			Assert.That( character.Experience, Is.EqualTo( 9000 ) );
-			Assert.That( character.Level, Is.EqualTo( 42 ) );
-			Assert.That( character.Armor, Is.EqualTo( 300 ) );           
-        
-        //[Test]
-        public void When_a_Game_start_Character_are_put_in_dungeon_and_can_not_move_to_not_holdable_square()
-        //{
+			Assert.AreEqual(character.Name, characterName);
+			Assert.AreEqual(character.Description, characterDescription);
+			Assert.AreEqual(character.Health, hp);
+			Assert.AreEqual(character.Experience, xp);
+			Assert.AreEqual(character.Level, lvl);
+			Assert.AreEqual(character.Armor, armor);
+        }
+
+        [Test]
+        public void Create_character_with_incorrect_stats_throws_ArgumentException()
+        {
 			// Arrange
-			GlobalContext context;
-			string characterName, dungeonName, floorName, squaresName;
+			GlobalContext context = new GlobalContext();
+			string characterName = "a character";
+			string characterDescription = "a description for a character";
+
+			// Act
+			/*
+			 * Nothing, see Assert
+			 */
+
+			// Assert
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 0, 0, 1, 10 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, -1, 0, 1, 10 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 100, -1, 1, 10 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 100, 0, 0, 10 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 100, 0, -1, 10 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 100, 0, 1, 0 ) );
+			Assert.Throws<ArgumentException>( () => context.AddCharacter( characterName, characterDescription, 100, 0, 1, -1 ) );
+        }       
+        
+        [Test]
+        public void When_a_Game_start_Character_are_put_in_dungeon_and_can_not_move_to_not_holdable_square()
+        {
+			// Arrange
+			GlobalContext context = new GlobalContext();
 			Character character;
 			Dungeon dungeon;
 			Floor floor;
-			Square squareEntrance, squareExit, trash;
+			Square final;
+			string characterName = "a character";
+			string dungeonName = "a dungeon";
+			string floorName = "a floor";
+			string squaresName = "a square";
 
 			// Act
-			context = new GlobalContext();
-			characterName = dungeonName = floorName = squaresName = "";
-			for( int i = 0; i < NoMagicHelper.MaxNameLength; i++ )
-			{
-				characterName += "a";
-				dungeonName += "b";
-				floorName += "c";
-				squaresName += "d";
-			}
-			context.TryAddCharacter( characterName, out character );
-			context.TryAddDungeon( dungeonName, out dungeon );
-			dungeon.TryAddFloor( floorName, NoMagicHelper.MinFloorSize, NoMagicHelper.MinFloorSize, out floor );
-			floor.TrySetAllSquares( squaresName, "", false );
-			floor.TrySetSquare( 0, 0, squaresName, "", true, null, out squareEntrance );
-			dungeon.Entrance = squareEntrance;
-			floor.TrySetSquare( 1, 1, squaresName, "", true, null, out squareExit );
-			dungeon.Exit = squareExit;
-			floor.TrySetSquare( 0, 1, squaresName, "", true, null, out trash );
+			character = context.AddCharacter( characterName, "");
+			dungeon = context.AddDungeon( dungeonName, "" );
+			floor = dungeon.AddFloor( floorName, "", 3, 3 );
+			floor.SetAllSquares( squaresName, "", false );
+			dungeon.Entrance = floor.SetSquare( 0, 0, squaresName, "", true, null );
+			dungeon.Exit = floor.SetSquare( 1, 1, squaresName, "", true, null );
+			floor.SetSquare( 0, 1, squaresName, "", true, null );
 			context.StartNewGame( character, dungeon );
 
 			// Assert
-			Assert.AreSame( character.Square, squareEntrance );
-			Assert.IsFalse( character.TryMoveTo( 1, 0 ) );
+			Assert.AreSame( character.Square, dungeon.Entrance );
+			Assert.IsFalse( character.TryMoveTo( 1, 0, out final ) );
+			Assert.AreEqual( character.Square, final );
 		}
     }
 }

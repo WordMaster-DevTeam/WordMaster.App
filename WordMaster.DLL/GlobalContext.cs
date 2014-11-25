@@ -50,6 +50,10 @@ namespace WordMaster.DLL
 			Character check, character;
 
 			if( TryGetCharacter( name, out check ) ) throw new ArgumentException("A Character with this name already exist.", "name");
+			if( hp <= 0 ) throw new ArgumentException( "Health Point must be greater than 0." );
+			if( xp < 0 ) throw new ArgumentException( "Experience point must be positive." );
+			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
+			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
 
 			character = new Character( name, description, hp, xp, level, armor );
 			_characters.Add( character );
@@ -101,7 +105,7 @@ namespace WordMaster.DLL
 		public bool TryAddCharacter( string name, string description, int hp, int xp, int level, int armor, out Character character )
 		{
 			Character check;
-			if( TryGetCharacter( name, out check ) )
+			if( TryGetCharacter( name, out check ) || hp <= 0 || xp < 0 || level <= 0 || armor <= 0 )
 			{
 				character = null;
 				return false;
@@ -353,7 +357,7 @@ namespace WordMaster.DLL
 		{
 			Dungeon dungeon;
 
-			if( TryGetDungeon( oldName, out dungeon ) ) throw new ArgumentException( "No Dungeon with this name already exist.", "name" );
+			if( !TryGetDungeon( oldName, out dungeon ) ) throw new ArgumentException( "No Dungeon with this name already exist.", "name" );
 
 			RenameDungeon( dungeon, newName );
 		}

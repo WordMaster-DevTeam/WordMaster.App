@@ -13,11 +13,6 @@ namespace WordMaster.UI
 {
     public partial class Ingame : Form
     {
-        GlobalContext _context = new GlobalContext( );      
-        Character _character;
-        Dungeon _dungeon;
-        Game _game;
-
         public Ingame()
         {
             InitializeComponent( );
@@ -25,21 +20,21 @@ namespace WordMaster.UI
 
         private void Ingame_Load( object sender, EventArgs e )
         {
-            _character = _context.AddDefaultCharacter("Olivier");
-            _dungeon = _context.AddDefaultDungeon( "The Cage" );
-            _game = _context.StartNewGame(_character, _dungeon);
+            Character character = AppManager.CurrentContext.AddDefaultCharacter( "Olivier" );
+            Dungeon dungeon = AppManager.CurrentContext.AddDefaultDungeon( "The Cage" );
+            AppManager.CurrentGame = AppManager.CurrentContext.StartNewGame( character, dungeon );
 
             // Dungeon panel
-            DungeonLabel.Text += "  " + _dungeon.Name;
-            FloorLabel.Text += "  " + _character.Floor.Name;
-            SquareLabel.Text += "  " + _character.Square.Name;
+            DungeonLabel.Text += "  " + AppManager.CurrentGame.Dungeon.Name;
+            FloorLabel.Text += "  " + AppManager.CurrentGame.Character.Floor.Name;
+            SquareLabel.Text += "  " + AppManager.CurrentGame.Character.Square.Name;
 
             // Character panel
-            NameLabel.Text +=  "  " + _character.Name;
-            LifeLabel.Text += "  " + _character.Health;
-            LeveLabel.Text += "  " + _character.Level;
-            ArmorLabel.Text += "  " + _character.Armor;
-            DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + _character.Description;   
+            NameLabel.Text += "  " + AppManager.CurrentGame.Character.Name;
+            LifeLabel.Text += "  " + AppManager.CurrentGame.Character.Health;
+            LeveLabel.Text += "  " + AppManager.CurrentGame.Character.Level;
+            ArmorLabel.Text += "  " + AppManager.CurrentGame.Character.Armor;
+            DescriptionLabel.Text = DescriptionLabel.Text + "  " + AppManager.CurrentGame.Character.Description;
         }
        
         private void QuitTheGame_Click( object sender, EventArgs e )
@@ -91,6 +86,11 @@ namespace WordMaster.UI
 
         }
         #endregion
+
+        private void floorView1_Load( object sender, EventArgs e )
+        {
+
+        }
         
     }
 }

@@ -266,6 +266,7 @@ namespace WordMaster.UI
             this.floorView1.Name = "floorView1";
             this.floorView1.Size = new System.Drawing.Size(300, 300);
             this.floorView1.TabIndex = 2;
+            this.floorView1.Load += new System.EventHandler(this.floorView1_Load);
             // 
             // Ingame
             // 

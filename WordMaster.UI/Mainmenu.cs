@@ -21,18 +21,16 @@ namespace WordMaster.UI
         protected override void OnLoad( EventArgs e )
         {
             base.OnLoad( e );
-            GlobalContext context = new GlobalContext( );
 
-            context.AddCharacter( "default character", "" );
+            AppManager.CurrentContext.AddCharacter( "default character", "" );
 
-            //DataGridView initialisation
-
-            CharacterDataGridView.DataSource = context.Characters;
-            CharacterDataGridView.Columns.Remove( "Experience" );
-            CharacterDataGridView.Columns.Remove( "Armor" );
-            CharacterDataGridView.Columns.Remove( "Historics" );
-            CharacterDataGridView.Columns.Remove( "Game" );
-            CharacterDataGridView.Columns.Remove( "Square" );
+            // DataGridView initialisation
+            //CharacterDataGridView.DataSource = context.Characters;
+            //CharacterDataGridView.Columns.Remove( "Experience" );
+            //CharacterDataGridView.Columns.Remove( "Armor" );
+            //CharacterDataGridView.Columns.Remove( "Historics" );
+            //CharacterDataGridView.Columns.Remove( "Game" );
+            //CharacterDataGridView.Columns.Remove( "Square" );
             
         }
 

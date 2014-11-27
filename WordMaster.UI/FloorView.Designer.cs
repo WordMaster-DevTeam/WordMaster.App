@@ -1,9 +1,11 @@
 ﻿using System.Drawing;
 
+
 namespace WordMaster.UI
 {
     partial class FloorView
     {
+
         /// <summary> 
         /// Required designer variable.
         /// </summary>
@@ -50,7 +52,7 @@ namespace WordMaster.UI
             this.BackColor = System.Drawing.Color.Gray;
             this.Name = "FloorView";
             this.Size = new System.Drawing.Size(300, 300);
-            this.Paint += new System.Windows.Forms.PaintEventHandler( this.FloorView_Paint );
+            this.Paint += new System.Windows.Forms.PaintEventHandler(this.FloorView_Paint);
             this.ResumeLayout(false);
 
         }

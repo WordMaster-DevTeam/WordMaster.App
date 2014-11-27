@@ -47,6 +47,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="AppManager.cs" />
+    <Compile Include="CharacterResume.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="CharacterResume.Designer.cs">
+      <DependentUpon>CharacterResume.cs</DependentUpon>
+    </Compile>
     <Compile Include="FloorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -73,6 +80,9 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <EmbeddedResource Include="CharacterResume.resx">
+      <DependentUpon>CharacterResume.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="FloorView.resx">
       <DependentUpon>FloorView.cs</DependentUpon>
     </EmbeddedResource>

@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WordMaster.DLL;
 
 namespace WordMaster.UI
 {
@@ -28,6 +29,16 @@ namespace WordMaster.UI
         }
 
         private void pictureBox1_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void BrowseLbl_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void CreateBtn_Click( object sender, EventArgs e )
         {
 
         }

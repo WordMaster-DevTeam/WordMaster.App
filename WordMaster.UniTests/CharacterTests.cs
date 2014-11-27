@@ -84,6 +84,10 @@ namespace WordMaster.UniTests
 			Assert.AreSame( character.Square, dungeon.Entrance );
 			Assert.IsFalse( character.TryMoveTo( 1, 0, out final ) );
 			Assert.AreEqual( character.Square, final );
+			Assert.IsTrue( character.TryMoveTo( 0, 1, out final ) );
+			Assert.AreEqual( character.Square, final );
+			Assert.IsTrue( character.TryMoveTo( 1, 1, out final ) );
+			Assert.AreEqual( character.Square, final );
 		}
     }
 }

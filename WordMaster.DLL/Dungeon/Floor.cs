@@ -10,6 +10,22 @@ namespace WordMaster.DLL
 		Square[,] _layout;
 
 		/// <summary>
+		/// Recovers an instance of <see cref="Square"/> class using the [int, int] syntax.
+		/// </summary>
+		/// <param name="line">Square's horizontale coordinate.</param>
+		/// <param name="column">Square's verticale coordinate.</param>
+		/// <returns>Square's reference.</returns>
+		public Square this[int line, int column]
+		{
+			get
+			{
+				if( line < 0 || line >= NumberOfLines || column < 0 || column >= NumberOfLines ) // Outside the layout
+					return null;
+				else return _layout[line, column]; // Inside the layout
+			}
+		}
+
+		/// <summary>
 		/// Initializes a new instance of <see cref="Floor"/> class.
 		/// </summary>
 		/// <param name="dungeon">Dungeon's reference, all Floors must be in a <see cref="Dungeon"/>.</param>
@@ -77,6 +93,14 @@ namespace WordMaster.DLL
 		public int NumberOfColumns
 		{
 			get { return _layout.GetLength( 1 ); }
+		}
+
+		/// <summary>
+		/// Getst the number of <see cref="Square"/>s in this instance of <see cref="Floor"/> class.
+		/// </summary>
+		public int NumberOfSquares
+		{
+			get { return _layout.GetLength( 0 ) * _layout.GetLength( 1 ); }
 		}
 
 		/// <summary>

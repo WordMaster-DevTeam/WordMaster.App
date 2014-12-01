@@ -5,7 +5,7 @@ using WordMaster.DLL;
 namespace WordMaster.UniTests
 {
 	[TestFixture]
-    public class NoMagicHelperTests
+    public class InputsCheckerTests
     {
 		[Test]
 		public void Checks_name_length()

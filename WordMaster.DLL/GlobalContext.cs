@@ -84,7 +84,7 @@ namespace WordMaster.DLL
 		{
 			Character check, character;
 
-			if(TryGetCharacter(name, out check) ) throw new ArgumentException( "A Floor with this name already exist.", "name" );
+			if(TryGetCharacter(name, out check) ) throw new ArgumentException( "A Character with this name already exist.", "name" );
 
 			character = new Character( name, "Default Character.", 200, 1000, 5, 150 );
 			_characters.Add( character );

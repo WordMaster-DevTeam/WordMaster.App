@@ -46,6 +46,10 @@
             ((System.ComponentModel.ISupportInitialize)(this.AvatarPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
+            // openFileDialog
+            // 
+            openFileDialog.FileName = "openFileDialog";
+            // 
             // AvatarLbl
             // 
             this.AvatarLbl.AutoSize = true;
@@ -94,7 +98,7 @@
             // 
             // NameTextBox
             // 
-            this.NameTextBox.BackColor = System.Drawing.Color.Gray;
+            this.NameTextBox.BackColor = System.Drawing.Color.BurlyWood;
             this.NameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.NameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.NameTextBox.Location = new System.Drawing.Point(320, 188);
@@ -104,7 +108,7 @@
             // 
             // DescriptionRichTextBox
             // 
-            this.DescriptionRichTextBox.BackColor = System.Drawing.Color.Gray;
+            this.DescriptionRichTextBox.BackColor = System.Drawing.Color.BurlyWood;
             this.DescriptionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
             this.DescriptionRichTextBox.Location = new System.Drawing.Point(320, 227);
             this.DescriptionRichTextBox.Name = "DescriptionRichTextBox";
@@ -145,15 +149,13 @@
             // AvatarPictureBox
             // 
             this.AvatarPictureBox.BackColor = System.Drawing.Color.BurlyWood;
+            this.AvatarPictureBox.BackgroundImageLayout = System.Windows.Forms.ImageLayout.None;
             this.AvatarPictureBox.Location = new System.Drawing.Point(689, 94);
             this.AvatarPictureBox.Name = "AvatarPictureBox";
             this.AvatarPictureBox.Size = new System.Drawing.Size(98, 119);
+            this.AvatarPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.AvatarPictureBox.TabIndex = 10;
             this.AvatarPictureBox.TabStop = false;
-            // 
-            // openFileDialog
-            // 
-            openFileDialog.FileName = "openFileDialog";
             // 
             // CreateBtn
             // 

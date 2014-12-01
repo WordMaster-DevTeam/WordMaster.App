@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordMaster.DLL
+namespace WordMaster.Library
 {
 	static public class NoMagicHelper
 	{

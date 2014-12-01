@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using WordMaster.DLL;
+using WordMaster.Library;
 
 namespace WordMaster.UniTests
 {

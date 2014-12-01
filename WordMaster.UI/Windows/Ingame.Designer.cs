@@ -1,4 +1,4 @@
-﻿using WordMaster.DLL;
+﻿using WordMaster.Library;
 using WordMaster.UI;
 
 namespace WordMaster.UI

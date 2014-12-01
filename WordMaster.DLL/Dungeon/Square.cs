@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WordMaster.DLL
+namespace WordMaster.Library
 {
-	public class Square
+	public partial class Square
 	{
 		readonly Floor _floor;
 		readonly int _line, _column;

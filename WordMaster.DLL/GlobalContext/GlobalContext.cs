@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WordMaster.DLL
+namespace WordMaster.Library
 {
 	public class GlobalContext
 	{

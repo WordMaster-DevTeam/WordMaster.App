@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordMaster.DLL
+namespace WordMaster.Library
 {
 	public class HistoricRecord
 	{

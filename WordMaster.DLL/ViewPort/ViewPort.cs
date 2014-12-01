@@ -243,7 +243,7 @@ namespace WordMaster.Library
 		/// Sets the client's size.
 		/// </summary>
 		/// <param name="client">Current client's size.</param>
-		internal void SetClientSize( Size client )
+		public void SetClientSize( Size client )
 		{
 			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
 			_maxClientSize = Math.Max( client.Width, client.Height );
@@ -284,7 +284,7 @@ namespace WordMaster.Library
 		/// Draws all the Squares of this instance of <see cref="ViewPort "/> in the current view port area.
 		/// </summary>
 		/// <param name="graphic">Graphic's instance used.</param>
-		internal void Draw( Graphics graphic )
+		public void Draw( Graphics graphic )
 		{
 			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
 			Matrix origin = graphic.Transform;

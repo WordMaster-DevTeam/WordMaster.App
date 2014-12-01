@@ -7,8 +7,7 @@ namespace WordMaster.Library
 {
 	public partial class Floor
 	{
-		readonly int _floorGraphicalSize, _floorGraphicalWidth;
-        int _squareGraphicalWidth;
+		int _floorGraphicalSize, _floorGraphicalWidth, _squareGraphicalWidth;
 
 		/// <summary>
 		/// Gets the maximum size for rendering the current <see cref="Floor"/>.

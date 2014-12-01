@@ -1,6 +1,6 @@
 ﻿namespace WordMaster.UI
 {
-	partial class Mainmenu
+	partial class MainMenu
 	{
 		/// <summary>
 		/// Required designer variable.
@@ -28,7 +28,7 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Mainmenu));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainMenu));
             this.LaunchBtn = new System.Windows.Forms.Button();
             this.CreateCharacterBtn = new System.Windows.Forms.Button();
             this.TutorialBTn = new System.Windows.Forms.Button();

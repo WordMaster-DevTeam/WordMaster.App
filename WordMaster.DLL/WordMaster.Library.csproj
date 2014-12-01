@@ -7,7 +7,7 @@
     <ProjectGuid>{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.DLL</RootNamespace>
+    <RootNamespace>WordMaster.Library</RootNamespace>
     <AssemblyName>WordMaster.DLL</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -32,6 +32,7 @@
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -39,16 +40,19 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character.cs" />
-    <Compile Include="Game.cs" />
-    <Compile Include="GlobalContext.cs" />
-    <Compile Include="HistoricRecord.cs" />
-    <Compile Include="Item.cs" />
-    <Compile Include="NoMagicHelper.cs" />
-    <Compile Include="Square.cs" />
-    <Compile Include="Floor.cs" />
-    <Compile Include="Dungeon.cs" />
+    <Compile Include="Character\Character.cs" />
+    <Compile Include="GlobalContext\Game.cs" />
+    <Compile Include="GlobalContext\GlobalContext.cs" />
+    <Compile Include="GlobalContext\HistoricRecord.cs" />
+    <Compile Include="Character\Item.cs" />
+    <Compile Include="Dungeon\Square.cs" />
+    <Compile Include="Dungeon\Floor.cs" />
+    <Compile Include="Dungeon\Dungeon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="ViewPort\Square.cs" />
+    <Compile Include="ViewPort\Floor.cs" />
+    <Compile Include="ViewPort\SquareRenderInfos.cs" />
+    <Compile Include="ViewPort\ViewPort.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -1,6 +1,6 @@
 ﻿namespace WordMaster.UI
 {
-    partial class CreateCharacter
+    partial class CharacterEditor
     {
         /// <summary>
         /// Required designer variable.
@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CreateCharacter));
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(CharacterEditor));
             this.AvatarLbl = new System.Windows.Forms.Label();
             this.NameLbl = new System.Windows.Forms.Label();
             this.DescriptionLbl = new System.Windows.Forms.Label();
@@ -153,7 +153,7 @@
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.Name = "CreateCharacter";
             this.Text = "CreateCharacter";
-            this.Load += new System.EventHandler(this.CreateCharacter_Load);
+            this.Load += new System.EventHandler(this.CharacterEditor_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.AvatarPictureBox)).EndInit();
             this.ResumeLayout(false);

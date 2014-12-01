@@ -10,14 +10,14 @@ using System.Windows.Forms;
 
 namespace WordMaster.UI
 {
-    public partial class CreateCharacter : Form
+    public partial class CharacterEditor : Form
     {
-        public CreateCharacter()
+        public CharacterEditor()
         {
             InitializeComponent( );
         }
 
-        private void CreateCharacter_Load( object sender, EventArgs e )
+		private void CharacterEditor_Load( object sender, EventArgs e )
         {
 
         }

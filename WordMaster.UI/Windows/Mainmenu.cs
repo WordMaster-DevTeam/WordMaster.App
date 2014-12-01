@@ -11,9 +11,9 @@ using WordMaster.Library;
 
 namespace WordMaster.UI
 {
-	public partial class Mainmenu : Form
+	public partial class MainMenu : Form
 	{
-		public Mainmenu()
+		public MainMenu()
 		{
 			InitializeComponent();
 		}
@@ -38,13 +38,13 @@ namespace WordMaster.UI
 
         private void CreateCharacterBtn_Click( object sender, EventArgs e )
         {
-            CreateCharacter createCharacterForm = new CreateCharacter( );
+            CharacterEditor createCharacterForm = new CharacterEditor( );
             createCharacterForm.Show( );
         }
 
         private void LaunchBtn_Click( object sender, EventArgs e )
         {
-            Ingame ingameform = new Ingame( );
+            InGame ingameform = new InGame( );
             ingameform.Show( );
         }
 

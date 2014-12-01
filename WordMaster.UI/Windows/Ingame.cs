@@ -11,19 +11,19 @@ using WordMaster.Library;
 
 namespace WordMaster.UI
 {
-    public partial class Ingame : Form
+    public partial class InGame : Form
     {
         GlobalContext _context = new GlobalContext( );      
         Character _character;
         Dungeon _dungeon;
         Game _game;
 
-        public Ingame()
+        public InGame()
         {
             InitializeComponent( );
         }
 
-        private void Ingame_Load( object sender, EventArgs e )
+        private void InGame_Load( object sender, EventArgs e )
         {
             _character = _context.AddDefaultCharacter("Olivier");
             _dungeon = _context.AddDefaultDungeon( "The Cage" );
@@ -51,7 +51,7 @@ namespace WordMaster.UI
         {
            
         }
-        #region Empty methods
+       
         private void label3_Click( object sender, EventArgs e )
         {
 
@@ -90,7 +90,5 @@ namespace WordMaster.UI
         {
 
         }
-        #endregion
-        
     }
 }

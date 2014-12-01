@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.UI", "WordMaster.UI\WordMaster.UI.csproj", "{E25F5C76-A174-4A19-9E5A-16908225A8A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.DLL", "WordMaster.DLL\WordMaster.DLL.csproj", "{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.Library", "WordMaster.DLL\WordMaster.Library.csproj", "{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.UniTests", "WordMaster.UniTests\WordMaster.UniTests.csproj", "{3EC26859-CE67-46F2-B1C6-FD628769D5BD}"
 EndProject

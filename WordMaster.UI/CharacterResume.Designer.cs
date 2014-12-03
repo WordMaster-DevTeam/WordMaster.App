@@ -1,6 +1,6 @@
 ﻿namespace WordMaster.UI
 {
-    partial class CharacterResume
+    partial class CharacterRecap
     {
         /// <summary> 
         /// Required designer variable.
@@ -28,58 +28,73 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.label1 = new System.Windows.Forms.Label();
-            this.label2 = new System.Windows.Forms.Label();
-            this.label3 = new System.Windows.Forms.Label();
-            this.label4 = new System.Windows.Forms.Label();
+            this.NameLbl = new System.Windows.Forms.Label();
+            this.LifeLbl = new System.Windows.Forms.Label();
+            this.LevelLbl = new System.Windows.Forms.Label();
+            this.DungeonLbl = new System.Windows.Forms.Label();
+            this.LaunchBtn = new System.Windows.Forms.Button();
             this.SuspendLayout();
             // 
-            // label1
+            // NameLbl
             // 
-            this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(13, 90);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(35, 13);
-            this.label1.TabIndex = 0;
-            this.label1.Text = "label1";
+            this.NameLbl.AutoSize = true;
+            this.NameLbl.Location = new System.Drawing.Point(13, 21);
+            this.NameLbl.Name = "NameLbl";
+            this.NameLbl.Size = new System.Drawing.Size(44, 13);
+            this.NameLbl.TabIndex = 0;
+            this.NameLbl.Text = "Name : ";
             // 
-            // label2
+            // LifeLbl
             // 
-            this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(13, 115);
-            this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(35, 13);
-            this.label2.TabIndex = 1;
-            this.label2.Text = "label2";
+            this.LifeLbl.AutoSize = true;
+            this.LifeLbl.Location = new System.Drawing.Point(13, 46);
+            this.LifeLbl.Name = "LifeLbl";
+            this.LifeLbl.Size = new System.Drawing.Size(33, 13);
+            this.LifeLbl.TabIndex = 1;
+            this.LifeLbl.Text = "Life : ";
             // 
-            // label3
+            // LevelLbl
             // 
-            this.label3.AutoSize = true;
-            this.label3.Location = new System.Drawing.Point(13, 144);
-            this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(35, 13);
-            this.label3.TabIndex = 2;
-            this.label3.Text = "label3";
+            this.LevelLbl.AutoSize = true;
+            this.LevelLbl.Location = new System.Drawing.Point(13, 73);
+            this.LevelLbl.Name = "LevelLbl";
+            this.LevelLbl.Size = new System.Drawing.Size(42, 13);
+            this.LevelLbl.TabIndex = 2;
+            this.LevelLbl.Text = "Level : ";
             // 
-            // label4
+            // DungeonLbl
             // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(13, 168);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 13);
-            this.label4.TabIndex = 3;
-            this.label4.Text = "label4";
+            this.DungeonLbl.AutoSize = true;
+            this.DungeonLbl.Location = new System.Drawing.Point(13, 97);
+            this.DungeonLbl.Name = "DungeonLbl";
+            this.DungeonLbl.Size = new System.Drawing.Size(60, 13);
+            this.DungeonLbl.TabIndex = 3;
+            this.DungeonLbl.Text = "Dungeon : ";
             // 
-            // CharacterResume
+            // LaunchBtn
+            // 
+            this.LaunchBtn.BackColor = System.Drawing.Color.Gray;
+            this.LaunchBtn.Location = new System.Drawing.Point(137, 119);
+            this.LaunchBtn.Name = "LaunchBtn";
+            this.LaunchBtn.Size = new System.Drawing.Size(87, 29);
+            this.LaunchBtn.TabIndex = 4;
+            this.LaunchBtn.Text = "Launch Game";
+            this.LaunchBtn.UseVisualStyleBackColor = false;
+            this.LaunchBtn.Click += new System.EventHandler(this.LaunchBtn_Click_1);
+            // 
+            // CharacterRecap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.Controls.Add(this.label4);
-            this.Controls.Add(this.label3);
-            this.Controls.Add(this.label2);
-            this.Controls.Add(this.label1);
-            this.Name = "CharacterResume";
-            this.Size = new System.Drawing.Size(286, 268);
+            this.BackColor = System.Drawing.Color.DimGray;
+            this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.LaunchBtn);
+            this.Controls.Add(this.DungeonLbl);
+            this.Controls.Add(this.LevelLbl);
+            this.Controls.Add(this.LifeLbl);
+            this.Controls.Add(this.NameLbl);
+            this.Name = "CharacterRecap";
+            this.Size = new System.Drawing.Size(232, 157);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -87,9 +102,10 @@
 
         #endregion
 
-        private System.Windows.Forms.Label label1;
-        private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label NameLbl;
+        private System.Windows.Forms.Label LifeLbl;
+        private System.Windows.Forms.Label LevelLbl;
+        private System.Windows.Forms.Label DungeonLbl;
+        private System.Windows.Forms.Button LaunchBtn;
     }
 }

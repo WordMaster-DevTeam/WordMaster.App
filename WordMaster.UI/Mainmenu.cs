@@ -22,15 +22,31 @@ namespace WordMaster.UI
         {
             base.OnLoad( e );
 
-            AppManager.CurrentContext.AddCharacter( "default character", "" );
+            CharacterTableLayout.ColumnCount = 4;
+            CharacterTableLayout.RowCount = 3;
 
-            // DataGridView initialisation
-            //CharacterDataGridView.DataSource = context.Characters;
-            //CharacterDataGridView.Columns.Remove( "Experience" );
-            //CharacterDataGridView.Columns.Remove( "Armor" );
-            //CharacterDataGridView.Columns.Remove( "Historics" );
-            //CharacterDataGridView.Columns.Remove( "Game" );
-            //CharacterDataGridView.Columns.Remove( "Square" );
+            AppManager.CurrentContext.AddCharacter( "default character", "" );
+            AppManager.CurrentContext.AddCharacter( "character1", "" );
+            AppManager.CurrentContext.AddCharacter( "character2", "" );
+            AppManager.CurrentContext.AddCharacter( "character3", "" );
+            AppManager.CurrentContext.AddCharacter( "character4", "" );
+            AppManager.CurrentContext.AddCharacter( "character5", "" );
+          
+            // Saved Characters loading
+
+            //TODO
+
+
+            //Filling table layout with all the Characters
+            
+            foreach(Character aChara in AppManager.CurrentContext.Characters)
+            {
+                CharacterRecap newCell = new CharacterRecap();
+                newCell.SetCharacter( aChara );                
+                CharacterTableLayout.Controls.Add( newCell );               
+            }
+
+            
             
         }
 
@@ -40,11 +56,7 @@ namespace WordMaster.UI
             createCharacterForm.Show( );
         }
 
-        private void LaunchBtn_Click( object sender, EventArgs e )
-        {
-            Ingame ingameform = new Ingame( );
-            ingameform.Show( );
-        }
+
 
         private void QuitBtn_Click( object sender, EventArgs e )
         {

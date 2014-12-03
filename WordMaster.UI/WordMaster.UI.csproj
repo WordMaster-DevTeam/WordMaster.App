@@ -49,11 +49,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="AppManager.cs" />
-    <Compile Include="CharacterResume.cs">
+    <Compile Include="CharacterRecap.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="CharacterResume.Designer.cs">
-      <DependentUpon>CharacterResume.cs</DependentUpon>
+    <Compile Include="CharacterRecap.Designer.cs">
+      <DependentUpon>CharacterRecap.cs</DependentUpon>
     </Compile>
     <Compile Include="FloorView.cs">
       <SubType>UserControl</SubType>
@@ -81,8 +81,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="CharacterResume.resx">
-      <DependentUpon>CharacterResume.cs</DependentUpon>
+    <EmbeddedResource Include="CharacterRecap.resx">
+      <DependentUpon>CharacterRecap.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FloorView.resx">
       <DependentUpon>FloorView.cs</DependentUpon>
@@ -104,6 +104,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -123,6 +124,9 @@
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.DLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Logo v1.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

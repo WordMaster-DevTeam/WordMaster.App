@@ -22,16 +22,35 @@ namespace WordMaster.UI
         {
             base.OnLoad( e );
 
-            CharacterTableLayout.ColumnCount = 4;
-            CharacterTableLayout.RowCount = 3;
-
+            // Test Characters list,will be discart when tests are finish
             AppManager.CurrentContext.AddCharacter( "default character", "" );
             AppManager.CurrentContext.AddCharacter( "character1", "" );
             AppManager.CurrentContext.AddCharacter( "character2", "" );
             AppManager.CurrentContext.AddCharacter( "character3", "" );
             AppManager.CurrentContext.AddCharacter( "character4", "" );
             AppManager.CurrentContext.AddCharacter( "character5", "" );
-          
+            AppManager.CurrentContext.AddCharacter( "character6", "" );
+            AppManager.CurrentContext.AddCharacter( "character7", "" );
+            AppManager.CurrentContext.AddCharacter( "character8", "" );
+            AppManager.CurrentContext.AddCharacter( "character9", "" );
+            AppManager.CurrentContext.AddCharacter( "character10", "" );
+            AppManager.CurrentContext.AddCharacter( "character11", "" );
+            AppManager.CurrentContext.AddCharacter( "character12", "" );
+            AppManager.CurrentContext.AddCharacter( "character13", "" );
+            AppManager.CurrentContext.AddCharacter( "character14", "" );
+            AppManager.CurrentContext.AddCharacter( "character15", "" );
+            AppManager.CurrentContext.AddCharacter( "character16", "" );
+            AppManager.CurrentContext.AddCharacter( "character17", "" );
+            AppManager.CurrentContext.AddCharacter( "character18", "" );
+            AppManager.CurrentContext.AddCharacter( "character19", "" );
+            AppManager.CurrentContext.AddCharacter( "character20", "" );
+
+            int nbLines = 3;
+            CharacterTableLayout.ColumnCount = AppManager.CurrentContext.Characters.Count( ) / nbLines;
+            CharacterTableLayout.RowCount = nbLines;
+            
+
+            
             // Saved Characters loading
 
             //TODO
@@ -47,7 +66,6 @@ namespace WordMaster.UI
             }
 
             
-            
         }
 
         private void CreateCharacterBtn_Click( object sender, EventArgs e )
@@ -61,6 +79,26 @@ namespace WordMaster.UI
         private void QuitBtn_Click( object sender, EventArgs e )
         {
             Application.Exit();
+        }
+
+        private void panel1_Paint( object sender, PaintEventArgs e )
+        {
+
+        }
+
+        private void ScoresBtn_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void OptionBtn_Click( object sender, EventArgs e )
+        {
+
+        }
+
+        private void TutorialBTn_Click( object sender, EventArgs e )
+        {
+
         }       
 	}
 }

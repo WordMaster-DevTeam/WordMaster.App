@@ -16,6 +16,7 @@ namespace WordMaster.UI
         public CharacterRecap()
         {
             InitializeComponent( );
+            this.Dock = DockStyle.Fill;
         }
         internal void SetCharacter(Character aCharacter)
         {

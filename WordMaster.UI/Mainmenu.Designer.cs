@@ -35,13 +35,17 @@
             this.ScoresBtn = new System.Windows.Forms.Button();
             this.CreditsBtn = new System.Windows.Forms.Button();
             this.QuitBtn = new System.Windows.Forms.Button();
-            this.label1 = new System.Windows.Forms.Label();
             this.CharacterTableLayout = new System.Windows.Forms.TableLayoutPanel();
+            this.panel1 = new System.Windows.Forms.Panel();
+            this.LogoPictureBox = new System.Windows.Forms.PictureBox();
+            this.panel1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
             // CreateCharacterBtn
             // 
-            this.CreateCharacterBtn.Location = new System.Drawing.Point(12, 95);
+            this.CreateCharacterBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreateCharacterBtn.Location = new System.Drawing.Point(361, 12);
             this.CreateCharacterBtn.Name = "CreateCharacterBtn";
             this.CreateCharacterBtn.Size = new System.Drawing.Size(133, 45);
             this.CreateCharacterBtn.TabIndex = 2;
@@ -51,34 +55,45 @@
             // 
             // TutorialBTn
             // 
-            this.TutorialBTn.Location = new System.Drawing.Point(216, 95);
+            this.TutorialBTn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.TutorialBTn.Enabled = false;
+            this.TutorialBTn.Location = new System.Drawing.Point(500, 12);
             this.TutorialBTn.Name = "TutorialBTn";
             this.TutorialBTn.Size = new System.Drawing.Size(133, 45);
             this.TutorialBTn.TabIndex = 3;
             this.TutorialBTn.Text = "Tutorial";
             this.TutorialBTn.UseVisualStyleBackColor = true;
+            this.TutorialBTn.Click += new System.EventHandler(this.TutorialBTn_Click);
             // 
             // OptionBtn
             // 
-            this.OptionBtn.Location = new System.Drawing.Point(411, 95);
+            this.OptionBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.OptionBtn.Enabled = false;
+            this.OptionBtn.Location = new System.Drawing.Point(639, 12);
             this.OptionBtn.Name = "OptionBtn";
             this.OptionBtn.Size = new System.Drawing.Size(133, 45);
             this.OptionBtn.TabIndex = 4;
             this.OptionBtn.Text = "Option";
             this.OptionBtn.UseVisualStyleBackColor = true;
+            this.OptionBtn.Click += new System.EventHandler(this.OptionBtn_Click);
             // 
             // ScoresBtn
             // 
-            this.ScoresBtn.Location = new System.Drawing.Point(619, 95);
+            this.ScoresBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.ScoresBtn.Enabled = false;
+            this.ScoresBtn.Location = new System.Drawing.Point(361, 63);
             this.ScoresBtn.Name = "ScoresBtn";
             this.ScoresBtn.Size = new System.Drawing.Size(133, 45);
             this.ScoresBtn.TabIndex = 5;
             this.ScoresBtn.Text = "Scores";
             this.ScoresBtn.UseVisualStyleBackColor = true;
+            this.ScoresBtn.Click += new System.EventHandler(this.ScoresBtn_Click);
             // 
             // CreditsBtn
             // 
-            this.CreditsBtn.Location = new System.Drawing.Point(847, 95);
+            this.CreditsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.CreditsBtn.Enabled = false;
+            this.CreditsBtn.Location = new System.Drawing.Point(500, 63);
             this.CreditsBtn.Name = "CreditsBtn";
             this.CreditsBtn.Size = new System.Drawing.Size(133, 45);
             this.CreditsBtn.TabIndex = 6;
@@ -87,7 +102,8 @@
             // 
             // QuitBtn
             // 
-            this.QuitBtn.Location = new System.Drawing.Point(1066, 95);
+            this.QuitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.QuitBtn.Location = new System.Drawing.Point(639, 63);
             this.QuitBtn.Name = "QuitBtn";
             this.QuitBtn.Size = new System.Drawing.Size(133, 45);
             this.QuitBtn.TabIndex = 7;
@@ -95,49 +111,65 @@
             this.QuitBtn.UseVisualStyleBackColor = true;
             this.QuitBtn.Click += new System.EventHandler(this.QuitBtn_Click);
             // 
-            // label1
-            // 
-            this.label1.AutoSize = true;
-            this.label1.Font = new System.Drawing.Font("Microsoft Sans Serif", 27.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label1.Location = new System.Drawing.Point(489, 19);
-            this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(231, 42);
-            this.label1.TabIndex = 8;
-            this.label1.Text = "Word Master";
-            // 
             // CharacterTableLayout
             // 
+            this.CharacterTableLayout.AutoScroll = true;
+            this.CharacterTableLayout.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
             this.CharacterTableLayout.BackColor = System.Drawing.Color.Gray;
             this.CharacterTableLayout.ColumnCount = 2;
-            this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CharacterTableLayout.Location = new System.Drawing.Point(12, 146);
+            this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
+            this.CharacterTableLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CharacterTableLayout.Location = new System.Drawing.Point(0, 114);
             this.CharacterTableLayout.Name = "CharacterTableLayout";
             this.CharacterTableLayout.RowCount = 2;
-            this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50F));
-            this.CharacterTableLayout.Size = new System.Drawing.Size(1187, 460);
+            this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
+            this.CharacterTableLayout.Size = new System.Drawing.Size(784, 448);
             this.CharacterTableLayout.TabIndex = 9;
+            // 
+            // panel1
+            // 
+            this.panel1.Controls.Add(this.LogoPictureBox);
+            this.panel1.Controls.Add(this.QuitBtn);
+            this.panel1.Controls.Add(this.CreditsBtn);
+            this.panel1.Controls.Add(this.ScoresBtn);
+            this.panel1.Controls.Add(this.OptionBtn);
+            this.panel1.Controls.Add(this.CreateCharacterBtn);
+            this.panel1.Controls.Add(this.TutorialBTn);
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Location = new System.Drawing.Point(0, 0);
+            this.panel1.Name = "panel1";
+            this.panel1.Size = new System.Drawing.Size(784, 114);
+            this.panel1.TabIndex = 10;
+            this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
+            // 
+            // LogoPictureBox
+            // 
+            this.LogoPictureBox.Image = ((System.Drawing.Image)(resources.GetObject("LogoPictureBox.Image")));
+            this.LogoPictureBox.Location = new System.Drawing.Point(-17, 7);
+            this.LogoPictureBox.Name = "LogoPictureBox";
+            this.LogoPictureBox.Size = new System.Drawing.Size(352, 101);
+            this.LogoPictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+            this.LogoPictureBox.TabIndex = 9;
+            this.LogoPictureBox.TabStop = false;
             // 
             // Mainmenu
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(1211, 618);
+            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.Controls.Add(this.panel1);
             this.Controls.Add(this.CharacterTableLayout);
-            this.Controls.Add(this.QuitBtn);
-            this.Controls.Add(this.CreditsBtn);
-            this.Controls.Add(this.label1);
-            this.Controls.Add(this.ScoresBtn);
-            this.Controls.Add(this.OptionBtn);
-            this.Controls.Add(this.CreateCharacterBtn);
-            this.Controls.Add(this.TutorialBTn);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximumSize = new System.Drawing.Size(1980, 1440);
+            this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Mainmenu";
             this.Text = "Word Master";
+            this.panel1.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);
-            this.PerformLayout();
 
 		}
 
@@ -149,8 +181,9 @@
         private System.Windows.Forms.Button ScoresBtn;
         private System.Windows.Forms.Button CreditsBtn;
         private System.Windows.Forms.Button QuitBtn;
-        private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TableLayoutPanel CharacterTableLayout;
+        private System.Windows.Forms.Panel panel1;
+        private System.Windows.Forms.PictureBox LogoPictureBox;
 	}
 }
 

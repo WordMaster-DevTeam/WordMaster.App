@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
-	public partial class Floor
+	public class Floor
 	{
 		readonly Dungeon _dungeon;
 		int _level;

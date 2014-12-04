@@ -1,6 +1,18 @@
-﻿namespace WordMaster.UI
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel;
+using System.Data;
+using System.Drawing;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+using System.Windows.Forms;
+using WordMaster.Gameplay;
+using WordMaster.Rendering;
+
+namespace WordMaster.UI
 {
-    partial class CharacterEditor
+    partial class CharacterEditor : Form
     {
         /// <summary>
         /// Required designer variable.

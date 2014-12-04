@@ -48,7 +48,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlExtension.cs" />
-    <Compile Include="Controls and components\FloorView.cs">
+    <Compile Include="Controls and components\FloorViewer.cs">
       <SubType>Component</SubType>
     </Compile>
     <Compile Include="Windows\CharacterEditor.cs">
@@ -103,13 +103,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Library.csproj">
+    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Gameplay.csproj">
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
-      <Name>WordMaster.Library</Name>
+      <Name>WordMaster.Gameplay</Name>
     </ProjectReference>
     <ProjectReference Include="..\WordMaster.IOChecks\WordMaster.IOChecks.csproj">
       <Project>{609380a8-a076-4830-8c74-c7301e385450}</Project>
       <Name>WordMaster.IOChecks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordMaster.Rendering\WordMaster.Rendering.csproj">
+      <Project>{d1cd04a9-0e75-4d7a-9cc3-ca7bc8948fe9}</Project>
+      <Name>WordMaster.Rendering</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

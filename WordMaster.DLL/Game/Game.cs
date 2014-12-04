@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
 	public class Game
 	{
@@ -18,7 +18,7 @@ namespace WordMaster.Library
 		{
 			_character = character;
 			_dungeon = dungeon;
-			_historic = historic = new HistoricRecord(dungeon);
+			_historic = historic = new HistoricRecord(character, dungeon);
 		}
 
 		/// <summary>

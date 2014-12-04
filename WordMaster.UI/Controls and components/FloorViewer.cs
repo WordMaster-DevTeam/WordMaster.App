@@ -1,28 +1,37 @@
 ﻿using System;
+using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
-using WordMaster.Library;
+using WordMaster.Gameplay;
+using WordMaster.Rendering;
 
 namespace WordMaster.UI
 {
-	public class FloorView : Control
+	public class FloorViewer : Control
 	{
-		readonly Floor _floor;
-        readonly ViewPort _viewPort;
+        ViewPort _viewPort;
 
 		/// <summary>
-		/// Initializes a new instance of <see cref="ViewPortOnly"/> class.
+		/// Initializes a new instance of <see cref="FloorViewer"/> class.
 		/// </summary>
-        public FloorView()
-        {
-            DoubleBuffered = true; // Graphical parameter (inherited)
-            _floor = null; // Floor to display
-            _viewPort = new ViewPort( _floor, 1 ); // ViewPort used to display the Floor
-            _viewPort.AreaChanged += _viewPort_AreaChanged; // Call the event AreaChanged, that force the application to (re)draw the ViewPort
-        }
+		public FloorViewer()
+		{
+			DoubleBuffered = true; // Graphical parameter (inherited)
+			InitializeComponent();
+		}
 
 		/// <summary>
-		/// Get the current ViewPort used in this instance of <see cref="FloorView"/> class.
+		/// 
+		/// </summary>
+		/// <param name="gameContext"></param>
+		internal void Initialize( GameContext gameContext )
+		{
+			_viewPort = new ViewPort( new FloorRender( gameContext.Game.Character, gameContext.Game.Character.Floor ), 10 ); // ViewPort used to display the Floor
+			_viewPort.AreaChanged += _viewPort_AreaChanged; // Force the application to (re)draw the ViewPort
+		}
+
+		/// <summary>
+		/// Get the current ViewPort used in this instance of <see cref="FloorViewer"/> class.
 		/// </summary>
 		public ViewPort ViewPort
 		{
@@ -44,8 +53,8 @@ namespace WordMaster.UI
 		/// </summary>
 		/// <param name="e">Event to handle.</param>
         protected override void OnResize( EventArgs e )
-        {
-            _viewPort.SetClientSize( ClientSize );
+		{
+			if( _viewPort != null ) _viewPort.SetClientSize( ClientSize );
             base.OnResize( e );
         }
 
@@ -56,17 +65,18 @@ namespace WordMaster.UI
 		/// <param name="y">Vertical's coordinate of the position.</param>
         public void ScrollTo( int x, int y )
         {
-            _viewPort.MoveCoordinates( x, y );
+            if( _viewPort != null ) _viewPort.MoveCoordinates( x, y );
         }
 
         protected override void OnPaint( PaintEventArgs e )
         {
             if( _viewPort == null || this.IsInDesignMode() )
             {
-                e.Graphics.FillRectangle( Brushes.Yellow, e.ClipRectangle );
+                e.Graphics.FillRectangle( Brushes.Azure, e.ClipRectangle );
             }
             else
             {
+				_viewPort.SetClientSize( ClientSize );
                 _viewPort.Draw( e.Graphics );
             }
             base.OnPaint( e );
@@ -77,17 +87,5 @@ namespace WordMaster.UI
 			this.SuspendLayout();
 			this.ResumeLayout(false);
 		}
-
-		//public FloorView()
-		//{
-		//	InitializeComponent();
-		//}
-
-		//public FloorView( IContainer container )
-		//{
-		//	container.Add( this );
-
-		//	InitializeComponent();
-		//}
 	}
 }

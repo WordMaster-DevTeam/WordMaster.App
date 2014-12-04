@@ -1,9 +1,10 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
 	public class HistoricRecord
 	{
+		readonly Character _character;
 		readonly Dungeon _dungeon;
 		DateTime _beginning;
 		DateTime _end;
@@ -17,14 +18,23 @@ namespace WordMaster.Library
 		/// </summary>
 		/// <param name="character">Character's reference.</param>
 		/// <param name="dungeon">Dungeon's reference.</param>
-		internal HistoricRecord( Dungeon dungeon )
+		internal HistoricRecord( Character character, Dungeon dungeon )
 		{
+			_character = character;
 			_dungeon = dungeon;
 			_beginning = DateTime.Now;
 		}
 
 		/// <summary>
-		/// Gets the reference to the instance of the <see cref="Dungeon"/> played.
+		/// Gets the reference to the instance of the <see cref="Character"/> used.
+		/// </summary>
+		public Character Character
+		{
+			get { return _character; }
+		}
+
+		/// <summary>
+		/// Gets the reference to the instance of the <see cref="Dungeon"/> used.
 		/// </summary>
 		public Dungeon Dungeon
 		{

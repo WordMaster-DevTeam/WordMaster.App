@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
     public class Item
     {

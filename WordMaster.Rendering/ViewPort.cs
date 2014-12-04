@@ -3,13 +3,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 
-namespace WordMaster.Library
+namespace WordMaster.Rendering
 {
 	public class ViewPort
 	{
-		readonly Floor _floor;
-		readonly int _minDisplayWidth;
+		FloorRender _floorRender;
 		Rectangle _viewPortArea;
+		readonly int _minDisplayWidth;
 		double _userZoomFactor;
 		int _maxClientSize;
 		float _clientScaleFactor;
@@ -17,22 +17,31 @@ namespace WordMaster.Library
 		/// <summary>
 		/// Initializes a new instance of <see cref="ViewPort"/> class.
 		/// </summary>
-		/// <param name="floor">Floor's reference to display.</param>
+		/// <param name="floorRender">Floor's reference to display.</param>
 		/// <param name="minDisplayMeters">Minimum display width (in meters).</param>
-		public ViewPort( Floor floor, int minDisplayMeters )
+		public ViewPort( FloorRender floorRender, int minDisplayMeters )
 		{
-			_floor = floor;
-			_viewPortArea = floor.Area;
+			if( floorRender != null )
+			{
+				_floorRender = floorRender;
+				_viewPortArea = floorRender.Area;
+			}
+
 			_userZoomFactor = 0.0;
 			_minDisplayWidth = minDisplayMeters * 100;
 		}
 
 		/// <summary>
-		/// Gets the current instance of <see cref="Floor"/> class displayed.
+		/// Gets or sets the current instance of <see cref="FloorRender"/> class used.
 		/// </summary>
-		public Floor Floor
+		public FloorRender FloorRender
 		{
-			get { return _floor; }
+			get { return _floorRender; }
+			set
+			{
+				_floorRender = value;
+				_viewPortArea = FloorRender.Area;
+			}
 		}
 
 		/// <summary>
@@ -40,7 +49,7 @@ namespace WordMaster.Library
 		/// </summary>
 		public bool HorizontalScrollEnabled
 		{
-			get { return _viewPortArea.Width < _floor.FloorGraphicalWidth; }
+			get { return _viewPortArea.Width < _floorRender.FloorRenderingWidth; }
 		}
 
 		/// <summary>
@@ -48,7 +57,7 @@ namespace WordMaster.Library
 		/// </summary>
 		public bool VerticalScrollEnabled
 		{
-			get { return _viewPortArea.Height < Floor.Area.Height; }
+			get { return _viewPortArea.Height < _floorRender.Area.Height; }
 		}
 
 		/// <summary>
@@ -56,7 +65,7 @@ namespace WordMaster.Library
 		/// </summary>
 		public double MinActualZoomFactor
 		{
-			get { return (double)_minDisplayWidth / (double)_floor.FloorGraphicalWidth; }
+			get { return (double)_minDisplayWidth / (double)_floorRender.FloorRenderingWidth; }
 		}
 
 		/// <summary>
@@ -64,7 +73,7 @@ namespace WordMaster.Library
 		/// </summary>
 		public double ZoomFactor
 		{
-			get { return (double)Math.Max( _viewPortArea.Width, _viewPortArea.Height ) / (double)_floor.FloorGraphicalWidth; }
+			get { return (double)Math.Max( _viewPortArea.Width, _viewPortArea.Height ) / (double)_floorRender.FloorRenderingWidth; }
 		}
 
 		/// <summary>
@@ -119,13 +128,13 @@ namespace WordMaster.Library
 		/// <summary>
 		/// Sets width, height and scale factor and move this instance of <see cref="ViewPort"/> class.
 		/// </summary>
-		/// <param name="value"></param>
-		/// <returns></returns>
+		/// <param name="value">...</param>
+		/// <returns>...</returns>
 		bool SetZoomFactor( double value )
 		{
-			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
+			Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
 
-			// Check the value parameter, can not be superior to zero, or inferior to the minimun zoom factor, or inferior not equal to the smaller positive double 
+			// Check the value parameter, can not be superior to one, or inferior to the minimun zoom factor
 			if( value > 1.0 )
 				value = 1.0;
 			else if( value < MinActualZoomFactor )
@@ -154,10 +163,9 @@ namespace WordMaster.Library
 			_viewPortArea.Width = newWidth;
 			_viewPortArea.Height = newHeight;
 			Move( ref _viewPortArea, -deltaW, -deltaW );
-			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
+			Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
 			_clientScaleFactor = (float)_maxClientSize / (float)Math.Max( _viewPortArea.Width, _viewPortArea.Height );
 
-			// ???
 			var h = AreaChanged;
 			if( h != null )
 				h( this, EventArgs.Empty );
@@ -166,7 +174,7 @@ namespace WordMaster.Library
 		}
 
 		/// <summary>
-		/// Move using deltas
+		/// Move using deltas.
 		/// </summary>
 		/// <param name="deltaX">Horizontal delta.</param>
 		/// <param name="deltaY"></param>
@@ -193,11 +201,11 @@ namespace WordMaster.Library
 		/// <summary>
 		/// ...
 		/// </summary>
-		/// <param name="rectangle"></param>
-		/// <param name="deltaX"></param>
-		/// <param name="deltaY"></param>
-		/// <returns></returns>
-		bool Move( ref Rectangle rectangle, int deltaX, int deltaY )
+		/// <param name="rectangle">...</param>
+		/// <param name="deltaX">...</param>
+		/// <param name="deltaY">...</param>
+		/// <returns>...</returns>
+		private bool Move( ref Rectangle rectangle, int deltaX, int deltaY )
 		{
 			int previousX = rectangle.X;
 			int previousY = rectangle.Y;
@@ -207,14 +215,14 @@ namespace WordMaster.Library
 				rectangle.X = 0;
 			else
 			{
-				int overflow = rectangle.Right - _floor.FloorGraphicalWidth;
+				int overflow = rectangle.Right - _floorRender.FloorRenderingWidth;
 				if( overflow > 0 )
 				{
 					rectangle.X -= overflow;
 					if( rectangle.X < 0 )
 					{
 						rectangle.X = 0;
-						rectangle.Width = _floor.FloorGraphicalWidth;
+						rectangle.Width = _floorRender.FloorRenderingWidth;
 					}
 				}
 			}
@@ -223,61 +231,64 @@ namespace WordMaster.Library
 				rectangle.Y = 0;
 			else
 			{
-				int overflow = rectangle.Bottom - _floor.FloorGraphicalWidth;
+				int overflow = rectangle.Bottom - _floorRender.FloorRenderingWidth;
 				if( overflow > 0 )
 				{
 					rectangle.Y -= overflow;
 					if( rectangle.Y < 0 )
 					{
 						rectangle.Y = 0;
-						rectangle.Height = _floor.FloorGraphicalWidth;
+						rectangle.Height = _floorRender.FloorRenderingWidth;
 					}
 				}
 			}
 
-			Debug.Assert( _floor.Area.Contains( rectangle ) );
+			Debug.Assert( _floorRender.Area.Contains( rectangle ) );
 			return previousX != rectangle.X || previousY != rectangle.Y;
 		}
 
 		/// <summary>
 		/// Sets the client's size.
 		/// </summary>
-		/// <param name="client">Current client's size.</param>
+		/// <param name="client">Client's reference.</param>
 		public void SetClientSize( Size client )
 		{
-			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
-			_maxClientSize = Math.Max( client.Width, client.Height );
-			Rectangle newViewPort = _viewPortArea;
-			bool keepHeight = _viewPortArea.Height > _viewPortArea.Width || (_viewPortArea.Height == _viewPortArea.Width && client.Height > client.Width);
-
-			if( keepHeight )
+			if( _floorRender != null )
 			{
-				_clientScaleFactor = (float)_maxClientSize / (float)_viewPortArea.Height;
-				newViewPort.Width = (int)Math.Ceiling( _viewPortArea.Height * client.Width / (double)_maxClientSize );
+				Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
+				_maxClientSize = Math.Max( client.Width, client.Height );
+				Rectangle newViewPort = _viewPortArea;
+				bool keepHeight = _viewPortArea.Height > _viewPortArea.Width || (_viewPortArea.Height == _viewPortArea.Width && client.Height > client.Width);
 
-				if( newViewPort.Width < _minDisplayWidth )
-					newViewPort.Width = _minDisplayWidth;
-				if( newViewPort.Right > _floor.FloorGraphicalWidth )
-					Move( ref newViewPort, _floor.FloorGraphicalWidth - newViewPort.Right, 0 );
+				if( keepHeight )
+				{
+					_clientScaleFactor = (float)_maxClientSize / (float)_viewPortArea.Height;
+					newViewPort.Width = (int)Math.Ceiling( _viewPortArea.Height * client.Width / (double)_maxClientSize );
+
+					if( newViewPort.Width < _minDisplayWidth )
+						newViewPort.Width = _minDisplayWidth;
+					if( newViewPort.Right > _floorRender.FloorRenderingWidth )
+						Move( ref newViewPort, _floorRender.FloorRenderingWidth - newViewPort.Right, 0 );
+				}
+				else
+				{
+					_clientScaleFactor = (float)_maxClientSize / (float)_viewPortArea.Width;
+					newViewPort.Height = (int)Math.Ceiling( _viewPortArea.Width * client.Height / (double)_maxClientSize );
+
+					if( newViewPort.Height < _minDisplayWidth )
+						newViewPort.Height = _minDisplayWidth;
+					if( newViewPort.Bottom > _floorRender.Area.Height )
+						Move( ref newViewPort, 0, _floorRender.Area.Height - newViewPort.Bottom );
+				}
+
+				Debug.Assert( _floorRender.Area.Contains( newViewPort ) );
+				_viewPortArea = newViewPort;
+				_clientScaleFactor = (float)_maxClientSize / (float)Math.Max( _viewPortArea.Width, _viewPortArea.Height );
+
+				var h = AreaChanged;
+				if( h != null )
+					h( this, EventArgs.Empty );
 			}
-			else
-			{
-				_clientScaleFactor = (float)_maxClientSize / (float)_viewPortArea.Width;
-				newViewPort.Height = (int)Math.Ceiling( _viewPortArea.Width * client.Height / (double)_maxClientSize );
-
-				if( newViewPort.Height < _minDisplayWidth )
-					newViewPort.Height = _minDisplayWidth;
-				if( newViewPort.Bottom > _floor.Area.Height )
-					Move( ref newViewPort, 0, _floor.Area.Height - newViewPort.Bottom );
-			}
-
-			Debug.Assert( _floor.Area.Contains( newViewPort ) );
-			_viewPortArea = newViewPort;
-			_clientScaleFactor = (float)_maxClientSize / (float)Math.Max( _viewPortArea.Width, _viewPortArea.Height );
-
-			var h = AreaChanged;
-			if( h != null )
-				h( this, EventArgs.Empty );
 		}
 
 		/// <summary>
@@ -286,21 +297,23 @@ namespace WordMaster.Library
 		/// <param name="graphic">Graphic's instance used.</param>
 		public void Draw( Graphics graphic )
 		{
-			Debug.Assert( _floor.Area.Contains( _viewPortArea ) );
-			Matrix origin = graphic.Transform;
-			graphic.ResetTransform();
-			graphic.ScaleTransform( _clientScaleFactor, _clientScaleFactor );
-			Matrix local = graphic.Transform;
-
-			// Render each Square of the Floor.
-			foreach( var renderInfo in _floor.GetOverlappedSquares( _viewPortArea ) )
+			if( _floorRender != null ) // Draw only if a FloorRender is setted
 			{
-				graphic.TranslateTransform( renderInfo.HorizontalOffset, renderInfo.VerticalOffset );
-				renderInfo.Square.Draw( graphic, renderInfo.RectangleSource, _clientScaleFactor );
-				graphic.Transform = local;
-			}
+				Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
+				Matrix origin = graphic.Transform;
+				graphic.ResetTransform();
+				graphic.ScaleTransform( _clientScaleFactor, _clientScaleFactor );
+				Matrix local = graphic.Transform;
 
-			graphic.Transform = origin;
+				foreach( SquareRenderInfos squareRenderInfos in _floorRender.GetOverlappedSquares( _viewPortArea ) ) // Render each Square of the Floor.
+				{
+					graphic.TranslateTransform( squareRenderInfos.HorizontalOffset, squareRenderInfos.VerticalOffset );
+					squareRenderInfos.Square.Draw( graphic, squareRenderInfos.RectangleSource, _clientScaleFactor );
+					graphic.Transform = local;
+				}
+
+				graphic.Transform = origin;
+			}
 		}
 	}
 }

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
     [Serializable]
     public class Character

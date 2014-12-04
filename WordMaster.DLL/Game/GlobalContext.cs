@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
 	public class GlobalContext
 	{
@@ -260,9 +260,9 @@ namespace WordMaster.Library
 
 			if( TryGetDungeon( name, out check ) ) throw new ArgumentException("A Floor with this name already exist.", "name");
 			
-				dungeon = new Dungeon( this, name, description );
-				_dungeons.Add( dungeon );
-				return dungeon;
+			dungeon = new Dungeon( this, name, description );
+			_dungeons.Add( dungeon );
+			return dungeon;
 		}
 
 		/// <summary>

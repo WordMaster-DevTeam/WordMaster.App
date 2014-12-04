@@ -7,39 +7,45 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using WordMaster.Library;
+using WordMaster.Gameplay;
+using WordMaster.Rendering;
 
 namespace WordMaster.UI
 {
     public partial class InGame : Form
     {
-        GlobalContext _context = new GlobalContext( );      
+        GlobalContext _globalContext;      
         Character _character;
         Dungeon _dungeon;
         Game _game;
+		GameContext _gameContext;
 
         public InGame()
         {
-            InitializeComponent( );
+			_globalContext = new GlobalContext();
+			_character = _globalContext.AddDefaultCharacter( "Olivier" );
+			_dungeon = _globalContext.AddDefaultDungeon( "The Cage" );
+			_game = _globalContext.StartNewGame( _character, _dungeon );
+			_gameContext = new GameContext( _globalContext, _game );
+
+			InitializeComponent();
         }
 
         private void InGame_Load( object sender, EventArgs e )
         {
-            _character = _context.AddDefaultCharacter("Olivier");
-            _dungeon = _context.AddDefaultDungeon( "The Cage" );
-            _game = _context.StartNewGame(_character, _dungeon);
+			// Dungeon panel
+			DungeonLabel.Text += "  " + _dungeon.Name;
+			FloorLabel.Text += "  " + _character.Floor.Name;
+			SquareLabel.Text += "  " + _character.Square.Name;
 
-            // Dungeon panel
-            DungeonLabel.Text += "  " + _dungeon.Name;
-            FloorLabel.Text += "  " + _character.Floor.Name;
-            SquareLabel.Text += "  " + _character.Square.Name;
+			// Character panel
+			NameLabel.Text += "  " + _character.Name;
+			LifeLabel.Text += "  " + _character.Health;
+			LeveLabel.Text += "  " + _character.Level;
+			ArmorLabel.Text += "  " + _character.Armor;
+			DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + _character.Description;
 
-            // Character panel
-            NameLabel.Text +=  "  " + _character.Name;
-            LifeLabel.Text += "  " + _character.Health;
-            LeveLabel.Text += "  " + _character.Level;
-            ArmorLabel.Text += "  " + _character.Armor;
-            DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + _character.Description;   
+			FloorViewer.Initialize( _gameContext );
         }
        
         private void QuitTheGame_Click( object sender, EventArgs e )
@@ -81,6 +87,7 @@ namespace WordMaster.UI
 		{
 
 		}
+
         private void DescriptionLabel_Click( object sender, EventArgs e )
         {
 
@@ -90,5 +97,25 @@ namespace WordMaster.UI
         {
 
         }
+
+		private void GoToRightButton_Click( object sender, EventArgs e )
+		{
+
+		}
+
+		private void GoToDownButton_Click( object sender, EventArgs e )
+		{
+
+		}
+
+		private void GoToUpButton_Click( object sender, EventArgs e )
+		{
+
+		}
+
+		private void floorView1_Click( object sender, EventArgs e )
+		{
+
+		}
     }
 }

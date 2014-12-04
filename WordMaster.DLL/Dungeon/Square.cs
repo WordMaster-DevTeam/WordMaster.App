@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.Gameplay
 {
-	public partial class Square
+	public class Square
 	{
 		readonly Floor _floor;
 		readonly int _line, _column;
@@ -30,6 +30,7 @@ namespace WordMaster.Library
 
 			if( teleportTo != null ) _holdable = true;
 			else _holdable = holdable;
+
 			_teleportTo = teleportTo;
 		}
 
@@ -39,6 +40,20 @@ namespace WordMaster.Library
 		public Floor Floor
 		{
 			get { return _floor; }
+		}
+
+		/// <summary>
+		/// Gets the horizontal coordinate of this instance of <see cref="Square"/> in an instance of <see cref="Floor"/> class.
+		/// </summary>
+		public int Line
+		{
+			get { return _line; }
+		}
+
+		/// Gets the vertical coordinate of this instance of <see cref="Square"/> in an instance of <see cref="Floor"/> class.
+		public int Column
+		{
+			get { return _column; }
 		}
 
 		/// <summary>

@@ -57,8 +57,8 @@ namespace WordMaster.Rendering
 			SolidBrush color;
 
 			// Default color (no textures yet)
-			     if( _floorRender.Character.Square == _square ) color = new SolidBrush( Color.Orange );
-			else if( _square.TeleportTo != null )               color = new SolidBrush( Color.LightBlue );
+			if( _floorRender.Character.Square == _square )      color = new SolidBrush( Color.LightBlue );
+			else if( _square.TeleportTo != null )               color = new SolidBrush( Color.Orange );
 			else if( _square.Holdable )                         color = new SolidBrush( Color.Beige );
 			else                                                color = new SolidBrush( Color.Gray );
 

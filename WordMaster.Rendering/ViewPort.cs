@@ -21,14 +21,10 @@ namespace WordMaster.Rendering
 		/// <param name="minDisplayMeters">Minimum display width (in meters).</param>
 		public ViewPort( FloorRender floorRender, int minDisplayMeters )
 		{
-			if( floorRender != null )
-			{
-				_floorRender = floorRender;
-				_viewPortArea = floorRender.Area;
-			}
-
+			_floorRender = floorRender;
+			_viewPortArea = floorRender.Area;
 			_userZoomFactor = 0.0;
-			_minDisplayWidth = minDisplayMeters * 100;
+			_minDisplayWidth = minDisplayMeters;
 		}
 
 		/// <summary>
@@ -212,7 +208,9 @@ namespace WordMaster.Rendering
 			rectangle.Offset( deltaX, deltaY );
 
 			if( rectangle.X < 0 )
+			{
 				rectangle.X = 0;
+			}
 			else
 			{
 				int overflow = rectangle.Right - _floorRender.FloorRenderingWidth;
@@ -228,7 +226,9 @@ namespace WordMaster.Rendering
 			}
 
 			if( rectangle.Y < 0 )
+			{
 				rectangle.Y = 0;
+			}
 			else
 			{
 				int overflow = rectangle.Bottom - _floorRender.FloorRenderingWidth;
@@ -297,23 +297,20 @@ namespace WordMaster.Rendering
 		/// <param name="graphic">Graphic's instance used.</param>
 		public void Draw( Graphics graphic )
 		{
-			if( _floorRender != null ) // Draw only if a FloorRender is setted
+			Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
+			Matrix origin = graphic.Transform;
+			graphic.ResetTransform();
+			graphic.ScaleTransform( _clientScaleFactor, _clientScaleFactor );
+			Matrix local = graphic.Transform;
+
+			foreach( SquareRenderInfos squareRenderInfos in _floorRender.GetOverlappedSquares( _viewPortArea ) ) // Render each Square of the Floor.
 			{
-				Debug.Assert( _floorRender.Area.Contains( _viewPortArea ) );
-				Matrix origin = graphic.Transform;
-				graphic.ResetTransform();
-				graphic.ScaleTransform( _clientScaleFactor, _clientScaleFactor );
-				Matrix local = graphic.Transform;
-
-				foreach( SquareRenderInfos squareRenderInfos in _floorRender.GetOverlappedSquares( _viewPortArea ) ) // Render each Square of the Floor.
-				{
-					graphic.TranslateTransform( squareRenderInfos.HorizontalOffset, squareRenderInfos.VerticalOffset );
-					squareRenderInfos.Square.Draw( graphic, squareRenderInfos.RectangleSource, _clientScaleFactor );
-					graphic.Transform = local;
-				}
-
-				graphic.Transform = origin;
+				graphic.TranslateTransform( squareRenderInfos.HorizontalOffset, squareRenderInfos.VerticalOffset );
+				squareRenderInfos.Square.Draw( graphic, squareRenderInfos.RectangleSource, _clientScaleFactor );
+				graphic.Transform = local;
 			}
+
+			graphic.Transform = origin;
 		}
 	}
 }

@@ -23,29 +23,31 @@ namespace WordMaster.UI
         public InGame()
         {
 			_globalContext = new GlobalContext();
-			_character = _globalContext.AddDefaultCharacter( "Olivier" );
-			_dungeon = _globalContext.AddDefaultDungeon( "The Cage" );
+			_character = _globalContext.AddDefaultCharacter( "Oliver" );
+			_dungeon = _globalContext.AddDefaultDungeon( "The Cab" );
 			_game = _globalContext.StartNewGame( _character, _dungeon );
 			_gameContext = new GameContext( _globalContext, _game );
 
 			InitializeComponent();
+
+			// Dungeon panel
+			DungeonLabel.Text += " : " + _dungeon.Name;
+			FloorLabel.Text += " : " + _character.Floor.Name;
+			SquareLabel.Text += " : " + _character.Square.Name;
+
+			// Character panel
+			NameLabel.Text += " : " + _character.Name;
+			LifeLabel.Text += " : " + _character.Health;
+			LeveLabel.Text += " : " + _character.Level;
+			ArmorLabel.Text += " : " + _character.Armor;
+			DescriptionLabel.Text = DescriptionLabel.Text + "\n" + _character.Description;
+
+			FloorViewer.Initialize( _gameContext );		
         }
 
         private void InGame_Load( object sender, EventArgs e )
         {
-			// Dungeon panel
-			DungeonLabel.Text += "  " + _dungeon.Name;
-			FloorLabel.Text += "  " + _character.Floor.Name;
-			SquareLabel.Text += "  " + _character.Square.Name;
 
-			// Character panel
-			NameLabel.Text += "  " + _character.Name;
-			LifeLabel.Text += "  " + _character.Health;
-			LeveLabel.Text += "  " + _character.Level;
-			ArmorLabel.Text += "  " + _character.Armor;
-			DescriptionLabel.Text = DescriptionLabel.Text + "\n \n" + _character.Description;
-
-			FloorViewer.Initialize( _gameContext );
         }
        
         private void QuitTheGame_Click( object sender, EventArgs e )

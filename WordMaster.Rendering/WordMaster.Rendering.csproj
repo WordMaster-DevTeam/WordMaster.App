@@ -40,8 +40,6 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="BlankFloorRender.cs" />
-    <Compile Include="Render\IFloorRender.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Render\FloorRender.cs" />
     <Compile Include="Render\SquareRender.cs" />

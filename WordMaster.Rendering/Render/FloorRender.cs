@@ -23,8 +23,10 @@ namespace WordMaster.Rendering
 		{
 			get
 			{
-				if( line < 0 || line >= _floor.NumberOfLines || column < 0 || column >= _floor.NumberOfColumns ) return null; // Outside the layout
-				else return _squaresRender[line, column];
+				if( line < 0 || line >= _floor.NumberOfLines || column < 0 || column >= _floor.NumberOfColumns )
+					return null; // Outside the layout
+				else
+					return _squaresRender[line, column];
 			}
 		}
 
@@ -40,12 +42,8 @@ namespace WordMaster.Rendering
 			_squaresRender = new SquareRender[_floor.NumberOfLines, _floor.NumberOfColumns];
 
 			for( int i = 0; i < _floor.NumberOfLines; i++ )
-			{
 				for( int j = 0; j < _floor.NumberOfColumns; j++ )
-				{
 					_squaresRender[i, j] = new SquareRender( this, floor[i, j] );
-				}
-			}
 		}
 
 		/// <summary>
@@ -86,9 +84,7 @@ namespace WordMaster.Rendering
 			get
 			{
 				if( _squareRenderingWidth <= 0 )
-				{
 					_squareRenderingWidth = 1;
-				}
 				return _squareRenderingWidth;
 			}
 			set
@@ -128,9 +124,9 @@ namespace WordMaster.Rendering
         }
 
 		/// <summary>
-		/// Gets a list (read-only) of instances of <see cref="GSquareRenderInfo"/> class that are in a Rectangle (usually the view port)
+		/// Gets a list (read-only) of instances of <see cref="GSquareRenderInfo"/> class that are in an instance of <see cref="Rectangle"/> class.
 		/// </summary>
-		/// <param name="rectangle">Area that contains the desired <see cref="GSquare"/>.</param>
+		/// <param name="rectangle">Area that contains the desired <see cref="SquareRender"/>.</param>
 		/// <returns>A list a <see cref="SquareRenderInfos"/>.</returns>
         public IEnumerable<SquareRenderInfos> GetOverlappedSquares( Rectangle rectangle )
         {
@@ -162,7 +158,7 @@ namespace WordMaster.Rendering
                         }
                         offsetX = -rectangleIntersect.X;
                     }
-					// Returns one element of the list.
+					// Returns one element of the list
                     yield return new SquareRenderInfos( currentSquare, rectangleIntersect, offsetX, offsetY );
 
                     offsetX += _squareRenderingWidth;

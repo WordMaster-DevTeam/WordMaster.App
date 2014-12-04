@@ -41,8 +41,8 @@
   <ItemGroup>
     <Compile Include="Character\Character.cs" />
     <Compile Include="Game\Game.cs" />
-    <Compile Include="Game\GameContext.cs" />
-    <Compile Include="Game\GlobalContext.cs" />
+    <Compile Include="Context\GameContext.cs" />
+    <Compile Include="Context\GlobalContext.cs" />
     <Compile Include="Game\HistoricRecord.cs" />
     <Compile Include="Character\Item.cs" />
     <Compile Include="Dungeon\Square.cs" />

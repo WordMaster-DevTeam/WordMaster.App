@@ -55,6 +55,18 @@
     <Compile Include="CharacterRecap.Designer.cs">
       <DependentUpon>CharacterRecap.cs</DependentUpon>
     </Compile>
+    <Compile Include="DungeonRecap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="DungeonRecap.Designer.cs">
+      <DependentUpon>DungeonRecap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="DungeonSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="DungeonSelection.Designer.cs">
+      <DependentUpon>DungeonSelection.cs</DependentUpon>
+    </Compile>
     <Compile Include="FloorView.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -83,6 +95,12 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <EmbeddedResource Include="CharacterRecap.resx">
       <DependentUpon>CharacterRecap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DungeonRecap.resx">
+      <DependentUpon>DungeonRecap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="DungeonSelection.resx">
+      <DependentUpon>DungeonSelection.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FloorView.resx">
       <DependentUpon>FloorView.cs</DependentUpon>
@@ -124,6 +142,9 @@
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.DLL</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\biblioWM.ico" />
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\Logo v1.bmp" />

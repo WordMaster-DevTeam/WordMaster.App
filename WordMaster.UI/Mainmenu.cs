@@ -51,7 +51,7 @@ namespace WordMaster.UI
             
 
             
-            // Saved Characters loading
+            // Saved Characters loading (need serialization)
 
             //TODO
 
@@ -65,6 +65,10 @@ namespace WordMaster.UI
                 CharacterTableLayout.Controls.Add( newCell );               
             }
 
+            foreach(RowStyle style in this.CharacterTableLayout.RowStyles)
+            {
+                style.SizeType = SizeType.Percent;
+            }
             
         }
 
@@ -80,6 +84,8 @@ namespace WordMaster.UI
         {
             Application.Exit();
         }
+
+
 
         private void panel1_Paint( object sender, PaintEventArgs e )
         {

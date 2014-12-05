@@ -80,7 +80,7 @@
             this.LaunchBtn.TabIndex = 4;
             this.LaunchBtn.Text = "Launch Game";
             this.LaunchBtn.UseVisualStyleBackColor = false;
-            this.LaunchBtn.Click += new System.EventHandler(this.LaunchBtn_Click_1);
+            this.LaunchBtn.Click += new System.EventHandler(this.LaunchBtn_Click);
             // 
             // CharacterRecap
             // 

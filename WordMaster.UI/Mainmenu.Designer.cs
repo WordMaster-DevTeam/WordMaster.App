@@ -45,7 +45,7 @@
             // CreateCharacterBtn
             // 
             this.CreateCharacterBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CreateCharacterBtn.Location = new System.Drawing.Point(361, 12);
+            this.CreateCharacterBtn.Location = new System.Drawing.Point(807, 12);
             this.CreateCharacterBtn.Name = "CreateCharacterBtn";
             this.CreateCharacterBtn.Size = new System.Drawing.Size(133, 45);
             this.CreateCharacterBtn.TabIndex = 2;
@@ -57,7 +57,7 @@
             // 
             this.TutorialBTn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TutorialBTn.Enabled = false;
-            this.TutorialBTn.Location = new System.Drawing.Point(500, 12);
+            this.TutorialBTn.Location = new System.Drawing.Point(946, 12);
             this.TutorialBTn.Name = "TutorialBTn";
             this.TutorialBTn.Size = new System.Drawing.Size(133, 45);
             this.TutorialBTn.TabIndex = 3;
@@ -69,7 +69,7 @@
             // 
             this.OptionBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OptionBtn.Enabled = false;
-            this.OptionBtn.Location = new System.Drawing.Point(639, 12);
+            this.OptionBtn.Location = new System.Drawing.Point(1085, 12);
             this.OptionBtn.Name = "OptionBtn";
             this.OptionBtn.Size = new System.Drawing.Size(133, 45);
             this.OptionBtn.TabIndex = 4;
@@ -81,7 +81,7 @@
             // 
             this.ScoresBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ScoresBtn.Enabled = false;
-            this.ScoresBtn.Location = new System.Drawing.Point(361, 63);
+            this.ScoresBtn.Location = new System.Drawing.Point(807, 63);
             this.ScoresBtn.Name = "ScoresBtn";
             this.ScoresBtn.Size = new System.Drawing.Size(133, 45);
             this.ScoresBtn.TabIndex = 5;
@@ -93,7 +93,7 @@
             // 
             this.CreditsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CreditsBtn.Enabled = false;
-            this.CreditsBtn.Location = new System.Drawing.Point(500, 63);
+            this.CreditsBtn.Location = new System.Drawing.Point(946, 63);
             this.CreditsBtn.Name = "CreditsBtn";
             this.CreditsBtn.Size = new System.Drawing.Size(133, 45);
             this.CreditsBtn.TabIndex = 6;
@@ -103,7 +103,7 @@
             // QuitBtn
             // 
             this.QuitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.QuitBtn.Location = new System.Drawing.Point(639, 63);
+            this.QuitBtn.Location = new System.Drawing.Point(1085, 63);
             this.QuitBtn.Name = "QuitBtn";
             this.QuitBtn.Size = new System.Drawing.Size(133, 45);
             this.QuitBtn.TabIndex = 7;
@@ -120,12 +120,13 @@
             this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.CharacterTableLayout.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle());
             this.CharacterTableLayout.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.CharacterTableLayout.ImeMode = System.Windows.Forms.ImeMode.Off;
             this.CharacterTableLayout.Location = new System.Drawing.Point(0, 114);
             this.CharacterTableLayout.Name = "CharacterTableLayout";
             this.CharacterTableLayout.RowCount = 2;
             this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
             this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.CharacterTableLayout.Size = new System.Drawing.Size(784, 448);
+            this.CharacterTableLayout.Size = new System.Drawing.Size(1230, 615);
             this.CharacterTableLayout.TabIndex = 9;
             // 
             // panel1
@@ -137,10 +138,10 @@
             this.panel1.Controls.Add(this.OptionBtn);
             this.panel1.Controls.Add(this.CreateCharacterBtn);
             this.panel1.Controls.Add(this.TutorialBTn);
-            this.panel1.Dock = System.Windows.Forms.DockStyle.Fill;
+            this.panel1.Dock = System.Windows.Forms.DockStyle.Top;
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(784, 114);
+            this.panel1.Size = new System.Drawing.Size(1230, 114);
             this.panel1.TabIndex = 10;
             this.panel1.Paint += new System.Windows.Forms.PaintEventHandler(this.panel1_Paint);
             // 
@@ -159,14 +160,16 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(784, 562);
+            this.ClientSize = new System.Drawing.Size(1230, 729);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.CharacterTableLayout);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximumSize = new System.Drawing.Size(1980, 1440);
             this.MinimumSize = new System.Drawing.Size(800, 600);
             this.Name = "Mainmenu";
             this.Text = "Word Master";
+            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.LogoPictureBox)).EndInit();
             this.ResumeLayout(false);

@@ -61,6 +61,8 @@ namespace WordMaster.UniTests
 			Dungeon dungeon;
 			Floor floor;
 			Square final;
+			Game game;
+			HistoricRecord historicRecord;
 			string characterName = "a character";
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
@@ -74,7 +76,7 @@ namespace WordMaster.UniTests
 			dungeon.Entrance = floor.SetSquare( 0, 0, squaresName, "", true, null );
 			dungeon.Exit = floor.SetSquare( 1, 1, squaresName, "", true, null );
 			floor.SetSquare( 0, 1, squaresName, "", true, null );
-			context.StartNewGame( character, dungeon );
+			context.StartNewGame( character, dungeon, out game, out historicRecord );
 
 			// Assert
 			Assert.AreSame( character.Square, dungeon.Entrance );

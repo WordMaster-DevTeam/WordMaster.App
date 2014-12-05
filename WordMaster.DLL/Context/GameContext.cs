@@ -11,11 +11,14 @@ namespace WordMaster.Gameplay
 		/// Initializes a new instance of <see cref="GameContext"/> class.
 		/// </summary>
 		/// <param name="globalContext">GlobalContext's reference.</param>
-		/// <param name="currentGame">Game's reference.</param>
-		public GameContext( GlobalContext globalContext, Game game )
+		/// <param name="character">Character's refernce.</param>
+		/// <param name="dungeon">Dungeon's reference.</param>
+		/// <param name="game">Game's reference to recover.</param>
+		/// <param name="historicRecord">HistoricRecord's referecne to recover</param>
+		public GameContext( GlobalContext globalContext, Character character, Dungeon dungeon, out Game game, out HistoricRecord historicRecord )
 		{
 			_globalContext = globalContext;
-			_game = game;
+			_game = game = new Game(character, dungeon, out historicRecord);
 		}
 
 		/// <summary>

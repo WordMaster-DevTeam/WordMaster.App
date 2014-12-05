@@ -195,12 +195,12 @@ namespace WordMaster.Rendering
 		}
 
 		/// <summary>
-		/// ...
+		/// Move methods used by MoveCoordinates and MoveDeltas (DRY).
 		/// </summary>
-		/// <param name="rectangle">...</param>
-		/// <param name="deltaX">...</param>
-		/// <param name="deltaY">...</param>
-		/// <returns>...</returns>
+		/// <param name="rectangle">Targeted rectangle.</param>
+		/// <param name="deltaX">Horizontal delta.</param>
+		/// <param name="deltaY">VertacalDelta</param>
+		/// <returns>if the ViewPort has moved.</returns>
 		private bool Move( ref Rectangle rectangle, int deltaX, int deltaY )
 		{
 			int previousX = rectangle.X;

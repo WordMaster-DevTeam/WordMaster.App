@@ -6,45 +6,50 @@ namespace WordMaster.Gameplay
     [Serializable]
     public class Character
     {
+		readonly GlobalContext _globalContext;
 		string _name, _description;
 		int _hp, _xp, _level, _armor;
-		readonly List<string> _book;
 		readonly List<Item> _inventory;
 		readonly List<HistoricRecord> _historics;
-		Dungeon _currentDungeon;
-		Floor _currentFloor;
-		Square _currentSquare;
-		Game _currentGame;
+		Dungeon _dungeon;
+		Floor _floor;
+		Square _square;
+		GameContext _gameContext;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Character"/> class.
 		/// </summary>
-		/// <param name="name">Character's name.</param>
+		/// <param name="globalContext">GlobalContext's reference, all Characters must be in a <see cref="GlobalContext"/>.</param>
+		/// <param name="name">Character's name, must be unique in this GlobalContext.</param>
 		/// <param name="description">Character's description.</param>
 		/// <param name="hp">Character's health.</param>
 		/// <param name="xp">Character's experience.</param>
 		/// <param name="level">Character's level.</param>
 		/// <param name="armor">Character's armor.</param>
 		/// </summary>
-		internal Character( string name, string description, int hp, int xp, int level, int armor)
+		internal Character( GlobalContext globalContext, string name, string description, int hp, int xp, int level, int armor)
 		{
+			_globalContext = globalContext;
 			_name = name;
 			_description = description;
 			_hp = hp;
 			_xp = xp;
 			_level = level;
 			_armor = armor;
-			_book = new List<string>();
 			_inventory = new List<Item>();
 			_historics = new List<HistoricRecord>();
-			_currentDungeon = null;
-			_currentFloor = null;
-			_currentSquare = null;
-			_currentGame = null;
 		}
 
 		/// <summary>
-		/// Gets the Character's name.
+		/// Gets the current instance of <see cref="GlobalContext"/> class.
+		/// </summary>
+		public GlobalContext GlobalContext 
+		{
+			get { return _globalContext; }
+		}
+
+		/// <summary>
+		/// Gets the <see cref="Character"/>'s name.
 		/// </summary>
         public string Name
         {
@@ -53,7 +58,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets the Character's descriptions.
+		/// Gets the <see cref="Character"/>'s descriptions.
 		/// </summary>
         public string Description
         {
@@ -62,7 +67,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets or sets the Character's health points (HP).
+		/// Gets or sets the <see cref="Character"/>'s health points (HP).
 		/// </summary>
         public int Health
         {
@@ -71,7 +76,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets or sets the Character's experience points.
+		/// Gets or sets the <see cref="Character"/>'s experience points.
 		/// </summary>
         public int Experience
         {
@@ -80,7 +85,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets or sets the Character's level.
+		/// Gets or sets the <see cref="Character"/>'s level.
 		/// </summary>
         public int Level
         {
@@ -89,7 +94,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets or sets the Character's armor.
+		/// Gets or sets the <see cref="Character"/>'s armor.
 		/// </summary>
         public int Armor
         {
@@ -98,7 +103,7 @@ namespace WordMaster.Gameplay
         }   
      
 		/// <summary>
-		/// Gets the list (read-write) of Item.
+		/// Gets the list (read-write) of <see cref="Item"/>.
 		/// </summary>
         public List<Item> Inventory
         {
@@ -106,15 +111,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets the list (read-write) of Books.
-		/// </summary>
-        public List<string> Book
-        {
-            get { return _book; }
-        }
-
-		/// <summary>
-		/// Gets the list (readonly) of HistoricRecords.
+		/// Gets the list (read only) of instances of<see cref="HistoricRecord"/>s class.
 		/// </summary>
 		public IEnumerable<HistoricRecord> Historics
 		{
@@ -122,56 +119,65 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Gets or set the current <see cref="Game"/>.
+		/// Gets the current instance of <see cref="HistoricRecords"/> class used in the current instance of <see cref="Game"/> class.
 		/// </summary>
-		public Game Game
+		public HistoricRecord Historic
 		{
-			get { return _currentGame; }
-			set { _currentGame = value; }
+			get
+			{
+				if( _gameContext != null )
+					return _gameContext.Game.Historic;
+				else
+					return null;
+			}
 		}
 
 		/// <summary>
-		/// Gets the current <see cref="Dungeon"/>.
+		/// Gets the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public Dungeon Dungeon
 		{
-			get { return _currentDungeon; }
+			get { return _dungeon; }
 		}
 
 		/// <summary>
-		/// Gets the current <see cref="Floor"/>.
+		/// Gets the current instance of <see cref="Floor"/> class.
 		/// </summary>
 		public Floor Floor
 		{
-			get { return _currentFloor; }
+			get { return _floor; }
 		}
 
 		/// <summary>
-		/// Gets the current <see cref="Square"/>.
+		/// Gets the current instance of <see cref="Square"/> class.
 		/// </summary>
 		public Square Square
 		{
-			get { return _currentSquare; }
+			get { return _square; }
+		}
+
+		/// <summary>
+		/// Gets the current instance of <see cref="GameContext"/> class.
+		/// </summary>
+		public GameContext GameContext
+		{
+			get { return _gameContext; }
 		}
 
 		/// <summary>
 		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
 		/// </summary>
-		/// <param name="dungeon">Dungeon's reference.</param>
-		/// <param name="game">Game's reference.</param>
-		/// <param name="record">HistoricRecord's reference.</param>
-		internal void EnterDungeon( Dungeon dungeon, Game game, HistoricRecord record )
+		/// <param name="gameContext">GameContext's reference.</param>
+		internal void EnterDungeon( GameContext gameContext )
 		{
-			Floor floor;
+			if( gameContext.Game.Dungeon.Entrance == null ) throw new ArgumentException( "No entrance.", "dungeon" );
+			if( gameContext.Game.Dungeon.Exit == null ) throw new ArgumentException( "No exit.", "dungeon" );
 
-			if( dungeon.TryGetFloor( 0, out floor ) == false ) throw new ArgumentException( "Empty Dungeon.", "dungeon" );
-			if( dungeon.Entrance == null ) throw new ArgumentException( "No entrance.", "dungeon" );
-		
-			_currentDungeon = dungeon;
-			_currentFloor = floor;
-			_currentSquare = dungeon.Entrance;
-			_currentGame = game;
-			_historics.Add( record );
+			_historics.Add( gameContext.Game.Historic );
+			_dungeon = gameContext.Game.Dungeon;
+			_floor = gameContext.Game.Dungeon.Entrance.Floor;
+			_square = gameContext.Game.Dungeon.Entrance;
+			_gameContext = gameContext;
 		}
 
 		/// <summary>
@@ -179,14 +185,16 @@ namespace WordMaster.Gameplay
 		/// </summary>
 		internal void LeaveDungeon()
 		{
-			_currentDungeon = null;
-			_currentFloor = null;
-			_currentSquare = null;
-			_currentGame = null;
+			_dungeon = null;
+			_floor = null;
+			_square = null;
+			_gameContext = null;
 		}
 
 		/// <summary>
 		/// Moves an instance of <see cref="Character"/> class to a different Square.
+		/// This method will change Character's <see cref="Floor"/> if the targeted <see cref="Square"/> teleport to another Floor.
+		/// It will also end or cancel the <see cref="Game"/> if the Character steps to the entrance's square or to the exit's square.
 		/// </summary>
 		/// <param name="target">Target Square's reference.</param>
 		/// <param name="final">Final Character's Square at the end of the call.</param>
@@ -195,24 +203,40 @@ namespace WordMaster.Gameplay
 		{
 			if( target == null ) // Target not set
 			{
-				final = _currentSquare;
+				final = _square;
 				return false;
 			}
 			else if( target.Holdable == false ) // Target not holdable
 			{
-					final = _currentSquare;
+					final = _square;
 					return false;
 			}
 			else
 			{
-					if( target.TeleportTo == null ) final = target; // Case 1: No teleport, final equal target
-					else final = target.TeleportTo; // Case 2: Teleport, final equal teleport's target
-
-					_currentFloor = final.Floor;
-					_currentSquare = final;
-					return true;
+				if( target.Floor.Dungeon.Entrance.Equals( target ) ) // Cancel the Game (exit the Dungeon by the entrance)
+				{
+					_gameContext.GlobalContext.CancelGame( this );
+					final = null;
+				}
+				else if( target.Floor.Dungeon.Exit.Equals( target ) ) // Finish the Game (exit the Dungeon by the exit)
+				{
+					_gameContext.GlobalContext.FinishGame( this );
+					final = null;
+				}
+				else if( target.TeleportTo == null ) // No teleport allocates to the target
+				{
+					final = target;
+					_square = final;
+				}
+				else // Teleport to the target should automatically teleport to target's target
+				{
+					final = target.TeleportTo;
+					_floor = final.Floor;
+					_square = final;
+				}
+				return true;
 			}
-		}   
+		}
 
         /// <summary>
         /// Moves an instance of <see cref="Character"/> class to a different Square.
@@ -225,10 +249,13 @@ namespace WordMaster.Gameplay
         {
 			Square square;
 
-			if( _currentFloor.TryGetSquare( line, column, out square ) ) return TryMoveTo( square, out final );
+			if( _floor.TryGetSquare( line, column, out square ) )
+			{
+				return TryMoveTo( square, out final );
+			}
 			else
 			{
-				final = _currentSquare;
+				final = _square;
 				return false;
 			}
         }

@@ -7,8 +7,8 @@
     <ProjectGuid>{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.Library</RootNamespace>
-    <AssemblyName>WordMaster.DLL</AssemblyName>
+    <RootNamespace>WordMaster.Gameplay</RootNamespace>
+    <AssemblyName>WordMaster.Gameplay</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
   </PropertyGroup>

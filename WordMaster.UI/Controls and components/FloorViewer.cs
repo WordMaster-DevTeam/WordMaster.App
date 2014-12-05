@@ -31,7 +31,7 @@ namespace WordMaster.UI
 		}
 
 		/// <summary>
-		/// Get the current ViewPort used in this instance of <see cref="FloorViewer"/> class.
+		/// Gets the current ViewPort used in this instance of <see cref="FloorViewer"/> class.
 		/// </summary>
 		public ViewPort ViewPort
 		{

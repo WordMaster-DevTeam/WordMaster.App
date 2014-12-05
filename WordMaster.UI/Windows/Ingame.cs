@@ -15,49 +15,42 @@ namespace WordMaster.UI
     public partial class InGame : Form
     {
         GlobalContext _globalContext;      
-        Character _character;
-        Dungeon _dungeon;
-        Game _game;
 		GameContext _gameContext;
+		Game _game;
+		HistoricRecord _historicRecord;
 
         public InGame()
         {
 			_globalContext = new GlobalContext();
-			_character = _globalContext.AddDefaultCharacter( "Oliver" );
-			_dungeon = _globalContext.AddDefaultDungeon( "The Cab" );
-			_game = _globalContext.StartNewGame( _character, _dungeon );
-			_gameContext = new GameContext( _globalContext, _game );
+			_gameContext = _globalContext.StartNewGame( _globalContext.AddDefaultCharacter( "Oliver" ), _globalContext.AddDefaultDungeon( "The Cab" ), out _game, out _historicRecord );
 
 			InitializeComponent();
-
-			// Dungeon panel
-			DungeonLabel.Text += " : " + _dungeon.Name;
-			FloorLabel.Text += " : " + _character.Floor.Name;
-			SquareLabel.Text += " : " + _character.Square.Name;
-
-			// Character panel
-			NameLabel.Text += " : " + _character.Name;
-			LifeLabel.Text += " : " + _character.Health;
-			LeveLabel.Text += " : " + _character.Level;
-			ArmorLabel.Text += " : " + _character.Armor;
-			DescriptionLabel.Text = DescriptionLabel.Text + "\n" + _character.Description;
-
-			FloorViewer.Initialize( _gameContext );		
         }
 
         private void InGame_Load( object sender, EventArgs e )
         {
+			// DungeonPanel
+			DungeonTextBox1.Text = _game.Character.Name;
+			DungeonTextBox2.Text = _game.Character.Description;
+			FloorTextBox1.Text = _game.Character.Floor.Name;
+			FloorTextBox2.Text = _game.Character.Floor.Description;
+			SquareTextBox1.Text = _game.Character.Square.Name;
+			SquareTextBox2.Text = _game.Character.Square.Description;
 
+			// CharacterPanel
+			NameTextBox.Text = _game.Character.Name;
+			LifeTextBox.Text = _game.Character.Health.ToString();
+			LevelTextBox.Text = _game.Character.Level.ToString();
+			ArmorTextBox.Text = _game.Character.Armor.ToString();
+			DescriptionTextBox.Text = _game.Character.Description;
+
+			// FloorViewer
+			FloorViewer.Initialize( _gameContext );	
         }
        
         private void QuitTheGame_Click( object sender, EventArgs e )
         {
             Application.Exit( );
-        }
-
-        private void GoToLeftButton_Click( object sender, EventArgs e )
-        {
-           
         }
        
         private void label3_Click( object sender, EventArgs e )
@@ -65,7 +58,7 @@ namespace WordMaster.UI
 
         }
 
-       private void Profilpicturebox_Click( object sender, EventArgs e )
+		private void Profilpicturebox_Click( object sender, EventArgs e )
         {
             
         }
@@ -100,24 +93,102 @@ namespace WordMaster.UI
 
         }
 
-		private void GoToRightButton_Click( object sender, EventArgs e )
-		{
-
-		}
-
-		private void GoToDownButton_Click( object sender, EventArgs e )
-		{
-
-		}
-
-		private void GoToUpButton_Click( object sender, EventArgs e )
-		{
-
-		}
-
 		private void floorView1_Click( object sender, EventArgs e )
 		{
 
 		}
-    }
+
+		private void NameTextBox_TextChanged( object sender, EventArgs e )
+		{
+
+		}
+
+		#region Up, Right, Down and Left actions
+		private void MoveAndUpdate( Square initial, int line, int column )
+		{
+			Square target, final;
+
+			if( initial.Floor.TryGetSquare( line, column, out target ) )
+			{
+				if( _gameContext.Game.Character.TryMoveTo( target, out final ) ) // Checks holdable state and teleport to another square if neeeded
+				{
+					if( final != null ) // The Game continue
+					{
+						if( !initial.Floor.Equals( final.Floor ) ) // Updates needed if the Floor have change
+						{
+							// Update FloorViewer's Floor and Floor's text boxes
+							FloorViewer.ViewPort.FloorRender = new FloorRender(_gameContext.Game.Character, final.Floor);
+							FloorTextBox1.Text = final.Floor.Name;
+							FloorTextBox2.Text = final.Floor.Description;
+						}
+						if( !initial.Equals( final ) ) // Updates needed if the Square have changed
+						{
+							// Update Square's text boxes
+							SquareTextBox1.Text = final.Name;
+							SquareTextBox2.Text = final.Description;
+						}
+					}
+					else // The Game have been ended
+					{
+						if( target.Equals( _gameContext.Game.Dungeon.Entrance ) || target.Equals( _gameContext.Game.Dungeon.Exit ) ) // Fail to finish the game
+						{
+							// Update FloorViewer's Floor and all text boxes (Dungeon, Floor, Square)
+							FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon[0] );
+							DungeonTextBox1.Text = _globalContext.EmptyDungeon.Name;
+							DungeonTextBox2.Text = _globalContext.EmptyDungeon.Description;
+							FloorTextBox1.Text = _globalContext.EmptyDungeon[0].Name;
+							FloorTextBox2.Text = _globalContext.EmptyDungeon[0].Description;
+							SquareTextBox1.Text = _globalContext.EmptyDungeon[0][0, 0].Name;
+							SquareTextBox2.Text = _globalContext.EmptyDungeon[0][0, 0].Description;
+						}
+					}
+				}
+			}
+		}
+
+		private void GoToUpButton_Click( object sender, EventArgs e )
+		{
+			if( _gameContext.Game.Character.Square != null )
+				MoveAndUpdate
+				(
+					_gameContext.Game.Character.Square,
+					_gameContext.Game.Character.Square.Line - 1,
+					_gameContext.Game.Character.Square.Column
+				);
+		}
+
+		private void GoToRightButton_Click( object sender, EventArgs e )
+		{
+			if( _gameContext.Game.Character.Square != null )
+				MoveAndUpdate
+				(
+					_gameContext.Game.Character.Square,
+					_gameContext.Game.Character.Square.Line,
+					_gameContext.Game.Character.Square.Column + 1
+				);
+		}
+
+		private void GoToDownButton_Click( object sender, EventArgs e )
+		{
+			if( _gameContext.Game.Character.Square != null )
+				MoveAndUpdate
+				(
+					_gameContext.Game.Character.Square,
+					_gameContext.Game.Character.Square.Line + 1,
+					_gameContext.Game.Character.Square.Column 
+				);
+		}
+
+		private void GoToLeftButton_Click( object sender, EventArgs e )
+		{
+			if( _gameContext.Game.Character.Square != null )
+				MoveAndUpdate
+				(
+					_gameContext.Game.Character.Square,
+					_gameContext.Game.Character.Square.Line,
+					_gameContext.Game.Character.Square.Column - 1
+				);
+		}
+		#endregion
+	}
 }

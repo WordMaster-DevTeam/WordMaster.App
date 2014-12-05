@@ -32,8 +32,8 @@ namespace WordMaster.Gameplay
 		/// <param name="level">Floor's position, must be superior or equal to zero.</param>
 		/// <param name="name">Floor's name, must be unique in this Dungeon.</param>
 		/// <param name="description">Floor's description.</param>
-		/// <param name="numberOfLines">Floor's number of line in the layout, each Floor must have at least two Squares.</param>
-		/// <param name="numberOfColumns">Floor's number of column in the layout, each Floor must have at least two Squares.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout.</param>
 		internal Floor( Dungeon dungeon, int level, string name, string description, int numberOfLines, int numberOfColumns )
 		{
 			_dungeon = dungeon;

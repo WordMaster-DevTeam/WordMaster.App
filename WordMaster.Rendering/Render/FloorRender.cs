@@ -8,9 +8,9 @@ namespace WordMaster.Rendering
 {
 	public class FloorRender
 	{
-		readonly Floor _floor;
-		readonly Character _character;
-		readonly SquareRender[,] _squaresRender;
+		Character _character;
+		Floor _floor;
+		SquareRender[,] _squaresRender;
 		int _squareRenderingWidth;
 
 		/// <summary>
@@ -47,16 +47,28 @@ namespace WordMaster.Rendering
 		}
 
 		/// <summary>
-		/// Gets the instance of <see cref="Floor"/> class used.
+		/// Gets (or sets - desactivated) the instance of <see cref="Floor"/> class used.
 		/// </summary>
 		public Floor Floor
 		{
 			get { return _floor; }
+			//set
+			//{
+			//	_floor = value;
+			//	_squaresRender = new SquareRender[_floor.NumberOfLines, _floor.NumberOfColumns];
+			//	for( int i = 0; i < _floor.NumberOfLines; i++ )
+			//		for( int j = 0; j < _floor.NumberOfColumns; j++ )
+			//			_squaresRender[i, j] = new SquareRender( this, _floor[i, j] );
+			//}
 		}
 
+		/// <summary>
+		/// Gets or sets the <see cref="Character"/> used.
+		/// </summary>
 		public Character Character
 		{
 			get { return _character; }
+			set { _character = value; }
 		}
 
 		/// <summary>

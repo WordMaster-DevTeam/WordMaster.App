@@ -67,10 +67,11 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-			Game game;
             Character character;
             Dungeon dungeon;
             Floor floor;
+			Game game;
+			HistoricRecord historicRecord;
 			string characterName = "a character";
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
@@ -83,7 +84,7 @@ namespace WordMaster.UniTests
 			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
 			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
 			floor.SetAllUninitializedSquares( squareName, "", true );
-            game = context.StartNewGame( character, dungeon );
+            context.StartNewGame( character, dungeon, out game, out historicRecord );
 
             //Assert
             Assert.AreSame( game.Character, character );
@@ -96,10 +97,11 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-			Game game;
             Character character;
             Dungeon dungeon;
             Floor floor;
+			Game game;
+			HistoricRecord historicRecord;
 			string characterName = "a character";
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
@@ -112,14 +114,14 @@ namespace WordMaster.UniTests
             dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
             dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
 			floor.SetAllUninitializedSquares( squareName, "", true );
-            game = context.StartNewGame( character, dungeon );
+            context.StartNewGame( character, dungeon, out game, out historicRecord );
             context.FinishGame(character);
 
             //Assert            
             Assert.That( character.Dungeon, Is.Null );
             Assert.That( character.Floor, Is.Null );
             Assert.That( character.Square, Is.Null );
-            Assert.That( character.Game, Is.Null );
+            Assert.That( character.GameContext, Is.Null );
             Assert.That( character.Historics.Last( ).Finished, Is.True );
         }
 
@@ -128,10 +130,11 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-			Game game;
             Character character;
             Dungeon dungeon;
             Floor floor;
+			Game game;
+			HistoricRecord historicRecord;
 			string characterName = "a character";
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
@@ -144,8 +147,8 @@ namespace WordMaster.UniTests
 			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
 			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
 			floor.SetAllUninitializedSquares( squareName, "", true );
-			game = context.StartNewGame( character, dungeon );
-            context.EndGame( character );
+			context.StartNewGame( character, dungeon, out game, out historicRecord );
+            context.CancelGame( character );
 
             //Assert
             Assert.That( character.Historics.Last( ).Cancelled, Is.True );

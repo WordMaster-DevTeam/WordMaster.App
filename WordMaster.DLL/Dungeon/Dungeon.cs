@@ -5,23 +5,46 @@ namespace WordMaster.Gameplay
 {
     public class Dungeon
     {
-		readonly GlobalContext _context;
+		readonly GlobalContext _globalContext;
 		readonly Dictionary<string, Floor> _floors;
 		string _name, _description;
 		Square _entrance, _exit;
-		
+
+		/// <summary>
+		/// Recovers an instance of <see cref="Dungeon"/> class using the [index] syntax.
+		/// </summary>
+		/// <param name="index">Floor's index.</param>
+		/// <returns>Floor's reference.</returns>
+		public Floor this[int index]
+		{
+			get
+			{
+				if( index < 0 || index >= _floors.Count ) // Checks index
+					return null;
+				else return GetFloor(index);
+			}
+		}
+
 		/// <summary>
 		/// Initializes a new instance of <see cref="Dungeon"/> class.
 		/// </summary>
-		/// <param name="context">GlobalContext's reference, all Dungeons must be in a <see cref="GlobalContext"/>.</param>
+		/// <param name="globalContext">GlobalContext's reference, all Dungeons must be in a <see cref="GlobalContext"/>.</param>
 		/// <param name="name">Dungeon's name, must be unique in this GlobalContext.</param>
 		/// <param name="description">Dungeon's description.</param>
-		internal Dungeon( GlobalContext context, string name, string description)
+		internal Dungeon( GlobalContext globalContext, string name, string description)
 		{
-			_context = context;
+			_globalContext = globalContext;
 			_name = name;
 			_description = description;
 			_floors = new Dictionary<string, Floor>();
+		}
+
+		/// <summary>
+		/// Gets the GlobalContext's reference.
+		/// </summary>
+		public GlobalContext GlobalContext
+		{
+			get { return _globalContext; }
 		}
 
 		/// <summary>
@@ -97,9 +120,9 @@ namespace WordMaster.Gameplay
 		{
 			get
 			{
-				foreach( Character character in _context.Characters ) // Any Character in it ?
-					if( character.Game != null ) // The Character is in a Dungeon
-						if( character.Game.Dungeon.Equals( this ) )
+				foreach( Character character in _globalContext.Characters ) // Any Character in it ?
+					if( character.GameContext != null ) // The Character is in a Dungeon
+						if( character.GameContext.Game.Dungeon.Equals( this ) )
 							return false;
 				return true;
 			}
@@ -195,8 +218,8 @@ namespace WordMaster.Gameplay
 		/// <param name="level">Floor's position, must be superior or equal to zero.</param>
 		/// <param name="name">Floor's name, must be unique in this Dungeon.</param>
 		/// <param name="description">Floor's description.</param>
-		/// <param name="numberOfLines">Floor's number of line in the layout, each Floor must have at least two Squares.</param>
-		/// <param name="numberOfColumns">Floor's number of column in the layout, each Floor must have at least two Squares.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout.</param>
 		/// <returns>New Floor's reference.</returns>
 		public Floor AddFloor( int level, string name, string description, int numberOfLines, int numberOfColumns )
 		{
@@ -204,7 +227,6 @@ namespace WordMaster.Gameplay
 			if( level > NumberOfFloors ) throw new InvalidOperationException( "Can not add a Floor with level because it would not be adjoining." );
 			if( ExistFloor( name ) ) throw new ArgumentException( "A floor with this name already exist.", "name" );
 			if( level < 0 ) throw new ArgumentException( "Floor level must be positive.", "level" );
-			if( numberOfLines * numberOfColumns < 2 ) throw new ArgumentException( "Floor's number of Square must be superior to one.", "numberOfLine, numberOfColumns" );
 
 			Floor floor = new Floor( this, level, name, description, numberOfLines, numberOfColumns );
 
@@ -224,8 +246,8 @@ namespace WordMaster.Gameplay
 		/// </summary>
 		/// <param name="name">Floor's name, must be unique in this Dungeon.</param>
 		/// <param name="description">Floor's description.</param>
-		/// <param name="numberOfLines">Floor's number of line in the layout, each Floor must have at least two Squares.</param>
-		/// <param name="numberOfColumns">Floor's number of column in the layout, each Floor must have at least two Squares.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout.</param>
 		/// <returns>New Floor's reference.</returns>
 		public Floor AddFloor( string name, string description, int numberOfLines, int numberOfColumns )
 		{
@@ -238,8 +260,8 @@ namespace WordMaster.Gameplay
 		/// <param name="level">Floor's position, must be superior or equal to zero.</param>
 		/// <param name="name">Floor's name, must be unique in this Dungeon.</param>
 		/// <param name="description">Floor's description.</param>
-		/// <param name="numberOfLines">Floor's number of line in the layout, each Floor must have at least two Squares.</param>
-		/// <param name="numberOfColumns">Floor's number of column in the layout, each Floor must have at least two Squares.</param>
+		/// <param name="numberOfLines">Floor's number of line in the layout.</param>
+		/// <param name="numberOfColumns">Floor's number of column in the layout.</param>
 		/// <param name="floor">Floor's reference to recover.</param>
 		/// <returns>If the Floor have been created and added.</returns>
 		public bool TryAddFloor( int level, string name, string description, int numberOfLines, int numberOfColumns, out Floor floor )

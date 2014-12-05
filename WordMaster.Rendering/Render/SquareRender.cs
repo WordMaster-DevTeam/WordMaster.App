@@ -56,14 +56,40 @@ namespace WordMaster.Rendering
 			Rectangle rectangle = new Rectangle( 0, 0, _floorRender.SquareRenderingWidth, _floorRender.SquareRenderingWidth );
 			SolidBrush color;
 
-			// Default color (no textures yet)
-			if( _floorRender.Character.Square == _square )      color = new SolidBrush( Color.LightBlue );
-			else if( _square.TeleportTo != null )               color = new SolidBrush( Color.Orange );
-			else if( _square.Holdable )                         color = new SolidBrush( Color.Beige );
-			else                                                color = new SolidBrush( Color.Gray );
+			// Default colors (no textures yet)
+			if( _square != null )
+			{
+				graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
 
-			graphic.FillRectangle( color, rectangle );
-			rectangle.Inflate( - (_floorRender.SquareRenderingWidth) / 12, - (_floorRender.SquareRenderingWidth) / 12 );
+				if( _square.Holdable ) // Holdable
+					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
+				
+				if( _square.TeleportTo != null ) // Teleport
+					graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
+				
+				if( _square.Floor.Dungeon.Entrance != null ) // Entrance
+				{
+					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) )
+						graphic.FillRectangle( new SolidBrush( Color.Red ), rectangle );
+				}
+
+				if( _square.Floor.Dungeon.Exit != null ) // Exit
+				{
+					if( _square.Floor.Dungeon.Exit.Equals( this._square ) )
+						graphic.FillRectangle( new SolidBrush( Color.Blue ), rectangle );
+				}
+
+				if( _floorRender.Character != null ) // Their is a Character in this Floor
+				{
+					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
+						color = new SolidBrush( Color.LightBlue );
+				}
+				else
+				{
+					graphic.FillRectangle( new SolidBrush( Color.Black ), rectangle );
+				}
+			}
+			rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
         }
 	}
 }

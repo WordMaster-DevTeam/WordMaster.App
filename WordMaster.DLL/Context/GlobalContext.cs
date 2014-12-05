@@ -26,11 +26,26 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Gets all the instances of <see cref="Dungeon"/> initialized in this instance of <see cref="GlobalContext"/> class.
+		/// Gets all the instances of <see cref="Dungeon"/> class initialized in this instance of <see cref="GlobalContext"/> class.
 		/// </summary>
 		public IEnumerable<Dungeon> Dungeons
 		{
 			get { return _dungeons; }
+		}
+
+		/// <summary>
+		/// Gets an instance of <see cref="Dungeon"/> class that are totally empty (one floor, one square, unholdable, no entrance, no exit).
+		/// </summary>
+		public Dungeon EmptyDungeon
+		{
+			get
+			{
+				Dungeon emptyDungeon = new Dungeon( this, "", "" );
+				Floor emptyFloor = emptyDungeon.AddFloor( "", "", 3, 3 );
+				emptyFloor.SetAllSquares( "", "" );
+
+				return emptyDungeon;
+			}
 		}
 
 		#region Character's management methods
@@ -55,7 +70,7 @@ namespace WordMaster.Gameplay
 			if( level <= 0 ) throw new ArgumentException( "Level must be greater than 0." );
 			if( armor <= 0 ) throw new ArgumentException( "Armor must be greater than 0." );
 
-			character = new Character( name, description, hp, xp, level, armor );
+			character = new Character( this, name, description, hp, xp, level, armor );
 			_characters.Add( character );
 			return character;
 		}
@@ -86,7 +101,7 @@ namespace WordMaster.Gameplay
 
 			if(TryGetCharacter(name, out check) ) throw new ArgumentException( "A Floor with this name already exist.", "name" );
 
-			character = new Character( name, "Default Character.", 200, 1000, 5, 150 );
+			character = new Character( this, name, "A standard guy without particuliar ambition. Height 1,79 meter with helmet and weight 91 kilograms with armor.", 100, 0, 1, 10 );
 			_characters.Add( character );
 			return character;
 		}
@@ -112,7 +127,7 @@ namespace WordMaster.Gameplay
 			}
 			else
 			{
-				character = new Character( name, description, hp, xp, level, armor );
+				character = new Character( this, name, description, hp, xp, level, armor );
 				return true;
 			}
 		}
@@ -155,7 +170,7 @@ namespace WordMaster.Gameplay
 		{
 			Character character;
 
-			if( TryGetCharacter( oldName, out character ) ) throw new ArgumentException( "No Character with this name already exist.", "name" );
+			if( !TryGetCharacter( oldName, out character ) ) throw new ArgumentException( "No Character with this name already exist.", "name" );
 
 			RenameCharacter( character, newName );
 		}
@@ -163,7 +178,7 @@ namespace WordMaster.Gameplay
 		/// <summary>
 		/// Sets the name of this instance of <see cref="Character"/> int his instance of <see cref="GlobalContext"/>.
 		/// </summary>
-		/// <param name="character">Character's refernece.</param>
+		/// <param name="character">Character's reference.</param>
 		/// <param name="newName">Charcter's new name, must be unique.</param>
 		/// <returns>If the Character have been renamed.</returns>
 		public bool TryRenaneCharacter( Character character, string newName)
@@ -203,7 +218,7 @@ namespace WordMaster.Gameplay
 		/// <returns>If the Character has been removed.</returns>
 		public bool TryRemoveCharacter( Character character )
 		{
-			if( character.Game != null )
+			if( character.GameContext != null )
 			{
 				return false;
 			}
@@ -221,7 +236,7 @@ namespace WordMaster.Gameplay
 		/// <param name="character">Character's reference.</param>
 		public void ForceRemoveCharacter( Character character )
 		{
-			if (character.Game != null ) EndGame( character);
+			if (character.GameContext != null ) CancelGame( character);
 			_characters.Remove( character );
 		}
 
@@ -258,7 +273,7 @@ namespace WordMaster.Gameplay
 		{
 			Dungeon check, dungeon;
 
-			if( TryGetDungeon( name, out check ) ) throw new ArgumentException("A Floor with this name already exist.", "name");
+			if( TryGetDungeon( name, out check ) ) throw new ArgumentException("A Dungeon with this name already exist.", "name");
 			
 			dungeon = new Dungeon( this, name, description );
 			_dungeons.Add( dungeon );
@@ -267,20 +282,19 @@ namespace WordMaster.Gameplay
 
 		/// <summary>
 		/// Adds an instance of <see cref="Dungeon"/> class in this instance of <see cref="GlobalContext"/> class.
-		/// NOTE: this if for debug.
 		/// WARNING: Dungeon's name must be unique.
 		/// </summary>
 		/// <param name="name">Dungeon's name, must be unique in this GlobalContext.</param>
-		/// <returns>A Dungeon of 3 <see cref="Floor"/> of 3*3 <see cref="Square"/>s each.</returns>
+		/// <returns>The Default Dungeon.</returns>
 		public Dungeon AddDefaultDungeon(string name)
 		{
 			Dungeon check, dungeon;
 			Floor floorA, floorB, floorC;
-			Square goAtoB, goBtoC, goCtoB;
+			Square goAtoB, goBtoA, goBtoC, goCtoB;
 
-			if( TryGetDungeon( name, out check ) ) throw new ArgumentException( "A Floor with this name already exist.", "name" );
+			if( TryGetDungeon( name, out check ) ) throw new ArgumentException( "A Dungeon with this name already exist.", "name" );
 
-			dungeon = this.AddDungeon( name, "Default Dungeon." );
+			dungeon = this.AddDungeon( name, "A small an pitiful dungeon." );
 
 			// Level 0
 			floorA = dungeon.AddFloor( "The Entrance Area", "You enter the dungeon and stand near the entrance...", 3, 3  );
@@ -290,10 +304,12 @@ namespace WordMaster.Gameplay
 			floorA.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 			
 			// Level 1
-			floorB = dungeon.AddFloor( "The 1st Floor", "While you climbing the stair, you feel the end is near.", 3, 3 );
-			goAtoB.TeleportTo = floorB.SetSquare( 1, 2, "Destroyed Wooden Stair", "You can not go back.", true, null );
-			floorB.SetSquare(2, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
-			goBtoC = floorB.SetSquare(1, 1, "Hole", "Their is an hole here, in the floor's roof...", true, null );
+			floorB = dungeon.AddFloor( "The 1st Floor", "While you climbing the stair, you feel the exit is near.", 3, 3 );
+			goBtoA = floorB.SetSquare( 1, 2, "Wooden Stair", "You can not go back.", true, null );
+			goAtoB.TeleportTo = goBtoA;
+			goBtoA.TeleportTo = goAtoB;
+			floorB.SetSquare(1, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			goBtoC = floorB.SetSquare(2, 1, "Hole", "Their is an hole here, in the floor's roof...", true, null );
 			floorB.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 
 			// Level 2
@@ -425,7 +441,7 @@ namespace WordMaster.Gameplay
 		{
 			foreach( Character character in _characters )
 				if( character.Dungeon.Equals( dungeon ) )
-					EndGame( character );
+					CancelGame( character );
 			_dungeons.Remove( dungeon );
 		}
 
@@ -457,15 +473,13 @@ namespace WordMaster.Gameplay
 		/// <param name="character">Character's reference.</param>
 		/// <param name="dungeon">Dungeon's reference.</param>
 		/// <returns>New Game's reference.</returns>
-		public Game StartNewGame( Character character, Dungeon dungeon)
+		public GameContext StartNewGame( Character character, Dungeon dungeon, out Game game, out HistoricRecord historicRecord)
 		{
 			if( dungeon.Entrance == null || dungeon.Exit == null ) throw new ArgumentException( "Dungeon's entrance and exit or not set", "dungeon" );
 
-			HistoricRecord record;
-			Game game = new Game( character, dungeon, out record );
-			character.EnterDungeon( dungeon , game, record );
-
-			return game;
+			GameContext gameContext = new GameContext( this, character, dungeon, out game, out historicRecord );
+			character.EnterDungeon( gameContext );
+			return gameContext;
 		}
 
 		/// <summary>
@@ -475,7 +489,7 @@ namespace WordMaster.Gameplay
 		/// <param name="character">Character's reference.</param>
 		public void FinishGame( Character character )
 		{
-			character.Game.Historic.Finished = true;
+			character.GameContext.Game.Historic.Finished = true;
 			character.LeaveDungeon();
 		}
 
@@ -484,9 +498,9 @@ namespace WordMaster.Gameplay
 		/// The player who have use the exit function.
 		/// </summary>
 		/// <param name="character">Character's reference.</param>
-		public void EndGame( Character character )
+		public void CancelGame( Character character )
 		{
-			character.Game.Historic.Cancelled = true;
+			character.GameContext.Game.Historic.Cancelled = true;
 			character.LeaveDungeon();
 		}
 		#endregion

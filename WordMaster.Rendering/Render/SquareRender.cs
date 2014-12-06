@@ -54,7 +54,6 @@ namespace WordMaster.Rendering
         public virtual void Draw( Graphics graphic, Rectangle rectangleSource, float scaleFactor )
         {
 			Rectangle rectangle = new Rectangle( 0, 0, _floorRender.SquareRenderingWidth, _floorRender.SquareRenderingWidth );
-			SolidBrush color;
 
 			// Default colors (no textures yet)
 			if( _square != null )
@@ -82,7 +81,7 @@ namespace WordMaster.Rendering
 				if( _floorRender.Character != null ) // Their is a Character in this Floor
 				{
 					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
-						color = new SolidBrush( Color.LightBlue );
+						graphic.FillRectangle( new SolidBrush( Color.LightBlue ), rectangle );
 				}
 				else
 				{

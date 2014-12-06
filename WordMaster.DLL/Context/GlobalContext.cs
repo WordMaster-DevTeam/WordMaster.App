@@ -41,7 +41,7 @@ namespace WordMaster.Gameplay
 			get
 			{
 				Dungeon emptyDungeon = new Dungeon( this, "", "" );
-				Floor emptyFloor = emptyDungeon.AddFloor( "", "", 3, 3 );
+				Floor emptyFloor = emptyDungeon.AddFloor( "", "", 10, 10 );
 				emptyFloor.SetAllSquares( "", "" );
 
 				return emptyDungeon;
@@ -289,36 +289,127 @@ namespace WordMaster.Gameplay
 		public Dungeon AddDefaultDungeon(string name)
 		{
 			Dungeon check, dungeon;
-			Floor floorA, floorB, floorC;
+			Floor floorA, floorB, floorC, floorD, floorE, floorF;
 			Square goAtoB, goBtoA, goBtoC, goCtoB;
 
 			if( TryGetDungeon( name, out check ) ) throw new ArgumentException( "A Dungeon with this name already exist.", "name" );
 
-			dungeon = this.AddDungeon( name, "A small an pitiful dungeon." );
+			dungeon = this.AddDungeon( name, "A small dungeon." );
 
 			// Level 0
-			floorA = dungeon.AddFloor( "The Entrance Area", "You enter the dungeon and stand near the entrance...", 3, 3  );
-			dungeon.Entrance = floorA.SetSquare( 1, 0, "Entrance", "A wooden door that crack will you push it.", true, null );
-			floorA.SetSquare( 1, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
-			goAtoB = floorA.SetSquare( 1, 2, "Wooden Stair", "You are not sure this stair will stand long enough to carry you.", true, null );
+			floorA = dungeon.AddFloor( "The Entrance Area", "You enter the dungeon and stand near the entrance...", 10, 10  );
+			dungeon.Entrance = floorA.SetSquare( 1, 1, "Entrance", "A wooden door that crack will you push it.", true, null );
+			floorA.SetSquare( 1, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 1, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 2, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 2, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 3, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 3, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 3, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 3, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 4, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 5, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 5, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 6, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 7, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorA.SetSquare( 8, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			goAtoB = floorA.SetSquare( 8, 8, "Wooden Stair", "You are not sure this stair will stand long enough to carry you.", true, null );
 			floorA.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 			
 			// Level 1
-			floorB = dungeon.AddFloor( "The 1st Floor", "While you climbing the stair, you feel the exit is near.", 3, 3 );
-			goBtoA = floorB.SetSquare( 1, 2, "Wooden Stair", "You can not go back.", true, null );
+			floorB = dungeon.AddFloor( "The 1st Floor", "While you climbing the stair, you feel the exit is near.", 10, 10 );
+			goBtoC = floorB.SetSquare( 1, 1, "Hole", "Their is an hole here, in the floor's roof...", true, null );
+			floorB.SetSquare( 1, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 1, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 1, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 1, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null ); 
+			floorB.SetSquare( 1, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 2, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 3, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 4, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 4, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 5, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 6, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 7, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 7, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 7, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 7, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorB.SetSquare( 8, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			goBtoA = floorB.SetSquare( 8, 8, "Wooden Stair", "You are not sure this stair will stand long enough to carry you.", true, null );
 			goAtoB.TeleportTo = goBtoA;
 			goBtoA.TeleportTo = goAtoB;
-			floorB.SetSquare(1, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
-			goBtoC = floorB.SetSquare(2, 1, "Hole", "Their is an hole here, in the floor's roof...", true, null );
 			floorB.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 
 			// Level 2
-			floorC = dungeon.AddFloor( "The Roof", "You can feel the cold air of the sea.", 3, 3 );
+			floorC = dungeon.AddFloor( "The Roof", "You can feel the cold air of the sea.", 10, 10 );
 			goCtoB = floorC.SetSquare( 1, 1, "Hole", "Their is an hole here, in the floor's roof...", true, goBtoC );
+			floorC.SetSquare( 1, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 1, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 1, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 1, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 1, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 2, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 2, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 2, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 3, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 3, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 3, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 4, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 4, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 4, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 4, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 4, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 5, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 5, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 5, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 6, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 6, 2, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 6, 3, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 6, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 6, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			dungeon.Exit = floorC.SetSquare( 6, 8, "Iron ladder", "You can safely escape using this.", true, null );
+			floorC.SetSquare( 7, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 7, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 7, 8, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 8, 4, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 8, 5, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 8, 6, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
+			floorC.SetSquare( 8, 7, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
 			goBtoC.TeleportTo = goCtoB;
 			goCtoB.TeleportTo = goBtoC;
-			floorC.SetSquare( 0, 1, "Wooden Floor", "The planks have begin to decay long ago.", true, null );
-			dungeon.Exit = floorC.SetSquare(0, 2, "Iron ladder", "You can safely escape using this.", true, null );
 			floorC.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 
 			return dungeon;

@@ -30,8 +30,8 @@ namespace WordMaster.UI
         private void InGame_Load( object sender, EventArgs e )
         {
 			// DungeonPanel
-			DungeonTextBox1.Text = _game.Character.Name;
-			DungeonTextBox2.Text = _game.Character.Description;
+			DungeonTextBox1.Text = _game.Character.Dungeon.Name;
+			DungeonTextBox2.Text = _game.Character.Dungeon.Description;
 			FloorTextBox1.Text = _game.Character.Floor.Name;
 			FloorTextBox2.Text = _game.Character.Floor.Description;
 			SquareTextBox1.Text = _game.Character.Square.Name;
@@ -47,7 +47,62 @@ namespace WordMaster.UI
 			// FloorViewer
 			FloorViewer.Initialize( _gameContext );	
         }
-       
+
+		protected override bool ProcessCmdKey( ref Message msg, Keys keyData )
+		{
+			// Capture up arrow key
+			if( keyData == Keys.Z || keyData == Keys.Up )
+			{
+				if( _gameContext.Game.Character.Square != null )
+					MoveAndUpdate
+					(
+						_gameContext.Game.Character.Square,
+						_gameContext.Game.Character.Square.Line - 1,
+						_gameContext.Game.Character.Square.Column
+					);
+				return true;
+			}
+
+			// Capture right arrow key
+			if( keyData == Keys.D || keyData == Keys.Right )
+			{
+				if( _gameContext.Game.Character.Square != null )
+					MoveAndUpdate
+					(
+						_gameContext.Game.Character.Square,
+						_gameContext.Game.Character.Square.Line,
+						_gameContext.Game.Character.Square.Column + 1
+					);
+				return true;
+			}
+			//capture down arrow key
+			if( keyData == Keys.S || keyData == Keys.Down )
+			{
+				if( _gameContext.Game.Character.Square != null )
+					MoveAndUpdate
+					(
+						_gameContext.Game.Character.Square,
+						_gameContext.Game.Character.Square.Line + 1,
+						_gameContext.Game.Character.Square.Column
+					);
+				return true;
+			}
+			//capture left arrow key
+			if( keyData == Keys.Q || keyData == Keys.Left )
+			{
+				if( _gameContext.Game.Character.Square != null )
+					MoveAndUpdate
+					(
+						_gameContext.Game.Character.Square,
+						_gameContext.Game.Character.Square.Line,
+						_gameContext.Game.Character.Square.Column - 1
+					);
+				return true;
+			}
+			
+			return base.ProcessCmdKey( ref msg, keyData );
+		}
+
         private void QuitTheGame_Click( object sender, EventArgs e )
         {
             Application.Exit( );

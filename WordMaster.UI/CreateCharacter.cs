@@ -77,5 +77,10 @@ namespace WordMaster.UI
                 
             }
         }
+
+        private void BackBtn_Click( object sender, EventArgs e )
+        {
+            this.Close( );
+        }
     }
 }

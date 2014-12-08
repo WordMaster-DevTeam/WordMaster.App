@@ -7,6 +7,7 @@ namespace WordMaster.Gameplay
 	{
 		readonly List<Character> _characters;
 		readonly List<Dungeon> _dungeons;
+		readonly Random _random = new Random();
 
 		/// <summary>
 		/// Initiliazes a new instance of <see cref="GlobalContext"/> class.
@@ -31,6 +32,14 @@ namespace WordMaster.Gameplay
 		public IEnumerable<Dungeon> Dungeons
 		{
 			get { return _dungeons; }
+		}
+
+		/// <summary>
+		/// Gets an instance of <see = "Random"/> class (random generator).
+		/// </summary>
+		public Random Random
+		{
+			get { return _random; }
 		}
 
 		/// <summary>
@@ -347,7 +356,10 @@ namespace WordMaster.Gameplay
 			floorB.SetSquare( 1, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 1, 5, "Stone floor", "The stone are cold below yours feets.", true, null ); 
 			floorB.SetSquare( 1, 6, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 1, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 1, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 2, 6, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 2, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 3, 1, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 3, 2, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 3, 3, "Stone floor", "The stone are cold below yours feets.", true, null );
@@ -355,8 +367,8 @@ namespace WordMaster.Gameplay
 			floorB.SetSquare( 3, 5, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 3, 6, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 3, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 3, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 4, 1, "Stone floor", "The stone are cold below yours feets.", true, null );
-			floorB.SetSquare( 4, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 5, 1, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 5, 2, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 5, 3, "Stone floor", "The stone are cold below yours feets.", true, null );
@@ -366,10 +378,12 @@ namespace WordMaster.Gameplay
 			floorB.SetSquare( 5, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 5, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 6, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 6, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 7, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 7, 5, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 7, 6, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 7, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
+			floorB.SetSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 8, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
 			/* Get B -> A ; Use A -> B ; Use B -> A */
 			AtoB.TeleportTo = floorB.SetSquare( 8, 8, "Old stair", "You are not sure this stair will stand long enough to carry you.", true, AtoB );

@@ -45,63 +45,8 @@ namespace WordMaster.UI
 			DescriptionTextBox.Text = _game.Character.Description;
 
 			// FloorViewer
-			FloorViewer.Initialize( _gameContext );	
+			FloorViewer.Initialize( _gameContext );
         }
-
-		protected override bool ProcessCmdKey( ref Message msg, Keys keyData )
-		{
-			// Capture up arrow key
-			if( keyData == Keys.Z || keyData == Keys.Up )
-			{
-				if( _gameContext.Game.Character.Square != null )
-					MoveAndUpdate
-					(
-						_gameContext.Game.Character.Square,
-						_gameContext.Game.Character.Square.Line - 1,
-						_gameContext.Game.Character.Square.Column
-					);
-				return true;
-			}
-
-			// Capture right arrow key
-			if( keyData == Keys.D || keyData == Keys.Right )
-			{
-				if( _gameContext.Game.Character.Square != null )
-					MoveAndUpdate
-					(
-						_gameContext.Game.Character.Square,
-						_gameContext.Game.Character.Square.Line,
-						_gameContext.Game.Character.Square.Column + 1
-					);
-				return true;
-			}
-			//capture down arrow key
-			if( keyData == Keys.S || keyData == Keys.Down )
-			{
-				if( _gameContext.Game.Character.Square != null )
-					MoveAndUpdate
-					(
-						_gameContext.Game.Character.Square,
-						_gameContext.Game.Character.Square.Line + 1,
-						_gameContext.Game.Character.Square.Column
-					);
-				return true;
-			}
-			//capture left arrow key
-			if( keyData == Keys.Q || keyData == Keys.Left )
-			{
-				if( _gameContext.Game.Character.Square != null )
-					MoveAndUpdate
-					(
-						_gameContext.Game.Character.Square,
-						_gameContext.Game.Character.Square.Line,
-						_gameContext.Game.Character.Square.Column - 1
-					);
-				return true;
-			}
-			
-			return base.ProcessCmdKey( ref msg, keyData );
-		}
 
         private void QuitTheGame_Click( object sender, EventArgs e )
         {
@@ -158,7 +103,61 @@ namespace WordMaster.UI
 
 		}
 
-		#region Up, Right, Down and Left actions
+		#region Up, Right, Down and Left actions' methods
+		protected override bool ProcessCmdKey( ref Message msg, Keys keyData )
+		{
+			// Capture Z & up arrow key
+			if( keyData == Keys.Z || keyData == Keys.Up )
+			{
+				GoToUp();
+				return true;
+			}
+
+			// Capture D & right arrow key
+			if( keyData == Keys.D || keyData == Keys.Right )
+			{
+				GoToRight();
+				return true;
+			}
+			// Capture S & down arrow key
+			if( keyData == Keys.S || keyData == Keys.Down )
+			{
+				GoToDown();
+				return true;
+			}
+			// Capture Q & left arrow key
+			if( keyData == Keys.Q || keyData == Keys.Left )
+			{
+				GoToLeft();
+				return true;
+			}
+
+			// JPO Random
+			if( keyData == Keys.R )
+			{
+				int key = _globalContext.Random.Next( 4 );
+
+				switch( key )
+				{
+					case 0:
+						GoToUp();
+						break;
+					case 1:
+						GoToRight();
+						break;
+					case 2:
+						GoToDown();
+						break;
+					case 3:
+						GoToLeft();
+						break;
+					
+				}
+			}
+
+			return base.ProcessCmdKey( ref msg, keyData );
+		}
+
 		private void MoveAndUpdate( Square initial, int line, int column )
 		{
 			Square target, final;
@@ -201,7 +200,7 @@ namespace WordMaster.UI
 			}
 		}
 
-		private void GoToUpButton_Click( object sender, EventArgs e )
+		private void GoToUp()
 		{
 			if( _gameContext.Game.Character.Square != null )
 				MoveAndUpdate
@@ -212,7 +211,7 @@ namespace WordMaster.UI
 				);
 		}
 
-		private void GoToRightButton_Click( object sender, EventArgs e )
+		private void GoToRight()
 		{
 			if( _gameContext.Game.Character.Square != null )
 				MoveAndUpdate
@@ -223,18 +222,18 @@ namespace WordMaster.UI
 				);
 		}
 
-		private void GoToDownButton_Click( object sender, EventArgs e )
+		private void GoToDown()
 		{
 			if( _gameContext.Game.Character.Square != null )
 				MoveAndUpdate
 				(
 					_gameContext.Game.Character.Square,
 					_gameContext.Game.Character.Square.Line + 1,
-					_gameContext.Game.Character.Square.Column 
+					_gameContext.Game.Character.Square.Column
 				);
 		}
 
-		private void GoToLeftButton_Click( object sender, EventArgs e )
+		private void GoToLeft()
 		{
 			if( _gameContext.Game.Character.Square != null )
 				MoveAndUpdate
@@ -243,6 +242,26 @@ namespace WordMaster.UI
 					_gameContext.Game.Character.Square.Line,
 					_gameContext.Game.Character.Square.Column - 1
 				);
+		}
+
+		private void GoToUpButton_Click( object sender, EventArgs e )
+		{
+			GoToUp();
+		}
+
+		private void GoToRightButton_Click( object sender, EventArgs e )
+		{
+			GoToRight();
+		}
+
+		private void GoToDownButton_Click( object sender, EventArgs e )
+		{
+			GoToDown();
+		}
+
+		private void GoToLeftButton_Click( object sender, EventArgs e )
+		{
+			GoToLeft();
 		}
 		#endregion
 	}

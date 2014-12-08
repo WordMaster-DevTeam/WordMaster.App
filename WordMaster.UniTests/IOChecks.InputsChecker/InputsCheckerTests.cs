@@ -1,6 +1,6 @@
 ﻿using System;
 using NUnit.Framework;
-using WordMaster.Library;
+using WordMaster.IOChecks;
 
 namespace WordMaster.UniTests
 {
@@ -14,18 +14,18 @@ namespace WordMaster.UniTests
 			string minNameLength = "", maxNameLength = "", midNameLength = "", minNameLengthMinusOne = "", maxNameLengthPlusOne = "";
 
 			// Act
-			for( int i = 0; i < NoMagicHelper.MinNameLength; i++ ) minNameLength += "a";
-			for( int i = 0; i < NoMagicHelper.MaxNameLength; i++ ) maxNameLength += "b";
-			for( int i = 0; i < NoMagicHelper.MaxNameLength / 2; i++ ) midNameLength += "c";
-			for( int i = 0; i < (NoMagicHelper.MinNameLength - 1); i++ ) minNameLengthMinusOne += "e";
-			for( int i = 0; i < (NoMagicHelper.MaxNameLength + 1); i++ ) maxNameLengthPlusOne += "f";
+			for( int i = 0; i < InputsChecker.MinNameLength; i++ ) minNameLength += "a";
+			for( int i = 0; i < InputsChecker.MaxNameLength; i++ ) maxNameLength += "b";
+			for( int i = 0; i < InputsChecker.MaxNameLength / 2; i++ ) midNameLength += "c";
+			for( int i = 0; i < (InputsChecker.MinNameLength - 1); i++ ) minNameLengthMinusOne += "e";
+			for( int i = 0; i < (InputsChecker.MaxNameLength + 1); i++ ) maxNameLengthPlusOne += "f";
 
 			// Assert
-			Assert.IsTrue( NoMagicHelper.CheckNameLength( minNameLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckNameLength( maxNameLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckNameLength( midNameLength ) );
-			Assert.IsFalse( NoMagicHelper.CheckNameLength( minNameLengthMinusOne ) );
-			Assert.IsFalse( NoMagicHelper.CheckNameLength( maxNameLengthPlusOne ) );
+			Assert.IsTrue( InputsChecker.CheckNameLength( minNameLength ) );
+			Assert.IsTrue( InputsChecker.CheckNameLength( maxNameLength ) );
+			Assert.IsTrue( InputsChecker.CheckNameLength( midNameLength ) );
+			Assert.IsFalse( InputsChecker.CheckNameLength( minNameLengthMinusOne ) );
+			Assert.IsFalse( InputsChecker.CheckNameLength( maxNameLengthPlusOne ) );
 		}
 
 		[Test]
@@ -35,18 +35,18 @@ namespace WordMaster.UniTests
 			string minLongStringLength = "", maxLongStringLength = "", midLongStringLength = "", /*minLongStringLengthMinusOne= "",*/ maxLongStringLengthPlusOne = "";
 
 			// Act
-			for( int i = 0; i < NoMagicHelper.MinDescriptionLength; i++ ) minLongStringLength += "a";
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength; i++ ) maxLongStringLength += "b";
-			for( int i = 0; i < NoMagicHelper.MaxDescriptionLength / 2; i++ ) midLongStringLength += "c";
+			for( int i = 0; i < InputsChecker.MinDescriptionLength; i++ ) minLongStringLength += "a";
+			for( int i = 0; i < InputsChecker.MaxDescriptionLength; i++ ) maxLongStringLength += "b";
+			for( int i = 0; i < InputsChecker.MaxDescriptionLength / 2; i++ ) midLongStringLength += "c";
 			/*for( int i = 0; i < (NoMagicHelper.MinDescritptionLength - 1); i++ ) minLongStringLengthMinusOne += "e";*/
-			for( int i = 0; i < (NoMagicHelper.MaxDescriptionLength + 1); i++ ) maxLongStringLengthPlusOne += "f";
+			for( int i = 0; i < (InputsChecker.MaxDescriptionLength + 1); i++ ) maxLongStringLengthPlusOne += "f";
 
 			// Assert
-			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( minLongStringLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( maxLongStringLength ) );
-			Assert.IsTrue( NoMagicHelper.CheckDescriptionLength( midLongStringLength ) );
+			Assert.IsTrue( InputsChecker.CheckDescriptionLength( minLongStringLength ) );
+			Assert.IsTrue( InputsChecker.CheckDescriptionLength( maxLongStringLength ) );
+			Assert.IsTrue( InputsChecker.CheckDescriptionLength( midLongStringLength ) );
 			/*Assert.IsFalse( NoMagicHelper.CheckLongStringLength( minLongStringLengthMinusOne ) );*/
-			Assert.IsFalse( NoMagicHelper.CheckDescriptionLength( maxLongStringLengthPlusOne ) );
+			Assert.IsFalse( InputsChecker.CheckDescriptionLength( maxLongStringLengthPlusOne ) );
 		}
 		[Test]
 		public void Check_Floor_size()
@@ -55,18 +55,18 @@ namespace WordMaster.UniTests
 			int minFloorSize, midFloorSize, maxFloorSize, minSizeMinusOne, maxSizePlusOne;
 
 			// Act
-			minFloorSize = NoMagicHelper.MinFloorSize;
-			maxFloorSize = NoMagicHelper.MaxFloorSize;
-			midFloorSize = NoMagicHelper.MaxFloorSize / 2;
-			minSizeMinusOne = NoMagicHelper.MinFloorSize - 1;
-			maxSizePlusOne = NoMagicHelper.MaxFloorSize + 1;
+			minFloorSize = InputsChecker.MinFloorSize;
+			maxFloorSize = InputsChecker.MaxFloorSize;
+			midFloorSize = InputsChecker.MaxFloorSize / 2;
+			minSizeMinusOne = InputsChecker.MinFloorSize - 1;
+			maxSizePlusOne = InputsChecker.MaxFloorSize + 1;
 
 			// Assert
-			Assert.IsTrue( NoMagicHelper.CheckFloorSize( minFloorSize ) );
-			Assert.IsTrue( NoMagicHelper.CheckFloorSize( maxFloorSize ) );
-			Assert.IsTrue( NoMagicHelper.CheckFloorSize( midFloorSize ) );
-			Assert.IsFalse( NoMagicHelper.CheckFloorSize( minSizeMinusOne ) );
-			Assert.IsFalse( NoMagicHelper.CheckFloorSize( maxSizePlusOne ) );
+			Assert.IsTrue( InputsChecker.CheckFloorSize( minFloorSize ) );
+			Assert.IsTrue( InputsChecker.CheckFloorSize( maxFloorSize ) );
+			Assert.IsTrue( InputsChecker.CheckFloorSize( midFloorSize ) );
+			Assert.IsFalse( InputsChecker.CheckFloorSize( minSizeMinusOne ) );
+			Assert.IsFalse( InputsChecker.CheckFloorSize( maxSizePlusOne ) );
 		}
     }
 }

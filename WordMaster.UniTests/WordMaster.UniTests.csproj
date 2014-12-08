@@ -53,7 +53,7 @@
     <Compile Include="Gameplay.Dungeon\SquareTests.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Gameplay.csproj">
+    <ProjectReference Include="..\WordMaster.Gameplay\WordMaster.Gameplay.csproj">
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.Gameplay</Name>
     </ProjectReference>

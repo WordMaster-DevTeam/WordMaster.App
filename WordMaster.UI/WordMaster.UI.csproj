@@ -51,18 +51,6 @@
     <Compile Include="Controls and components\FloorViewer.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Windows\CharacterEditor.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\CharacterEditor.Designer.cs">
-      <DependentUpon>CharacterEditor.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Windows\MainMenu.cs">
-      <SubType>Form</SubType>
-    </Compile>
-    <Compile Include="Windows\MainMenu.Designer.cs">
-      <DependentUpon>MainMenu.cs</DependentUpon>
-    </Compile>
     <Compile Include="Windows\InGame.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -71,14 +59,8 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Windows\CharacterEditor.resx">
-      <DependentUpon>CharacterEditor.cs</DependentUpon>
-    </EmbeddedResource>
     <EmbeddedResource Include="Windows\InGame.resx">
       <DependentUpon>InGame.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Windows\MainMenu.resx">
-      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -88,6 +70,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -103,7 +86,10 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Gameplay.csproj">
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\WordMaster.Gameplay\WordMaster.Gameplay.csproj">
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.Gameplay</Name>
     </ProjectReference>

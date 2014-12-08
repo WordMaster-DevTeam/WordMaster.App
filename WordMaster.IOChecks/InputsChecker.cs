@@ -1,8 +1,8 @@
 ﻿using System;
 
-namespace WordMaster.Library
+namespace WordMaster.IOChecks
 {
-	static public class NoMagicHelper
+	static public class InputsChecker
 	{
 		#region Name's length
 		readonly static int _minLengthName = 3;

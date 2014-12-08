@@ -10,21 +10,26 @@ using System.Windows.Forms;
 
 namespace WordMaster.UI
 {
-    public partial class Ingame : Form
+    public partial class CharacterEditor : Form
     {
-        public Ingame()
+        public CharacterEditor()
         {
             InitializeComponent( );
         }
 
-        private void label3_Click( object sender, EventArgs e )
+		private void CharacterEditor_Load( object sender, EventArgs e )
         {
 
         }
 
-        private void Ingame_Load( object sender, EventArgs e )
+        private void DescriptionLbl_Click( object sender, EventArgs e )
         {
-            
+
+        }
+
+        private void pictureBox1_Click( object sender, EventArgs e )
+        {
+
         }
     }
 }

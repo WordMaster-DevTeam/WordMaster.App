@@ -31,6 +31,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <StartupObject>WordMaster.UI.Program</StartupObject>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Core" />
@@ -44,25 +47,38 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Mainmenu.cs">
+    <Compile Include="ControlExtension.cs" />
+    <Compile Include="Controls and components\FloorViewer.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\CharacterEditor.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Mainmenu.Designer.cs">
-      <DependentUpon>Mainmenu.cs</DependentUpon>
+    <Compile Include="Windows\CharacterEditor.Designer.cs">
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
     </Compile>
-    <Compile Include="Ingame.cs">
+    <Compile Include="Windows\MainMenu.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="Ingame.Designer.cs">
-      <DependentUpon>Ingame.cs</DependentUpon>
+    <Compile Include="Windows\MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\InGame.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\InGame.Designer.cs">
+      <DependentUpon>InGame.cs</DependentUpon>
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <EmbeddedResource Include="Ingame.resx">
-      <DependentUpon>Ingame.cs</DependentUpon>
+    <EmbeddedResource Include="Windows\CharacterEditor.resx">
+      <DependentUpon>CharacterEditor.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Mainmenu.resx">
-      <DependentUpon>Mainmenu.cs</DependentUpon>
+    <EmbeddedResource Include="Windows\InGame.resx">
+      <DependentUpon>InGame.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
@@ -87,9 +103,17 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.DLL.csproj">
+    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Gameplay.csproj">
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
-      <Name>WordMaster.DLL</Name>
+      <Name>WordMaster.Gameplay</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordMaster.IOChecks\WordMaster.IOChecks.csproj">
+      <Project>{609380a8-a076-4830-8c74-c7301e385450}</Project>
+      <Name>WordMaster.IOChecks</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\WordMaster.Rendering\WordMaster.Rendering.csproj">
+      <Project>{d1cd04a9-0e75-4d7a-9cc3-ca7bc8948fe9}</Project>
+      <Name>WordMaster.Rendering</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

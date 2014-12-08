@@ -1,11 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.30723.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.UI", "WordMaster.UI\WordMaster.UI.csproj", "{E25F5C76-A174-4A19-9E5A-16908225A8A3}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.DLL", "WordMaster.DLL\WordMaster.DLL.csproj", "{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.Gameplay", "WordMaster.DLL\WordMaster.Gameplay.csproj", "{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.UniTests", "WordMaster.UniTests\WordMaster.UniTests.csproj", "{3EC26859-CE67-46F2-B1C6-FD628769D5BD}"
 EndProject
@@ -15,6 +15,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = ".nuget", ".nuget", "{B4A6D1
 	ProjectSection(SolutionItems) = preProject
 		.nuget\packages.config = .nuget\packages.config
 	EndProjectSection
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WordMaster.Rendering", "WordMaster.Rendering\WordMaster.Rendering.csproj", "{D1CD04A9-0E75-4D7A-9CC3-CA7BC8948FE9}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -38,6 +40,10 @@ Global
 		{609380A8-A076-4830-8C74-C7301E385450}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{609380A8-A076-4830-8C74-C7301E385450}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{609380A8-A076-4830-8C74-C7301E385450}.Release|Any CPU.Build.0 = Release|Any CPU
+		{D1CD04A9-0E75-4D7A-9CC3-CA7BC8948FE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{D1CD04A9-0E75-4D7A-9CC3-CA7BC8948FE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{D1CD04A9-0E75-4D7A-9CC3-CA7BC8948FE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{D1CD04A9-0E75-4D7A-9CC3-CA7BC8948FE9}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

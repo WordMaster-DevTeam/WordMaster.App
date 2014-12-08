@@ -4,14 +4,13 @@
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{3EC26859-CE67-46F2-B1C6-FD628769D5BD}</ProjectGuid>
+    <ProjectGuid>{57693073-A0D2-4A4D-9D72-36EF48DA2F8C}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WordMaster.UniTests</RootNamespace>
-    <AssemblyName>WordMaster.UniTests</AssemblyName>
-    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <RootNamespace>WordMaster.Gameplay</RootNamespace>
+    <AssemblyName>WordMaster.Gameplay</AssemblyName>
+    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
-    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -31,10 +30,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="nunit.framework, Version=2.6.3.13283, Culture=neutral, PublicKeyToken=96d09a1eb7f44a77, processorArchitecture=MSIL">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\packages\NUnit.2.6.3\lib\nunit.framework.dll</HintPath>
-    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -44,34 +39,16 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gameplay.Character\CharacterTests.cs" />
-    <Compile Include="Gameplay.Dungeon\DungeonTests.cs" />
-    <Compile Include="Gameplay.Dungeon\FloorTests.cs" />
-    <Compile Include="Gameplay.Context\GlobalContextTest.cs" />
-    <Compile Include="IOChecks.InputsChecker\InputsCheckerTests.cs" />
+    <Compile Include="Character\Character.cs" />
+    <Compile Include="Game\Game.cs" />
+    <Compile Include="Context\GameContext.cs" />
+    <Compile Include="Context\GlobalContext.cs" />
+    <Compile Include="Game\HistoricRecord.cs" />
+    <Compile Include="Character\Item.cs" />
+    <Compile Include="Dungeon\Square.cs" />
+    <Compile Include="Dungeon\Floor.cs" />
+    <Compile Include="Dungeon\Dungeon.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Gameplay.Dungeon\SquareTests.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\WordMaster.DLL\WordMaster.Gameplay.csproj">
-      <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
-      <Name>WordMaster.Gameplay</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.IOChecks\WordMaster.IOChecks.csproj">
-      <Project>{609380a8-a076-4830-8c74-c7301e385450}</Project>
-      <Name>WordMaster.IOChecks</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.Rendering\WordMaster.Rendering.csproj">
-      <Project>{d1cd04a9-0e75-4d7a-9cc3-ca7bc8948fe9}</Project>
-      <Name>WordMaster.Rendering</Name>
-    </ProjectReference>
-    <ProjectReference Include="..\WordMaster.UI\WordMaster.UI.csproj">
-      <Project>{e25f5c76-a174-4a19-9e5a-16908225a8a3}</Project>
-      <Name>WordMaster.UI</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

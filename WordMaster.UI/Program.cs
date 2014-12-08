@@ -16,7 +16,7 @@ namespace WordMaster.UI
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault( false );
-			Application.Run( new Mainmenu() );
+			Application.Run( new InGame() );
 		}
 	}
 }

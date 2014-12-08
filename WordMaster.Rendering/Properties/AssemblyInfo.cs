@@ -5,11 +5,11 @@ using System.Runtime.InteropServices;
 // General Information about an assembly is controlled through the following 
 // set of attributes. Change these attribute values to modify the information
 // associated with an assembly.
-[assembly: AssemblyTitle("WordMaster.Gameplay")]
+[assembly: AssemblyTitle("WordMaster.Rendering")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
 [assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("WordMaster.Gameplay")]
+[assembly: AssemblyProduct("WordMaster.Rendering")]
 [assembly: AssemblyCopyright("Copyright ©  2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
@@ -20,7 +20,7 @@ using System.Runtime.InteropServices;
 [assembly: ComVisible(false)]
 
 // The following GUID is for the ID of the typelib if this project is exposed to COM
-[assembly: Guid("9408dbc9-a18b-4424-9e6b-79cf26643542")]
+[assembly: Guid("ed87bace-b386-4dc3-8f50-b8b77024a761")]
 
 // Version information for an assembly consists of the following four values:
 //

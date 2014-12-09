@@ -31,7 +31,8 @@ namespace WordMaster.UI
 
         private void SelectBtn_Click( object sender, EventArgs e )
         {
-
+            ParentForm.DialogResult = DialogResult.OK;
+            
         }
        
         private void DungeonRecap_Load( object sender, EventArgs e )

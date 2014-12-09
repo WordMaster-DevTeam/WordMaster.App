@@ -36,16 +36,20 @@ namespace WordMaster.UI
         {
             if(_character.Dungeon==null)
             {
-                DungeonSelection dungeonSelectForm = new DungeonSelection( );
-                dungeonSelectForm.Show( );
+                using( DungeonSelection dungeonSelectForm = new DungeonSelection( ) )
+                {
+                    
+                    DialogResult res = dungeonSelectForm.ShowDialog( );
+                    if(res == DialogResult.OK)
+                    {
+                        dungeonSelectForm.Close( );
+                    }
+                    
+                }
+                
             }
             else
             {
-                AppManager.CurrentContext.StartNewGame( _character, _character.Dungeon, out _game, out _historicRecord );
-                
-                InGame inGameForm;
-				inGameForm = new InGame();
-                inGameForm.Show( );
             }                     
         } 
     }

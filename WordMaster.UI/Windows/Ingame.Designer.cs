@@ -311,7 +311,7 @@ namespace WordMaster.UI
 			this.ControlPanel.Size = new System.Drawing.Size(170, 150);
 			this.ControlPanel.TabIndex = 20;
 			// 
-			// NameTextBox
+			// _nameTextBox
 			// 
 			this.NameTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			this.NameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;

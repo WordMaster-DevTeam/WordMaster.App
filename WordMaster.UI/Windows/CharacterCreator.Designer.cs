@@ -33,9 +33,9 @@
             this.AvatarLbl = new System.Windows.Forms.Label();
             this.NameLbl = new System.Windows.Forms.Label();
             this.DescriptionLbl = new System.Windows.Forms.Label();
-            this.BrowseLbl = new System.Windows.Forms.Button();
-            this.NameTextBox = new System.Windows.Forms.TextBox();
-            this.DescriptionRichTextBox = new System.Windows.Forms.RichTextBox();
+            this.BrowseBtn = new System.Windows.Forms.Button();
+            this._nameTextBox = new System.Windows.Forms.TextBox();
+            this._descriptionRichTextBox = new System.Windows.Forms.RichTextBox();
             this.PathLbl = new System.Windows.Forms.Label();
             this.TitleLbl = new System.Windows.Forms.Label();
             this.AvatarPictureBox = new System.Windows.Forms.PictureBox();
@@ -83,39 +83,38 @@
             this.DescriptionLbl.Size = new System.Drawing.Size(207, 29);
             this.DescriptionLbl.TabIndex = 2;
             this.DescriptionLbl.Text = "Your description : ";
-            this.DescriptionLbl.Click += new System.EventHandler(this.DescriptionLbl_Click);
             // 
-            // BrowseLbl
+            // BrowseBtn
             // 
-            this.BrowseLbl.BackColor = System.Drawing.Color.BurlyWood;
-            this.BrowseLbl.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BrowseLbl.Location = new System.Drawing.Point(298, 60);
-            this.BrowseLbl.Name = "BrowseLbl";
-            this.BrowseLbl.Size = new System.Drawing.Size(90, 26);
-            this.BrowseLbl.TabIndex = 3;
-            this.BrowseLbl.Text = "Browse";
-            this.BrowseLbl.UseVisualStyleBackColor = false;
-            this.BrowseLbl.Click += new System.EventHandler(this.BrowseLbl_Click);
+            this.BrowseBtn.BackColor = System.Drawing.Color.BurlyWood;
+            this.BrowseBtn.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BrowseBtn.Location = new System.Drawing.Point(298, 60);
+            this.BrowseBtn.Name = "BrowseBtn";
+            this.BrowseBtn.Size = new System.Drawing.Size(90, 26);
+            this.BrowseBtn.TabIndex = 3;
+            this.BrowseBtn.Text = "Browse";
+            this.BrowseBtn.UseVisualStyleBackColor = false;
+            this.BrowseBtn.Click += new System.EventHandler(this.BrowseBtn_Click);
             // 
-            // NameTextBox
+            // _nameTextBox
             // 
-            this.NameTextBox.BackColor = System.Drawing.Color.BurlyWood;
-            this.NameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
-            this.NameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.NameTextBox.Location = new System.Drawing.Point(298, 105);
-            this.NameTextBox.Name = "NameTextBox";
-            this.NameTextBox.Size = new System.Drawing.Size(363, 26);
-            this.NameTextBox.TabIndex = 4;
+            this._nameTextBox.BackColor = System.Drawing.Color.BurlyWood;
+            this._nameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this._nameTextBox.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this._nameTextBox.Location = new System.Drawing.Point(298, 105);
+            this._nameTextBox.Name = "_nameTextBox";
+            this._nameTextBox.Size = new System.Drawing.Size(363, 26);
+            this._nameTextBox.TabIndex = 4;
             // 
-            // DescriptionRichTextBox
+            // _descriptionRichTextBox
             // 
-            this.DescriptionRichTextBox.BackColor = System.Drawing.Color.BurlyWood;
-            this.DescriptionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-            this.DescriptionRichTextBox.Location = new System.Drawing.Point(298, 144);
-            this.DescriptionRichTextBox.Name = "DescriptionRichTextBox";
-            this.DescriptionRichTextBox.Size = new System.Drawing.Size(468, 205);
-            this.DescriptionRichTextBox.TabIndex = 5;
-            this.DescriptionRichTextBox.Text = "";
+            this._descriptionRichTextBox.BackColor = System.Drawing.Color.BurlyWood;
+            this._descriptionRichTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this._descriptionRichTextBox.Location = new System.Drawing.Point(298, 144);
+            this._descriptionRichTextBox.Name = "_descriptionRichTextBox";
+            this._descriptionRichTextBox.Size = new System.Drawing.Size(468, 205);
+            this._descriptionRichTextBox.TabIndex = 5;
+            this._descriptionRichTextBox.Text = "";
             // 
             // PathLbl
             // 
@@ -170,9 +169,9 @@
             this.panel1.Controls.Add(this.CreateBtn);
             this.panel1.Controls.Add(this.AvatarPictureBox);
             this.panel1.Controls.Add(this.PathLbl);
-            this.panel1.Controls.Add(this.DescriptionRichTextBox);
-            this.panel1.Controls.Add(this.NameTextBox);
-            this.panel1.Controls.Add(this.BrowseLbl);
+            this.panel1.Controls.Add(this._descriptionRichTextBox);
+            this.panel1.Controls.Add(this._nameTextBox);
+            this.panel1.Controls.Add(this.BrowseBtn);
             this.panel1.Controls.Add(this.DescriptionLbl);
             this.panel1.Controls.Add(this.NameLbl);
             this.panel1.Controls.Add(this.AvatarLbl);
@@ -193,7 +192,7 @@
             this.BackBtn.UseVisualStyleBackColor = false;
             this.BackBtn.Click += new System.EventHandler(this.BackBtn_Click);
             // 
-            // CreateCharacter
+            // CharacterCreator
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
@@ -201,11 +200,9 @@
             this.ClientSize = new System.Drawing.Size(800, 516);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.TitleLbl);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.None;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.Name = "CreateCharacter";
+            this.Name = "CharacterCreator";
             this.Text = "CreateCharacter";
-            this.WindowState = System.Windows.Forms.FormWindowState.Maximized;
             this.Load += new System.EventHandler(this.CreateCharacter_Load);
             ((System.ComponentModel.ISupportInitialize)(this.AvatarPictureBox)).EndInit();
             this.panel1.ResumeLayout(false);
@@ -220,9 +217,9 @@
         private System.Windows.Forms.Label AvatarLbl;
         private System.Windows.Forms.Label NameLbl;
         private System.Windows.Forms.Label DescriptionLbl;
-        private System.Windows.Forms.Button BrowseLbl;
-        private System.Windows.Forms.TextBox NameTextBox;
-        private System.Windows.Forms.RichTextBox DescriptionRichTextBox;
+        private System.Windows.Forms.Button BrowseBtn;
+        private System.Windows.Forms.TextBox _nameTextBox;
+        private System.Windows.Forms.RichTextBox _descriptionRichTextBox;
         private System.Windows.Forms.Label PathLbl;
         private System.Windows.Forms.Label TitleLbl;
         private System.Windows.Forms.PictureBox AvatarPictureBox;

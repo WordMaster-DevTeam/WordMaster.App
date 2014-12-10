@@ -386,13 +386,13 @@ namespace WordMaster.Gameplay
 			floorB.SetSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorB.SetSquare( 8, 7, "Stone floor", "The stone are cold below yours feets.", true, null );
 			/* Get B -> A ; Use A -> B ; Use B -> A */
-			AtoB.TeleportTo = floorB.SetSquare( 8, 8, "Old stair", "You are not sure this stair will stand long enough to carry you.", true, AtoB );
+			AtoB.TargetTeleport = floorB.SetSquare( 8, 8, "Old stair", "You are not sure this stair will stand long enough to carry you.", true, AtoB );
 			floorB.SetAllUninitializedSquares( "Stone wall", "The stone have endure the passing of time...", false );
 
 			// Level 2
 			floorC = dungeon.AddFloor( "The 2nd floor", "While the ground is still cold, the air is warm.", 10, 10 );
 			/* Save C -> B ; Use B -> C ; Use C -> B */
-			BtoC.TeleportTo = floorC.SetSquare( 1, 1, "Hole", "Their is an hole here, in the floor's ground...", true, BtoC );
+			BtoC.TargetTeleport = floorC.SetSquare( 1, 1, "Hole", "Their is an hole here, in the floor's ground...", true, BtoC );
 			floorC.SetSquare( 1, 2, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorC.SetSquare( 1, 3, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorC.SetSquare( 1, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
@@ -450,7 +450,7 @@ namespace WordMaster.Gameplay
 			floorD.SetSquare( 5, 8, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorD.SetSquare( 6, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
 			/* Save D -> C ; Use C -> D ; Use D -> C */
-			CtoD.TeleportTo = floorD.SetSquare( 6, 8, "Iron ladder", "You can safely escape this floor from here.", true, CtoD );
+			CtoD.TargetTeleport = floorD.SetSquare( 6, 8, "Iron ladder", "You can safely escape this floor from here.", true, CtoD );
 			floorD.SetSquare( 7, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorD.SetSquare( 7, 5, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorD.SetSquare( 7, 6, "Stone floor", "The stone are cold below yours feets.", true, null );
@@ -503,7 +503,7 @@ namespace WordMaster.Gameplay
 			/* Save E -> F */
 			EtoF = floorE.SetSquare( 8, 6, "Old Stair", "You can go to the next floor with this.", true, null );
 			/* Save E -> D ; Use D -> E ; Use E -> D */
-			DtoE.TeleportTo = floorE.SetSquare( 8, 8, "Wooden ladder", "A sturdy ladder.", true, DtoE );
+			DtoE.TargetTeleport = floorE.SetSquare( 8, 8, "Wooden ladder", "A sturdy ladder.", true, DtoE );
 			floorE.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 
 			// Level 5
@@ -546,7 +546,7 @@ namespace WordMaster.Gameplay
 			floorF.SetSquare( 8, 3, "Stone floor", "The stone are cold below yours feets.", true, null );
 			floorF.SetSquare( 8, 4, "Stone floor", "The stone are cold below yours feets.", true, null );
 			/* Save F -> E ; Use E -> F ; Use F -> E */
-			EtoF.TeleportTo = floorF.SetSquare( 8, 5, "Wooden ladder", "A sturdy ladder.", true, EtoF );
+			EtoF.TargetTeleport = floorF.SetSquare( 8, 5, "Wooden ladder", "A sturdy ladder.", true, EtoF );
 			/* The exit */
 			dungeon.Exit = floorF.SetSquare( 8, 8, "Exit", "To leave the dungeon.", true, null );
 			floorF.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );

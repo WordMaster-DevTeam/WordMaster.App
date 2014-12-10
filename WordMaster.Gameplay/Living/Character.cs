@@ -8,7 +8,7 @@ namespace WordMaster.Gameplay
     {
 		readonly GlobalContext _globalContext;
 		string _name, _description;
-		int _hp, _xp, _level, _armor;
+		int _health, _experience, _level, _armor;
 		readonly List<Item> _inventory;
 		readonly List<HistoricRecord> _historics;
 		Dungeon _dungeon;
@@ -27,13 +27,13 @@ namespace WordMaster.Gameplay
 		/// <param name="level">Character's level.</param>
 		/// <param name="armor">Character's armor.</param>
 		/// </summary>
-		internal Character( GlobalContext globalContext, string name, string description, int hp, int xp, int level, int armor)
+		internal Character( GlobalContext globalContext, string name, string description, int health, int experience, int level, int armor)
 		{
 			_globalContext = globalContext;
 			_name = name;
 			_description = description;
-			_hp = hp;
-			_xp = xp;
+			_health = health;
+			_experience = experience;
 			_level = level;
 			_armor = armor;
 			_inventory = new List<Item>();
@@ -49,7 +49,7 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Gets the <see cref="Character"/>'s name.
+		/// Gets or sets (this DLL only) the <see cref="Character"/>'s name.
 		/// </summary>
         public string Name
         {
@@ -58,7 +58,7 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets the <see cref="Character"/>'s descriptions.
+		/// Gets or sets the <see cref="Character"/>'s description.
 		/// </summary>
         public string Description
         {
@@ -67,12 +67,12 @@ namespace WordMaster.Gameplay
         }
 
 		/// <summary>
-		/// Gets or sets the <see cref="Character"/>'s health points (HP).
+		/// Gets or sets (this DLL only) the <see cref="Character"/>'s health points.
 		/// </summary>
         public int Health
         {
-            get { return _hp; }
-            set { _hp = value; }
+            get { return _health; }
+            internal set { _health = value; }
         }
 
 		/// <summary>
@@ -80,8 +80,8 @@ namespace WordMaster.Gameplay
 		/// </summary>
         public int Experience
         {
-            get { return _xp; }
-            set { _xp = value; }
+            get { return _experience; }
+            internal set { _experience = value; }
         }
 
 		/// <summary>
@@ -90,7 +90,7 @@ namespace WordMaster.Gameplay
         public int Level
         {
             get { return _level; }
-            set { _level = value; }
+            internal set { _level = value; }
         }
 
 		/// <summary>
@@ -99,7 +99,7 @@ namespace WordMaster.Gameplay
         public int Armor
         {
             get { return _armor; }
-            set { _armor = value; }
+			internal set { _armor = value; }
         }   
      
 		/// <summary>
@@ -133,27 +133,30 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Gets the current instance of <see cref="Dungeon"/> class.
+		/// Gets or sets (this DLL only) the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
 		public Dungeon Dungeon
 		{
 			get { return _dungeon; }
+			internal set { _dungeon = value; }
 		}
 
 		/// <summary>
-		/// Gets the current instance of <see cref="Floor"/> class.
+		/// Gets or sets (this DLL only) the current instance of <see cref="Floor"/> class.
 		/// </summary>
 		public Floor Floor
 		{
 			get { return _floor; }
+			internal set { _floor = value; }
 		}
 
 		/// <summary>
-		/// Gets the current instance of <see cref="Square"/> class.
+		/// Gets or sets (this DLL only) the current instance of <see cref="Square"/> class.
 		/// </summary>
 		public Square Square
 		{
 			get { return _square; }
+			internal set { _square = value; }
 		}
 
 		/// <summary>
@@ -223,14 +226,14 @@ namespace WordMaster.Gameplay
 					_gameContext.GlobalContext.FinishGame( this );
 					final = null;
 				}
-				else if( target.TeleportTo == null ) // No teleport allocates to the target
+				else if( target.TargetTeleport == null ) // No teleport allocates to the target
 				{
 					final = target;
 					_square = final;
 				}
 				else // Teleport to the target should automatically teleport to target's target
 				{
-					final = target.TeleportTo;
+					final = target.TargetTeleport;
 					_floor = final.Floor;
 					_square = final;
 				}

@@ -63,7 +63,7 @@ namespace WordMaster.Rendering
 				if( _square.Holdable ) // Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
 				
-				if( _square.TeleportTo != null ) // Teleport
+				if( _square.TargetTeleport != null ) // Teleport
 					graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
 				
 				if( _square.Floor.Dungeon.Entrance != null ) // Entrance

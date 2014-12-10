@@ -52,56 +52,6 @@ namespace WordMaster.UI
         {
             Application.Exit( );
         }
-       
-        private void label3_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void Profilpicturebox_Click( object sender, EventArgs e )
-        {
-            
-        }
-
-        private void WDversionlbl_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void Lifelbl_Click( object sender, EventArgs e )
-		{
-
-		}
-
-		private void panel1_Paint( object sender, PaintEventArgs e )
-		{
-
-		}
-
-		private void Namelbl_Click( object sender, EventArgs e )
-		{
-
-		}
-
-        private void DescriptionLabel_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void FloorLabel_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void floorView1_Click( object sender, EventArgs e )
-		{
-
-		}
-
-		private void NameTextBox_TextChanged( object sender, EventArgs e )
-		{
-
-		}
 
 		#region Up, Right, Down and Left actions' methods
 		protected override bool ProcessCmdKey( ref Message msg, Keys keyData )

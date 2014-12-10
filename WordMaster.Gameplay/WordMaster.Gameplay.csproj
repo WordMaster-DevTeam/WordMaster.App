@@ -39,16 +39,21 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Character\Character.cs" />
+    <Compile Include="Living\Character.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\GlobalContext.cs" />
     <Compile Include="Game\HistoricRecord.cs" />
-    <Compile Include="Character\Item.cs" />
+    <Compile Include="Living\Item.cs" />
     <Compile Include="Dungeon\Square.cs" />
     <Compile Include="Dungeon\Floor.cs" />
     <Compile Include="Dungeon\Dungeon.cs" />
+    <Compile Include="Living\Monster.cs" />
+    <Compile Include="Dungeon\Switch.cs" />
+    <Compile Include="Dungeon\Trap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Dungeon\Trigger.cs" />
+    <Compile Include="Dungeon\Teleport.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

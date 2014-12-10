@@ -120,14 +120,14 @@ namespace WordMaster.Gameplay
 		/// <param name="name">Square's name.</param>
 		/// <param name="description">Square's description.</param>
 		/// <param name="holdable">Square's Holdable state.</param>
-		/// <param name="teleportTo">Square's teleport to Square.</param>
+		/// <param name="targetTeleport">Square's target to teleport to.</param>
 		/// <returns>New Square's reference.</returns>
-		public Square SetSquare(int line, int column, string name, string description, bool holdable, Square teleportTo)
+		public Square SetSquare(int line, int column, string name, string description, bool holdable, Square targetTeleport)
 		{
 			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
 			if( !CheckBounds( line, column ) ) throw new IndexOutOfRangeException( "Coordinates out of range." );
 
-			_layout[line, column] = new Square( this, line, column, name, description, holdable, teleportTo );
+			_layout[line, column] = new Square( this, line, column, name, description, holdable, targetTeleport );
 			return _layout[line, column];
 		}
 
@@ -153,14 +153,14 @@ namespace WordMaster.Gameplay
 		/// <param name="name">Square's name.</param>
 		/// <param name="description">Square's description.</param>
 		/// <param name="holdable">Square's Holdable state.</param>
-		/// <param name="teleportTo">Square's teleport to Square.</param>
+		/// <param name="targetTeleport">Square's target to teleport to.</param>
 		/// <param name="square">Square's reference to recover.</param>
 		/// <returns>If the Squares have been set.</returns>
-		public bool TrySetSquare(int line, int column, string name, string description, bool holdable, Square teleportTo, out Square square)
+		public bool TrySetSquare( int line, int column, string name, string description, bool holdable, Square targetTeleport, out Square square )
 		{
 			try
 			{
-				square = SetSquare(line, column, name, description, holdable, teleportTo);
+				square = SetSquare( line, column, name, description, holdable, targetTeleport );
 				return true;
 			}
 			catch

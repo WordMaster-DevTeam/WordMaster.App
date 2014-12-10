@@ -30,7 +30,7 @@ namespace WordMaster.UniTests
 			Assert.AreEqual( square.Name, squareName );
 			Assert.AreEqual( square.Description, squareDescription );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.AreEqual( square.TeleportTo, null );
+			Assert.AreEqual( square.TargetTeleport, null );
 		}
 
 		[Test]
@@ -55,13 +55,13 @@ namespace WordMaster.UniTests
 			square.Name = squareName2;
 			square.Description = squareDescription2;
 			square.Holdable = true;
-			square.TeleportTo = square;
+			square.TargetTeleport = square;
 
 			// Assert
 			Assert.AreEqual( square.Name, squareName2 );
 			Assert.AreEqual( square.Description, squareDescription2 );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.AreEqual( square.TeleportTo, square );
+			Assert.AreEqual( square.TargetTeleport, square );
 		}
 
 		[Test]
@@ -82,13 +82,13 @@ namespace WordMaster.UniTests
 			squareA = floor.SetSquare( 0, 0, squareName, "", false, null );
 			squareB = floor.SetSquare( 0, 1, squareName, "", false, squareA );
 			squareC = floor.SetSquare( 0, 2, squareName, "", true, squareB );
-			squareA.TeleportTo = squareB;
+			squareA.TargetTeleport = squareB;
 			squareC.Holdable = false;
 
 			// Assert
-			Assert.AreSame( squareA.TeleportTo, squareB );
-			Assert.AreSame( squareB.TeleportTo, squareA );
-			Assert.AreSame( squareC.TeleportTo, null );
+			Assert.AreSame( squareA.TargetTeleport, squareB );
+			Assert.AreSame( squareB.TargetTeleport, squareA );
+			Assert.AreSame( squareC.TargetTeleport, null );
 			Assert.AreEqual( squareA.Holdable, true );
 			Assert.AreEqual( squareB.Holdable, true );
 			Assert.AreEqual( squareC.Holdable, false );

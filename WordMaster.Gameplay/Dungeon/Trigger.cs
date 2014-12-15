@@ -2,7 +2,7 @@
 
 namespace WordMaster.Gameplay
 {
-	internal abstract class Trigger
+	public abstract class Trigger
 	{
 		readonly Square _holder;
 		string _name, _description;

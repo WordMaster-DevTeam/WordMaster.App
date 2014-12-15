@@ -202,41 +202,31 @@ namespace WordMaster.Gameplay
 		/// <param name="target">Target Square's reference.</param>
 		/// <param name="final">Final Character's Square at the end of the call.</param>
 		/// <returns>If the Character have moved.</returns>
-		public bool TryMoveTo( Square target, out Square final )
+		public bool TryMoveTo( Square target )
 		{
-			if( target == null ) // Target not set
+			if( target == null || target.Holdable == false ) // Target not set or not holdable
 			{
-				final = _square;
 				return false;
-			}
-			else if( target.Holdable == false ) // Target not holdable
-			{
-					final = _square;
-					return false;
 			}
 			else
 			{
 				if( target.Floor.Dungeon.Entrance.Equals( target ) ) // Cancel the Game (exit the Dungeon by the entrance)
 				{
 					_gameContext.GlobalContext.CancelGame( this );
-					final = null;
 				}
 				else if( target.Floor.Dungeon.Exit.Equals( target ) ) // Finish the Game (exit the Dungeon by the exit)
 				{
 					_gameContext.GlobalContext.FinishGame( this );
-					final = null;
 				}
-				else if( target.TargetTeleport == null ) // No teleport allocates to the target
+				else if( target.Trigger != null ) // Trigger set
 				{
-					final = target;
-					_square = final;
+					target.Trigger.Activate( this );
 				}
-				else // Teleport to the target should automatically teleport to target's target
+				else // No Trigger
 				{
-					final = target.TargetTeleport;
-					_floor = final.Floor;
-					_square = final;
+					_square = target;
 				}
+
 				return true;
 			}
 		}
@@ -246,19 +236,17 @@ namespace WordMaster.Gameplay
         /// </summary>
 		/// <param name="line">Target Square's horizontal coordinate.</param>
 		/// <param name="column">Target Square's vertical coordinate.</param>
-		/// <param name="final">Final Character's Square at the end of the call.</param>
 		/// <returns>If the Character have moved.</returns>
-		public bool TryMoveTo( int line, int column, out Square final )
+		public bool TryMoveTo( int line, int column )
         {
-			Square square;
+			Square square = _floor[line, column];
 
-			if( _floor.TryGetSquare( line, column, out square ) )
+			if( square != null )
 			{
-				return TryMoveTo( square, out final );
+				return TryMoveTo( square );
 			}
 			else
 			{
-				final = _square;
 				return false;
 			}
         }

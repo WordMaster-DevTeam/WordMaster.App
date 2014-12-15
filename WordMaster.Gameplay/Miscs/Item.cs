@@ -2,7 +2,7 @@
 
 namespace WordMaster.Gameplay
 {
-    public class Item
+	public abstract class Item
     {
         string _name;
         string _description;
@@ -16,6 +16,7 @@ namespace WordMaster.Gameplay
         {
             _name = name;
             _description = description;
-        }       
+        }
+
     }
 }

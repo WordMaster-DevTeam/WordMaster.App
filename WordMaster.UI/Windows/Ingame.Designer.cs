@@ -68,6 +68,9 @@ namespace WordMaster.UI
 			this.GoToRightButton = new System.Windows.Forms.Button();
 			this.MainPanel = new System.Windows.Forms.Panel();
 			this.ControlPanel = new System.Windows.Forms.Panel();
+			this.MiscTextBox2 = new System.Windows.Forms.RichTextBox();
+			this.MiscTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.MiscLabel = new System.Windows.Forms.Label();
 			this.FloorViewer = new WordMaster.UI.FloorViewer();
 			this.CharacterPanel.SuspendLayout();
 			this.DungeonPanel.SuspendLayout();
@@ -105,7 +108,7 @@ namespace WordMaster.UI
 			this.CharacterPanel.Controls.Add(this.DescriptionLabel);
 			this.CharacterPanel.Controls.Add(this.ArmorLabel);
 			this.CharacterPanel.Cursor = System.Windows.Forms.Cursors.Default;
-			this.CharacterPanel.Location = new System.Drawing.Point(3, 139);
+			this.CharacterPanel.Location = new System.Drawing.Point(3, 189);
 			this.CharacterPanel.Name = "CharacterPanel";
 			this.CharacterPanel.Size = new System.Drawing.Size(170, 209);
 			this.CharacterPanel.TabIndex = 18;
@@ -244,6 +247,9 @@ namespace WordMaster.UI
 			this.DungeonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.DungeonPanel.BackColor = System.Drawing.Color.Gainsboro;
+			this.DungeonPanel.Controls.Add(this.MiscTextBox2);
+			this.DungeonPanel.Controls.Add(this.MiscTextBox1);
+			this.DungeonPanel.Controls.Add(this.MiscLabel);
 			this.DungeonPanel.Controls.Add(this.SquareTextBox2);
 			this.DungeonPanel.Controls.Add(this.FloorTextBox2);
 			this.DungeonPanel.Controls.Add(this.DungeonTextBox2);
@@ -256,7 +262,7 @@ namespace WordMaster.UI
 			this.DungeonPanel.Cursor = System.Windows.Forms.Cursors.Default;
 			this.DungeonPanel.Location = new System.Drawing.Point(3, 3);
 			this.DungeonPanel.Name = "DungeonPanel";
-			this.DungeonPanel.Size = new System.Drawing.Size(170, 130);
+			this.DungeonPanel.Size = new System.Drawing.Size(170, 182);
 			this.DungeonPanel.TabIndex = 19;
 			// 
 			// SquareTextBox2
@@ -464,10 +470,51 @@ namespace WordMaster.UI
 			this.ControlPanel.Controls.Add(this.QuitTheGame);
 			this.ControlPanel.Controls.Add(this.GoToRightButton);
 			this.ControlPanel.Controls.Add(this.GoToLeftButton);
-			this.ControlPanel.Location = new System.Drawing.Point(3, 354);
+			this.ControlPanel.Location = new System.Drawing.Point(3, 402);
 			this.ControlPanel.Name = "ControlPanel";
 			this.ControlPanel.Size = new System.Drawing.Size(170, 150);
 			this.ControlPanel.TabIndex = 20;
+			// 
+			// MiscTextBox2
+			// 
+			this.MiscTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.MiscTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.MiscTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
+			this.MiscTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.MiscTextBox2.Location = new System.Drawing.Point(60, 148);
+			this.MiscTextBox2.Name = "MiscTextBox2";
+			this.MiscTextBox2.ReadOnly = true;
+			this.MiscTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+			this.MiscTextBox2.Size = new System.Drawing.Size(104, 14);
+			this.MiscTextBox2.TabIndex = 27;
+			this.MiscTextBox2.Text = "";
+			this.MiscTextBox2.WordWrap = false;
+			// 
+			// MiscTextBox1
+			// 
+			this.MiscTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.MiscTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.MiscTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
+			this.MiscTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.MiscTextBox1.Location = new System.Drawing.Point(60, 128);
+			this.MiscTextBox1.Name = "MiscTextBox1";
+			this.MiscTextBox1.ReadOnly = true;
+			this.MiscTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+			this.MiscTextBox1.Size = new System.Drawing.Size(104, 14);
+			this.MiscTextBox1.TabIndex = 26;
+			this.MiscTextBox1.Text = "";
+			this.MiscTextBox1.WordWrap = false;
+			// 
+			// MiscLabel
+			// 
+			this.MiscLabel.AutoSize = true;
+			this.MiscLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MiscLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.MiscLabel.Location = new System.Drawing.Point(3, 128);
+			this.MiscLabel.Name = "MiscLabel";
+			this.MiscLabel.Size = new System.Drawing.Size(32, 14);
+			this.MiscLabel.TabIndex = 25;
+			this.MiscLabel.Text = "Misc";
 			// 
 			// FloorViewer
 			// 
@@ -539,5 +586,8 @@ namespace WordMaster.UI
 		private RichTextBox DungeonTextBox2;
 		private RichTextBox FloorTextBox2;
 		private RichTextBox SquareTextBox2;
+		private RichTextBox MiscTextBox2;
+		private RichTextBox MiscTextBox1;
+		private Label MiscLabel;
     }
 }

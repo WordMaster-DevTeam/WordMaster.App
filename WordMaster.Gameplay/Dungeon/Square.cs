@@ -10,47 +10,6 @@ namespace WordMaster.Gameplay
 		bool _holdable;
 		Trigger _trigger;
 
-		#region - DEPRECATED -
-		Square _targetTeleport;
-
-		/// <summary>
-		/// DEPRECATED - Initializes a new instance of <see cref="Square"/> class.
-		/// </summary>
-		/// <param name="floor">Floor's reference, each Square must be in a <see cref="Floor"/>.</param>
-		/// <param name="line">Square's horizontal coordinate.</param>
-		/// <param name="column">Square's vertical coordinate.</param>
-		/// <param name="name">Square's names.</param>
-		/// <param name="description">Square's description</param>
-		/// <param name="holdable">Square's Holdable state.</param>
-		/// <param name="targetTeleport">Square's reference to another Square where the player should teleport, sets holdable to true if set.</param>
-		internal Square( Floor floor, int line, int column, string name, string description, bool holdable, Square targetTeleport)
-		{
-			_floor = floor;
-			_line = line;
-			_column = column;
-			_name = name;
-			_description = description;
-
-			if( targetTeleport != null ) _holdable = true;
-			else _holdable = holdable;
-
-			_targetTeleport = targetTeleport;
-		}
-
-		/// <summary>
-		/// DEPRECATED - Gets or sets the "teleport to" Square's reference of this instance of <see cref="Square"/> class.
-		/// </summary>
-		public Square TargetTeleport
-		{
-			get { return _targetTeleport; }
-			set
-			{
-				if( value != null ) _holdable = true;
-				_targetTeleport = value;
-			}
-		}
-		#endregion
-
 		/// <summary>
 		/// Initializes a new instance of <see cref="Square"/> class.
 		/// </summary>
@@ -138,12 +97,12 @@ namespace WordMaster.Gameplay
 		/// <param name="hidden">Switch's concealment, set to false for a unconcelead trigger, true for an concelead one.</param>
 		/// <param name="newSquare">Switch's replacement, or Switch's target if use a second time (if possible).</param>
 		/// <returns>New Switch's reference.</returns>
-		public Switch SetSwitch( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, int targetLine, int targetColumn, string newName, string newDescription, bool holdable )
+		public Switch SetSwitch( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, Square changed )
 		{
 			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
-			if( !Floor.CheckBounds(targetLine, targetColumn) ) throw new IndexOutOfRangeException( "Coordinates out of range." );
+			if( changed == null ) throw new ArgumentException( "Changed can not be null", "changed" );
 
-			_trigger = new Switch( this, name, description, onlyOnceActivated, proximityActivated, hidden, new Square(this.Floor, targetLine, targetColumn, newName, newDescription, holdable) );
+			_trigger = new Switch( this, name, description, onlyOnceActivated, proximityActivated, hidden, changed );
 			return (Switch)_trigger;
 		}
 

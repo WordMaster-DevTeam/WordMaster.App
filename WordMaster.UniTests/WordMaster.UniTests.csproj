@@ -44,7 +44,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Gameplay.Character\CharacterTests.cs" />
+    <Compile Include="Gameplay.Living\CharacterTests.cs" />
     <Compile Include="Gameplay.Dungeon\DungeonTests.cs" />
     <Compile Include="Gameplay.Dungeon\FloorTests.cs" />
     <Compile Include="Gameplay.Context\GlobalContextTest.cs" />

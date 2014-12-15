@@ -81,8 +81,8 @@ namespace WordMaster.UniTests
 			character = context.AddCharacter( characterName, "" );
 			dungeon = context.AddDungeon( dungeonName, "" );
             floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
-			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
+			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true );
+			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true );
 			floor.SetAllUninitializedSquares( squareName, "", true );
             context.StartNewGame( character, dungeon, out game, out historicRecord );
 
@@ -111,8 +111,8 @@ namespace WordMaster.UniTests
 			character = context.AddCharacter( characterName, "" );
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-            dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
-            dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
+            dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true );
+            dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true );
 			floor.SetAllUninitializedSquares( squareName, "", true );
             context.StartNewGame( character, dungeon, out game, out historicRecord );
             context.FinishGame(character);
@@ -144,8 +144,8 @@ namespace WordMaster.UniTests
 			character = context.AddCharacter( characterName, "" );
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true, null );
-			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true, null );
+			dungeon.Entrance = floor.SetSquare( 0, 0, "The entrance", "", true );
+			dungeon.Exit = floor.SetSquare( 2, 2, "The exit", "", true );
 			floor.SetAllUninitializedSquares( squareName, "", true );
 			context.StartNewGame( character, dungeon, out game, out historicRecord );
             context.CancelGame( character );

@@ -47,7 +47,7 @@ namespace WordMaster.UniTests
 			floor.TrySetAllSquares(squaresName, squaresDescription, true);
 
 			// Assert
-			Assert.AreNotSame( floor.GetSquare( 0, 0 ), null );
+			Assert.AreNotSame( floor[0, 0], null );
 			Assert.IsTrue( floor.CheckAllSquares() );
 		}
 
@@ -73,7 +73,7 @@ namespace WordMaster.UniTests
 			// Assert
 			Assert.IsTrue( floor.CheckAllSquares() );
 			Assert.AreEqual( square.Name, aSquareName );
-			Assert.AreNotEqual( square.Name, floor.GetSquare( 0, 0 ).Name );
+			Assert.AreNotEqual( square.Name, floor[0, 0].Name );
 		}
 	}
 }

@@ -17,11 +17,11 @@ namespace WordMaster.Gameplay
 		/// <param name="proximityActivated">Switch's activation mechanisme, set to false for one position activation, true to neighbors activation additionally.</param>
 		/// <param name="hidden">Switch's concealment, set to false for a unconcelead trigger, true for an concelead one.</param>
 
-		internal Switch( Square holder, string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, Square newSquare)
+		internal Switch( Square holder, string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, Square square)
 			: base( holder, name, description, onlyOnceActivated, proximityActivated, hidden )
 		{
-
-			_newSquare = newSquare;
+			_newSquare = square;
+			_oldSquare = holder.Floor[square.Line, square.Column];
 		}
 
 		/// <summary>
@@ -50,13 +50,16 @@ namespace WordMaster.Gameplay
 
 			if( this.Active )
 			{
-				Square tmp;
+				Square temp;
 
-				if( NumberOfUses % 2 == 0 ) tmp = _oldSquare; // Second activation and even activation only
-				else tmp = _newSquare; // First activation and odd activation only
+				if( NumberOfUses % 2 == 0 ) // Second activation and even activation only
+					temp = _oldSquare;
+				else // First activation and odd activation only
+					temp = _newSquare;
 
-				user.Square = tmp;
-				if( user.Square.Floor.Equals( user.Floor ) )
+				Holder.Floor[temp.Line, temp.Column] = temp;
+
+				if( !user.Square.Floor.Equals( user.Floor ) )
 					user.Floor = user.Square.Floor;
 			}
 

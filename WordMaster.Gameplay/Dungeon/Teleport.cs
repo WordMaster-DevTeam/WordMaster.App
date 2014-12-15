@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordMaster.Gameplay
 {
-	internal class Teleport : Trigger
+	public class Teleport : Trigger
 	{
 		readonly Square _target;
 		readonly bool _bidirectional;
@@ -44,14 +44,11 @@ namespace WordMaster.Gameplay
 		{
 			base.Activate( user );
 
-			if( user.Square.Equals( this.Holder ) ) // A teleport can only be activated be going to his holder's Square
-			{
-				Square origin = user.Square;
-				user.Square = _target;
+			Square origin = user.Square;
+			user.Square = _target;
 
-				if( origin.Floor.Equals( _target.Floor ) ) // Change automatically the user's Floor if needed
-					user.Floor = _target.Floor;
-			}
+			if( !user.Square.Equals( _target.Floor ) ) // Change automatically the user's Floor if needed
+				user.Floor = _target.Floor;
 		}
 	}
 }

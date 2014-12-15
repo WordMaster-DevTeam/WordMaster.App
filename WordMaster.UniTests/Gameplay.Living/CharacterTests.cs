@@ -72,20 +72,21 @@ namespace WordMaster.UniTests
 			character = context.AddCharacter( characterName, "");
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			floor.SetAllSquares( squaresName, "", false );
-			dungeon.Entrance = floor.SetSquare( 0, 0, squaresName, "", true, null );
-			dungeon.Exit = floor.SetSquare( 1, 1, squaresName, "", true, null );
-			floor.SetSquare( 0, 1, squaresName, "", true, null );
+			dungeon.Entrance = floor.SetSquare( 0, 0, squaresName, "", true );
+			floor.SetSquare( 0, 1, squaresName, "", true );
+			floor.SetSquare( 1, 1, squaresName, "", true );
+			dungeon.Exit = floor.SetSquare( 1, 2, squaresName, "", true );
+			floor.SetAllUninitializedSquares( squaresName, "", false );
 			context.StartNewGame( character, dungeon, out game, out historicRecord );
 
 			// Assert
 			Assert.AreSame( character.Square, dungeon.Entrance );
-			Assert.IsFalse( character.TryMoveTo( 1, 0, out final ) );
-			Assert.AreEqual( character.Square, final );
-			Assert.IsTrue( character.TryMoveTo( 0, 1, out final ) );
-			Assert.AreEqual( character.Square, final );
-			Assert.IsTrue( character.TryMoveTo( 1, 1, out final ) );
-			Assert.AreEqual( character.Square, final );
+			Assert.IsTrue( character.TryMoveTo( 0, 1 ) );
+			Assert.AreEqual( character.Square, character.Floor[0, 1] );
+			Assert.IsTrue( character.TryMoveTo( 1, 1 ) );
+			Assert.AreEqual( character.Square, character.Floor[1, 1] );
+			Assert.IsFalse( character.TryMoveTo( 1, 0 ) );
+			Assert.AreEqual( character.Square, character.Floor[1, 1] );
 		}
     }
 }

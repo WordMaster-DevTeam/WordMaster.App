@@ -23,14 +23,14 @@ namespace WordMaster.UniTests
 			// Act
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			square = floor.SetSquare( 0, 0, squareName, squareDescription, true, null );
+			square = floor.SetSquare( 0, 0, squareName, squareDescription, true );
 
 			// Assert
-			Assert.AreSame( square, floor.GetSquare( 0, 0 ) );
+			Assert.AreSame( square, floor[0, 0] );
 			Assert.AreEqual( square.Name, squareName );
 			Assert.AreEqual( square.Description, squareDescription );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.AreEqual( square.TargetTeleport, null );
+			Assert.AreEqual( square.Trigger, null );
 		}
 
 		[Test]
@@ -47,21 +47,23 @@ namespace WordMaster.UniTests
 			string squareName2 = "another square";
 			string squareDescription1 = "a description for a square";
 			string squareDescription2 = "another description for a square";
+			string teleportName = "a teleport";
+			string teleportDescription = "a description for a teleport";
 
 			// Act
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			square = floor.SetSquare( 0, 0, squareName1, squareDescription1, false, null );
+			square = floor.SetSquare( 0, 0, squareName1, squareDescription1, false );
 			square.Name = squareName2;
 			square.Description = squareDescription2;
 			square.Holdable = true;
-			square.TargetTeleport = square;
+			square.SetTeleport( teleportName, teleportDescription, square, true );
 
 			// Assert
 			Assert.AreEqual( square.Name, squareName2 );
 			Assert.AreEqual( square.Description, squareDescription2 );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.AreEqual( square.TargetTeleport, square );
+			Assert.IsInstanceOf<Teleport>( square.Trigger );
 		}
 
 		[Test]
@@ -75,23 +77,23 @@ namespace WordMaster.UniTests
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 			string squareName = "a square";
+			string triggerName = "a teleport";
+			string triggerDescription = "a description for a teleport";
 
 			// Act
 			dungeon = context.AddDungeon( dungeonName, "" );
 			floor = dungeon.AddFloor( floorName, "", 3, 3 );
-			squareA = floor.SetSquare( 0, 0, squareName, "", false, null );
-			squareB = floor.SetSquare( 0, 1, squareName, "", false, squareA );
-			squareC = floor.SetSquare( 0, 2, squareName, "", true, squareB );
-			squareA.TargetTeleport = squareB;
-			squareC.Holdable = false;
+			squareA = floor.SetSquare( 0, 0, squareName, "", false );
+			squareB = floor.SetSquare( 0, 1, squareName, "", false );
+			squareC = floor.SetSquare( 0, 2, squareName, "", true );
+			squareA.SetTeleport( triggerName, triggerDescription, squareC, false );
 
 			// Assert
-			Assert.AreSame( squareA.TargetTeleport, squareB );
-			Assert.AreSame( squareB.TargetTeleport, squareA );
-			Assert.AreSame( squareC.TargetTeleport, null );
-			Assert.AreEqual( squareA.Holdable, true );
-			Assert.AreEqual( squareB.Holdable, true );
-			Assert.AreEqual( squareC.Holdable, false );
+			Assert.AreSame( squareA.Trigger.Holder, squareA );
+			Assert.IsInstanceOf<Teleport>( squareA.Trigger);
+			Assert.IsTrue( squareA.Holdable );
+			Assert.IsFalse( squareB.Holdable );
+			Assert.IsTrue( squareC.Holdable );
 		}
 	}
 }

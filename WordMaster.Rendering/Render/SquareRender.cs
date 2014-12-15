@@ -31,19 +31,19 @@ namespace WordMaster.Rendering
 		/// <summary>
 		/// Gets an Area witch indicates where this instance of <see cref="SquareRender"/> class representation is and witch size it is.
 		/// </summary>
-        public Rectangle Area
-        {
-            get
-            {
-                return new Rectangle
+		public Rectangle Area
+		{
+			get
+			{
+				return new Rectangle
 				(
 					_square.Column * _floorRender.SquareRenderingWidth,
 					_square.Line * _floorRender.SquareRenderingWidth,
 					_floorRender.SquareRenderingWidth,
-					_floorRender.SquareRenderingWidth 
+					_floorRender.SquareRenderingWidth
 				);
-            }
-        }
+			}
+		}
 
 		/// <summary>
 		/// Draws this instance of <see cref="SquareRender"/> class.
@@ -51,31 +51,40 @@ namespace WordMaster.Rendering
 		/// <param name="graphic">Graphic used.</param>
 		/// <param name="rectangleSource">Rectangle source (for optimisation purpose).</param>
 		/// <param name="scaleFactor">Scale facter (for optimisation purpose).</param>
-        public virtual void Draw( Graphics graphic, Rectangle rectangleSource, float scaleFactor )
-        {
+		public virtual void Draw( Graphics graphic, Rectangle rectangleSource, float scaleFactor )
+		{
 			Rectangle rectangle = new Rectangle( 0, 0, _floorRender.SquareRenderingWidth, _floorRender.SquareRenderingWidth );
 
 			// Default colors (no textures yet)
 			if( _square != null )
 			{
-				graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
-
+				// Default 
 				if( _square.Holdable ) // Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
-				
-				if( _square.TargetTeleport != null ) // Teleport
-					graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
-				
-				if( _square.Floor.Dungeon.Entrance != null ) // Entrance
+				else // Not Holdable
+					graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
+
+
+				if( _square.Trigger != null ) // The Trigger is set
 				{
-					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) )
+					if( _square.Trigger is Teleport || !_square.Trigger.Hidden ) // Teleport
+						graphic.FillRectangle( new SolidBrush( Color.Yellow ), rectangle );
+					else if( _square.Trigger is Switch || !_square.Trigger.Hidden ) // Switch
+						graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
+					else if( _square.Trigger is Trap || !_square.Trigger.Hidden ) // Trap
 						graphic.FillRectangle( new SolidBrush( Color.Red ), rectangle );
 				}
 
-				if( _square.Floor.Dungeon.Exit != null ) // Exit
+				if( _square.Floor.Dungeon.Entrance != null ) // The Entrance is set
 				{
-					if( _square.Floor.Dungeon.Exit.Equals( this._square ) )
-						graphic.FillRectangle( new SolidBrush( Color.Blue ), rectangle );
+					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) ) // Entrance
+						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
+				}
+
+				if( _square.Floor.Dungeon.Exit != null ) // The Exit is set
+				{
+					if( _square.Floor.Dungeon.Exit.Equals( this._square ) ) // Exit
+						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
 				}
 
 				if( _floorRender.Character != null ) // Their is a Character in this Floor
@@ -83,12 +92,12 @@ namespace WordMaster.Rendering
 					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
 						graphic.FillRectangle( new SolidBrush( Color.LightBlue ), rectangle );
 				}
-				else
+				else // No Character
 				{
 					graphic.FillRectangle( new SolidBrush( Color.Black ), rectangle );
 				}
 			}
 			rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
-        }
+		}
 	}
 }

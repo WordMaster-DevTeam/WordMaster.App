@@ -50,6 +50,8 @@ namespace WordMaster.UI
             }
             else
             {
+                InGame inGameForm = new InGame( );
+                inGameForm.Show( );
             }                     
         } 
     }

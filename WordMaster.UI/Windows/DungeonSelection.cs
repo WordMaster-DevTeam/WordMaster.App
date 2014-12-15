@@ -11,11 +11,26 @@ using WordMaster.Gameplay;
 
 namespace WordMaster.UI
 {
-    public partial class DungeonSelection : Form
+    public partial class DungeonSelection : Form, IDungeonSelector
     {
+        List<Dungeon> _dungeons;
+
         public DungeonSelection()
         {
             InitializeComponent( );
+        }
+
+        public void SetDungeonList( List<Dungeon> dungeonList )
+        {
+            _dungeons = dungeonList;
+            DungeonListTableLayout.RowCount = _dungeons.Count( );
+
+            foreach ( Dungeon aDungeon in _dungeons )
+            {
+                DungeonRecap newRecap = new DungeonRecap( );
+                newRecap.SetDungeon( aDungeon );
+                DungeonListTableLayout.Controls.Add( newRecap );
+            }
         }
         
         protected override void OnLoad( EventArgs e )

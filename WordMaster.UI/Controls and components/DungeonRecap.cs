@@ -15,12 +15,16 @@ namespace WordMaster.UI
     {
         Dungeon _dungeon;
 
+        public IDungeonSelector DS
+        {
+            get { return (IDungeonSelector)Parent; }
+        }
         public DungeonRecap()
         {
             InitializeComponent( );
             this.Dock = DockStyle.Fill;
         }
-
+        
         internal void SetDungeon( Dungeon dungeon)
         {
             _dungeon = dungeon;

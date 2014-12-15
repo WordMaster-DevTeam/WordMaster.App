@@ -58,6 +58,7 @@
     <Compile Include="Controls and components\FloorViewer.cs">
       <SubType>Component</SubType>
     </Compile>
+    <Compile Include="IDungeonSelector.cs" />
     <Compile Include="Windows\CharacterCreator.cs">
       <SubType>Form</SubType>
     </Compile>

@@ -45,11 +45,11 @@
             // CreateCharacterBtn
             // 
             this.CreateCharacterBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.CreateCharacterBtn.Location = new System.Drawing.Point(365, 12);
+            this.CreateCharacterBtn.Location = new System.Drawing.Point(574, 12);
             this.CreateCharacterBtn.Name = "CreateCharacterBtn";
             this.CreateCharacterBtn.Size = new System.Drawing.Size(133, 45);
             this.CreateCharacterBtn.TabIndex = 2;
-            this.CreateCharacterBtn.Text = "Create new character";
+            this.CreateCharacterBtn.Text = "New character";
             this.CreateCharacterBtn.UseVisualStyleBackColor = true;
             this.CreateCharacterBtn.Click += new System.EventHandler(this.CreateCharacterBtn_Click);
             // 
@@ -57,7 +57,7 @@
             // 
             this.TutorialBTn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.TutorialBTn.Enabled = false;
-            this.TutorialBTn.Location = new System.Drawing.Point(504, 12);
+            this.TutorialBTn.Location = new System.Drawing.Point(713, 12);
             this.TutorialBTn.Name = "TutorialBTn";
             this.TutorialBTn.Size = new System.Drawing.Size(133, 45);
             this.TutorialBTn.TabIndex = 3;
@@ -69,7 +69,7 @@
             // 
             this.OptionBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.OptionBtn.Enabled = false;
-            this.OptionBtn.Location = new System.Drawing.Point(643, 12);
+            this.OptionBtn.Location = new System.Drawing.Point(852, 12);
             this.OptionBtn.Name = "OptionBtn";
             this.OptionBtn.Size = new System.Drawing.Size(133, 45);
             this.OptionBtn.TabIndex = 4;
@@ -81,7 +81,7 @@
             // 
             this.ScoresBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.ScoresBtn.Enabled = false;
-            this.ScoresBtn.Location = new System.Drawing.Point(365, 63);
+            this.ScoresBtn.Location = new System.Drawing.Point(574, 63);
             this.ScoresBtn.Name = "ScoresBtn";
             this.ScoresBtn.Size = new System.Drawing.Size(133, 45);
             this.ScoresBtn.TabIndex = 5;
@@ -93,7 +93,7 @@
             // 
             this.CreditsBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.CreditsBtn.Enabled = false;
-            this.CreditsBtn.Location = new System.Drawing.Point(504, 63);
+            this.CreditsBtn.Location = new System.Drawing.Point(713, 63);
             this.CreditsBtn.Name = "CreditsBtn";
             this.CreditsBtn.Size = new System.Drawing.Size(133, 45);
             this.CreditsBtn.TabIndex = 6;
@@ -103,7 +103,7 @@
             // QuitBtn
             // 
             this.QuitBtn.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.QuitBtn.Location = new System.Drawing.Point(643, 63);
+            this.QuitBtn.Location = new System.Drawing.Point(852, 63);
             this.QuitBtn.Name = "QuitBtn";
             this.QuitBtn.Size = new System.Drawing.Size(133, 45);
             this.QuitBtn.TabIndex = 7;
@@ -126,7 +126,7 @@
             this.CharacterTableLayout.Name = "CharacterTableLayout";
             this.CharacterTableLayout.RowCount = 1;
             this.CharacterTableLayout.RowStyles.Add(new System.Windows.Forms.RowStyle());
-            this.CharacterTableLayout.Size = new System.Drawing.Size(776, 468);
+            this.CharacterTableLayout.Size = new System.Drawing.Size(985, 507);
             this.CharacterTableLayout.TabIndex = 9;
             // 
             // panel1
@@ -142,7 +142,7 @@
             this.panel1.Controls.Add(this.TutorialBTn);
             this.panel1.Location = new System.Drawing.Point(0, 0);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(788, 114);
+            this.panel1.Size = new System.Drawing.Size(997, 114);
             this.panel1.TabIndex = 10;
             // 
             // LogoPictureBox
@@ -160,7 +160,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(64)))), ((int)(((byte)(64)))), ((int)(((byte)(64)))));
-            this.ClientSize = new System.Drawing.Size(800, 600);
+            this.ClientSize = new System.Drawing.Size(1009, 639);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.CharacterTableLayout);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;

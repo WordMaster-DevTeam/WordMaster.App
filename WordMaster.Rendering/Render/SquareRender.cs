@@ -67,11 +67,11 @@ namespace WordMaster.Rendering
 
 				if( _square.Trigger != null ) // The Trigger is set
 				{
-					if( _square.Trigger is Teleport || !_square.Trigger.Hidden ) // Teleport
+					if( _square.Trigger is Teleport && !_square.Trigger.Hidden ) // Teleport
 						graphic.FillRectangle( new SolidBrush( Color.Yellow ), rectangle );
-					else if( _square.Trigger is Switch || !_square.Trigger.Hidden ) // Switch
+					else if( _square.Trigger is Switch && !_square.Trigger.Hidden ) // Switch
 						graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
-					else if( _square.Trigger is Trap || !_square.Trigger.Hidden ) // Trap
+					else if( _square.Trigger is Trap && !_square.Trigger.Hidden ) // Trap
 						graphic.FillRectangle( new SolidBrush( Color.Red ), rectangle );
 				}
 

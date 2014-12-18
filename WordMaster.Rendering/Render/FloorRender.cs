@@ -23,10 +23,10 @@ namespace WordMaster.Rendering
 		{
 			get
 			{
-				if( line < 0 || line >= _floor.NumberOfLines || column < 0 || column >= _floor.NumberOfColumns )
-					return null; // Outside the layout
-				else
+				if( _floor.CheckBounds( line, column ) ) // Inside the layout
 					return _squaresRender[line, column];
+				else // Outside the layout
+					return null;
 			}
 		}
 
@@ -47,19 +47,11 @@ namespace WordMaster.Rendering
 		}
 
 		/// <summary>
-		/// Gets (or sets - desactivated) the instance of <see cref="Floor"/> class used.
+		/// Gets the instance of <see cref="Floor"/> class used.
 		/// </summary>
 		public Floor Floor
 		{
 			get { return _floor; }
-			//set
-			//{
-			//	_floor = value;
-			//	_squaresRender = new SquareRender[_floor.NumberOfLines, _floor.NumberOfColumns];
-			//	for( int i = 0; i < _floor.NumberOfLines; i++ )
-			//		for( int j = 0; j < _floor.NumberOfColumns; j++ )
-			//			_squaresRender[i, j] = new SquareRender( this, _floor[i, j] );
-			//}
 		}
 
 		/// <summary>

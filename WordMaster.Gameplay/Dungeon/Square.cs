@@ -75,7 +75,7 @@ namespace WordMaster.Gameplay
 		public bool Holdable
 		{
 			get { return _holdable; }
-			set { if( Floor.Dungeon.Editable ) _holdable = value;	}
+			set { if( Floor.Dungeon.Editable ) _holdable = value; }
 		}
 
 		/// <summary>
@@ -88,7 +88,8 @@ namespace WordMaster.Gameplay
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Switch"/> class within this instance of <see cref="Square"/> class.
-		/// NB: A Switch is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square.
+		/// NB: A Switch is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable, exchanged Square must be initialize.
 		/// </summary>
 		/// <param name="name">Switch's name.</param>
 		/// <param name="description">Switch's description.</param>
@@ -97,18 +98,21 @@ namespace WordMaster.Gameplay
 		/// <param name="hidden">Switch's concealment, set to false for a unconcelead trigger, true for an concelead one.</param>
 		/// <param name="newSquare">Switch's replacement, or Switch's target if use a second time (if possible).</param>
 		/// <returns>New Switch's reference.</returns>
-		public Switch SetSwitch( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, Square changed )
+		public Switch SetSwitch( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, Square exchanged )
 		{
 			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
-			if( changed == null ) throw new ArgumentException( "Changed can not be null", "changed" );
+			if( exchanged == null ) throw new ArgumentException( "Changed can not be null", "changed" );
 
-			_trigger = new Switch( this, name, description, onlyOnceActivated, proximityActivated, hidden, changed );
+			if( !proximityActivated ) // A Square with a Switch must be holdable if not proximity activated
+				_holdable = true;
+			_trigger = new Switch( this, name, description, onlyOnceActivated, proximityActivated, hidden, exchanged );
 			return (Switch)_trigger;
 		}
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="Teleport"/> class within this instance of <see cref="Square"/> class.
-		/// NB: A Teleport is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square.
+		/// NB: A Teleport is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable, target must be initialize.
 		/// </summary>
 		/// <param name="name">Teleport's name.</param>
 		/// <param name="description">Teleport's description.</param>
@@ -118,16 +122,17 @@ namespace WordMaster.Gameplay
 		public Teleport SetTeleport( string name, string description, Square target, bool bidirectional )
 		{
 			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
-			if( target == null ) throw new ArgumentException( "Target can not be null", "target" );
+			if( target == null ) throw new ArgumentNullException( "Target can not be null", "target" );
 
 			_holdable = true; // A Square with a Teleport must alway be holdable
-			_trigger = new Teleport(this, name, description, target, bidirectional);
+			_trigger = new Teleport( this, name, description, target, bidirectional );
 			return (Teleport)_trigger;
 		}
 
 		/// <summary>
 		/// Initializes a new intance of <see cref="Trap"/> class within this instance of <see cref="Square"/> class.
-		/// NB: A Trap is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square.
+		/// NB: A Trap is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable.
 		/// </summary>
 		/// <param name="name">Trap's name.</param>
 		/// <param name="description">Trap's description.</param>
@@ -141,6 +146,8 @@ namespace WordMaster.Gameplay
 		{
 			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
 
+			if( !proximityActivated ) // A Square with a Trap must be holdable if not proximity activated
+				_holdable = true;
 			_trigger = new Trap( this, name, description, onlyOnceActivated, proximityActivated, hidden, ignoreArmor, intensity );
 			return (Trap)_trigger;
 		}

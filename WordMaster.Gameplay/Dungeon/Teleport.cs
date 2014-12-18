@@ -42,13 +42,13 @@ namespace WordMaster.Gameplay
 		/// <param name="user">Character's reference, the user of this <see cref="Trigger"/>.</param>
 		internal override void Activate( Character user )
 		{
-			base.Activate( user );
-
 			Square origin = user.Square;
 			user.Square = _target;
 
 			if( !user.Square.Equals( _target.Floor ) ) // Change automatically the user's Floor if needed
 				user.Floor = _target.Floor;
+
+			base.Activate( user );
 		}
 	}
 }

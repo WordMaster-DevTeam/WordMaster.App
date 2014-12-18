@@ -47,13 +47,12 @@ namespace WordMaster.Gameplay
 		/// <param name="user">Character's reference, the user of this <see crefe="Trigger"/>.</param>
 		internal override void Activate( Character user )
 		{
-			base.Activate( user );
-
 			if( this.Active )
 			{
 				if( IgnoreArmor ) user.Health -= Intensity;
 				else user.Health -= (Intensity - user.Armor);
 			}
+			base.Activate( user );
 		}
 	}
 }

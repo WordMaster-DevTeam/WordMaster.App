@@ -27,6 +27,7 @@ namespace WordMaster.Gameplay
 			_onlyOnceActivated = onlyOnceActivated;
 			_proximityActivated = proximityActivated;
 			_hidden = hidden;
+			_active = true;
 		}
 
 		/// <summary>

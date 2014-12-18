@@ -22,40 +22,14 @@ namespace WordMaster.UI
         public InGame()
         {
 			_globalContext = new GlobalContext();
-			_gameContext = _globalContext.StartNewGame( _globalContext.AddDefaultCharacter( "Oliver" ), _globalContext.AddDefaultDungeon( "The Cab" ), out _game, out _historicRecord );
-
+			_gameContext = _globalContext.StartNewGame( _globalContext.AddDefaultCharacter( "Bob" ), _globalContext.AddDefaultDungeon( "The Academy" ), out _game, out _historicRecord );
 			InitializeComponent();
         }
 
         private void InGame_Load( object sender, EventArgs e )
         {
-			// DungeonPanel
-			DungeonTextBox1.Text = _gameContext.Game.Character.Dungeon.Name;
-			DungeonTextBox2.Text = _gameContext.Game.Character.Dungeon.Description;
-			FloorTextBox1.Text = _gameContext.Game.Character.Floor.Name;
-			FloorTextBox2.Text = _gameContext.Game.Character.Floor.Description;
-			SquareTextBox1.Text = _gameContext.Game.Character.Square.Name;
-			SquareTextBox2.Text = _gameContext.Game.Character.Square.Description;
-			if( _game.Character.Square.Trigger == null)
-			{
-				MiscTextBox1.Text = "...";
-				MiscTextBox2.Text = "...";
-			}
-			else
-			{
-				MiscTextBox1.Text = _gameContext.Game.Character.Square.Trigger.Name;
-				MiscTextBox2.Text = _gameContext.Game.Character.Square.Trigger.Description;
-			}
-
-
-			// CharacterPanel
-			NameTextBox.Text = _gameContext.Game.Character.Name;
-			LifeTextBox.Text = _gameContext.Game.Character.Health.ToString();
-			LevelTextBox.Text = _gameContext.Game.Character.Level.ToString();
-			ArmorTextBox.Text = _gameContext.Game.Character.Armor.ToString();
-			DescriptionTextBox.Text = _gameContext.Game.Character.Description;
-
-			// FloorViewer
+			UpdateDungeonPanel();
+			UpdateCharacterPanel();
 			FloorViewer.Initialize( _gameContext );
         }
 
@@ -64,7 +38,76 @@ namespace WordMaster.UI
             Application.Exit( );
         }
 
-		#region Up, Right, Down and Left actions' methods
+		#region Interface's updates
+		private void UpdateCharacterPanel()
+		{
+			NameTextBox.Text = _gameContext.Game.Character.Name;
+			LifeTextBox.Text = _gameContext.Game.Character.Health.ToString() + " / " + _gameContext.Game.Character.MaxHealth.ToString();
+			LevelTextBox.Text = _gameContext.Game.Character.Level.ToString();
+			ArmorTextBox.Text = _gameContext.Game.Character.Armor.ToString();
+			ExperienceTextBox.Text = _gameContext.Game.Character.Experience.ToString();
+			DescriptionTextBox.Text = _gameContext.Game.Character.Description;
+		}
+
+		private void UpdateDungeonPanel()
+		{
+			if(_gameContext.Game.Character.GameContext != null ) // Game ongoing
+			{
+				DungeonTextBox1.Text = _gameContext.Game.Character.Dungeon.Name;
+				DungeonTextBox2.Text = _gameContext.Game.Character.Dungeon.Description;
+				FloorTextBox1.Text = _gameContext.Game.Character.Floor.Name;
+				FloorTextBox2.Text = _gameContext.Game.Character.Floor.Description;
+				SquareTextBox1.Text = _gameContext.Game.Character.Square.Name;
+				SquareTextBox2.Text = _gameContext.Game.Character.Square.Description;
+
+				if( _game.Character.Square.Trigger == null ) // No Trigger
+				{
+					MiscTextBox2.Text = "...";
+					MiscTextBox1.Text = "...";
+				}
+				else // Trigger found
+				{
+					MiscTextBox1.Text = _gameContext.Game.Character.Square.Trigger.Name;
+					MiscTextBox2.Text = _gameContext.Game.Character.Square.Trigger.Description;
+				}
+			}
+			else // Game ended
+			{
+				DungeonTextBox1.Text = "";
+				DungeonTextBox2.Text = "";
+				FloorTextBox1.Text = "";
+				FloorTextBox2.Text = "";
+				SquareTextBox1.Text = "";
+				SquareTextBox2.Text = "";
+				MiscTextBox1.Text = "";
+				MiscTextBox2.Text = "";
+			}
+		}
+		#endregion
+
+		#region Interface's controls
+		private void MoveAndUpdate( Square initial, int line, int column )
+		{
+			Square target = initial.Floor[line, column];
+
+			if( _gameContext.Game.Character.TryMoveTo( target ) ) // Checks holdable state and activates trigger if neeeded
+			{
+				if( _gameContext.Game.Character.GameContext == null ) // Game ended
+				{
+					// Updated FloorViewer's Floor
+					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon[0] );
+					UpdateDungeonPanel();
+					UpdateCharacterPanel();
+				}
+				else // Game ongoing
+				{
+					FloorViewer.ViewPort.FloorRender = new FloorRender( _gameContext.Game.Character, _gameContext.Game.Character.Floor );
+					UpdateDungeonPanel();
+					UpdateCharacterPanel();
+				}
+			}
+		}
+
 		private void GoToUp()
 		{
 			if( _gameContext.Game.Character.Square != null )
@@ -180,52 +223,6 @@ namespace WordMaster.UI
 			}
 
 			return base.ProcessCmdKey( ref msg, keyData );
-		}
-
-		private void MoveAndUpdate( Square initial, int line, int column )
-		{
-			Square target = initial.Floor[line, column];
-
-			if( _gameContext.Game.Character.TryMoveTo( target ) ) // Checks holdable state and activates trigger if neeeded
-			{
-				if( _gameContext.Game.Character.GameContext == null ) // The Game have ended
-				{
-					// Update FloorViewer's Floor and all text boxes (Dungeon, Floor, Square)
-					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon[0] );
-					DungeonTextBox1.Text = _globalContext.EmptyDungeon.Name;
-					DungeonTextBox2.Text = _globalContext.EmptyDungeon.Description;
-					FloorTextBox1.Text = _globalContext.EmptyDungeon[0].Name;
-					FloorTextBox2.Text = _globalContext.EmptyDungeon[0].Description;
-					SquareTextBox1.Text = _globalContext.EmptyDungeon[0][0, 0].Name;
-					SquareTextBox2.Text = _globalContext.EmptyDungeon[0][0, 0].Description;
-					MiscTextBox1.Text = "";
-					MiscTextBox2.Text = "";
-				}
-				else // The Game continue
-				{
-					if( !initial.Floor.Equals( _gameContext.Game.Character.Floor ) ) // Updates needed if the Floor have changed
-					{
-						// Update FloorViewer's Floor and Floor's text boxes
-						FloorViewer.ViewPort.FloorRender = new FloorRender( _gameContext.Game.Character, _gameContext.Game.Character.Floor );
-						FloorTextBox1.Text = _gameContext.Game.Character.Floor.Name;
-						FloorTextBox2.Text = _gameContext.Game.Character.Floor.Description;
-					}
-
-					// Update Square's text boxes
-					SquareTextBox1.Text = _gameContext.Game.Character.Square.Name;
-					SquareTextBox2.Text = _gameContext.Game.Character.Square.Description;
-					if( _gameContext.Game.Character.Square.Trigger == null )
-					{
-						MiscTextBox1.Text = "...";
-						MiscTextBox2.Text = "...";
-					}
-					else
-					{
-						MiscTextBox1.Text = _game.Character.Square.Trigger.Name;
-						MiscTextBox2.Text = _game.Character.Square.Trigger.Description;
-					}
-				}
-			}
 		}
 		#endregion
 	}

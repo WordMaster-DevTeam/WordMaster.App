@@ -53,6 +53,9 @@ namespace WordMaster.UI
 			this.DescriptionLabel = new System.Windows.Forms.Label();
 			this.ArmorLabel = new System.Windows.Forms.Label();
 			this.DungeonPanel = new System.Windows.Forms.Panel();
+			this.MiscTextBox1 = new System.Windows.Forms.RichTextBox();
+			this.MiscTextBox2 = new System.Windows.Forms.RichTextBox();
+			this.MiscLabel = new System.Windows.Forms.Label();
 			this.SquareTextBox2 = new System.Windows.Forms.RichTextBox();
 			this.FloorTextBox2 = new System.Windows.Forms.RichTextBox();
 			this.DungeonTextBox2 = new System.Windows.Forms.RichTextBox();
@@ -68,14 +71,15 @@ namespace WordMaster.UI
 			this.GoToRightButton = new System.Windows.Forms.Button();
 			this.MainPanel = new System.Windows.Forms.Panel();
 			this.ControlPanel = new System.Windows.Forms.Panel();
-			this.MiscTextBox2 = new System.Windows.Forms.RichTextBox();
-			this.MiscTextBox1 = new System.Windows.Forms.RichTextBox();
-			this.MiscLabel = new System.Windows.Forms.Label();
+			this.ExperienceTextBox = new System.Windows.Forms.RichTextBox();
+			this.ExperienceLabel = new System.Windows.Forms.Label();
+			this.pictureBox1 = new System.Windows.Forms.PictureBox();
 			this.FloorViewer = new WordMaster.UI.FloorViewer();
 			this.CharacterPanel.SuspendLayout();
 			this.DungeonPanel.SuspendLayout();
 			this.MainPanel.SuspendLayout();
 			this.ControlPanel.SuspendLayout();
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
 			this.SuspendLayout();
 			// 
 			// QuitTheGame
@@ -96,7 +100,9 @@ namespace WordMaster.UI
 			// 
 			this.CharacterPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.CharacterPanel.BackColor = System.Drawing.Color.Gainsboro;
+			this.CharacterPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(159)))), ((int)(((byte)(126)))));
+			this.CharacterPanel.Controls.Add(this.ExperienceTextBox);
+			this.CharacterPanel.Controls.Add(this.ExperienceLabel);
 			this.CharacterPanel.Controls.Add(this.DescriptionTextBox);
 			this.CharacterPanel.Controls.Add(this.ArmorTextBox);
 			this.CharacterPanel.Controls.Add(this.LevelTextBox);
@@ -108,9 +114,9 @@ namespace WordMaster.UI
 			this.CharacterPanel.Controls.Add(this.DescriptionLabel);
 			this.CharacterPanel.Controls.Add(this.ArmorLabel);
 			this.CharacterPanel.Cursor = System.Windows.Forms.Cursors.Default;
-			this.CharacterPanel.Location = new System.Drawing.Point(3, 189);
+			this.CharacterPanel.Location = new System.Drawing.Point(2, 357);
 			this.CharacterPanel.Name = "CharacterPanel";
-			this.CharacterPanel.Size = new System.Drawing.Size(170, 209);
+			this.CharacterPanel.Size = new System.Drawing.Size(180, 232);
 			this.CharacterPanel.TabIndex = 18;
 			// 
 			// DescriptionTextBox
@@ -119,11 +125,11 @@ namespace WordMaster.UI
 			this.DescriptionTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.DescriptionTextBox.Cursor = System.Windows.Forms.Cursors.Default;
 			this.DescriptionTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.DescriptionTextBox.Location = new System.Drawing.Point(6, 138);
+			this.DescriptionTextBox.Location = new System.Drawing.Point(5, 162);
 			this.DescriptionTextBox.Name = "DescriptionTextBox";
 			this.DescriptionTextBox.ReadOnly = true;
 			this.DescriptionTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
-			this.DescriptionTextBox.Size = new System.Drawing.Size(158, 64);
+			this.DescriptionTextBox.Size = new System.Drawing.Size(170, 65);
 			this.DescriptionTextBox.TabIndex = 22;
 			this.DescriptionTextBox.Text = "";
 			// 
@@ -133,7 +139,7 @@ namespace WordMaster.UI
 			this.ArmorTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.ArmorTextBox.Cursor = System.Windows.Forms.Cursors.Default;
 			this.ArmorTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.ArmorTextBox.Location = new System.Drawing.Point(60, 88);
+			this.ArmorTextBox.Location = new System.Drawing.Point(71, 88);
 			this.ArmorTextBox.Name = "ArmorTextBox";
 			this.ArmorTextBox.ReadOnly = true;
 			this.ArmorTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
@@ -148,7 +154,7 @@ namespace WordMaster.UI
 			this.LevelTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.LevelTextBox.Cursor = System.Windows.Forms.Cursors.Default;
 			this.LevelTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.LevelTextBox.Location = new System.Drawing.Point(60, 62);
+			this.LevelTextBox.Location = new System.Drawing.Point(71, 62);
 			this.LevelTextBox.Name = "LevelTextBox";
 			this.LevelTextBox.ReadOnly = true;
 			this.LevelTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
@@ -163,7 +169,7 @@ namespace WordMaster.UI
 			this.LifeTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.LifeTextBox.Cursor = System.Windows.Forms.Cursors.Default;
 			this.LifeTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.LifeTextBox.Location = new System.Drawing.Point(60, 35);
+			this.LifeTextBox.Location = new System.Drawing.Point(71, 35);
 			this.LifeTextBox.Name = "LifeTextBox";
 			this.LifeTextBox.ReadOnly = true;
 			this.LifeTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
@@ -178,7 +184,7 @@ namespace WordMaster.UI
 			this.NameTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.NameTextBox.Cursor = System.Windows.Forms.Cursors.Default;
 			this.NameTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.NameTextBox.Location = new System.Drawing.Point(60, 9);
+			this.NameTextBox.Location = new System.Drawing.Point(71, 9);
 			this.NameTextBox.Name = "NameTextBox";
 			this.NameTextBox.ReadOnly = true;
 			this.NameTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
@@ -190,55 +196,55 @@ namespace WordMaster.UI
 			// NameLabel
 			// 
 			this.NameLabel.AutoSize = true;
-			this.NameLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.NameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.NameLabel.Location = new System.Drawing.Point(4, 11);
+			this.NameLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.NameLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.NameLabel.Location = new System.Drawing.Point(3, 11);
 			this.NameLabel.Name = "NameLabel";
-			this.NameLabel.Size = new System.Drawing.Size(42, 14);
+			this.NameLabel.Size = new System.Drawing.Size(40, 14);
 			this.NameLabel.TabIndex = 1;
 			this.NameLabel.Text = "Name ";
 			// 
 			// LifeLabel
 			// 
 			this.LifeLabel.AutoSize = true;
-			this.LifeLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LifeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.LifeLabel.Location = new System.Drawing.Point(4, 37);
+			this.LifeLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LifeLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.LifeLabel.Location = new System.Drawing.Point(3, 37);
 			this.LifeLabel.Name = "LifeLabel";
-			this.LifeLabel.Size = new System.Drawing.Size(30, 14);
+			this.LifeLabel.Size = new System.Drawing.Size(28, 14);
 			this.LifeLabel.TabIndex = 2;
 			this.LifeLabel.Text = "Life ";
 			// 
 			// LevelLabel
 			// 
 			this.LevelLabel.AutoSize = true;
-			this.LevelLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.LevelLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.LevelLabel.Location = new System.Drawing.Point(4, 64);
+			this.LevelLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.LevelLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.LevelLabel.Location = new System.Drawing.Point(3, 64);
 			this.LevelLabel.Name = "LevelLabel";
-			this.LevelLabel.Size = new System.Drawing.Size(38, 14);
+			this.LevelLabel.Size = new System.Drawing.Size(36, 14);
 			this.LevelLabel.TabIndex = 3;
 			this.LevelLabel.Text = "Level ";
 			// 
 			// DescriptionLabel
 			// 
 			this.DescriptionLabel.AutoSize = true;
-			this.DescriptionLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.DescriptionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.DescriptionLabel.Location = new System.Drawing.Point(4, 119);
+			this.DescriptionLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DescriptionLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.DescriptionLabel.Location = new System.Drawing.Point(3, 146);
 			this.DescriptionLabel.Name = "DescriptionLabel";
-			this.DescriptionLabel.Size = new System.Drawing.Size(69, 14);
+			this.DescriptionLabel.Size = new System.Drawing.Size(63, 14);
 			this.DescriptionLabel.TabIndex = 4;
 			this.DescriptionLabel.Text = "Description";
 			// 
 			// ArmorLabel
 			// 
 			this.ArmorLabel.AutoSize = true;
-			this.ArmorLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ArmorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.ArmorLabel.Location = new System.Drawing.Point(4, 90);
+			this.ArmorLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ArmorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.ArmorLabel.Location = new System.Drawing.Point(3, 90);
 			this.ArmorLabel.Name = "ArmorLabel";
-			this.ArmorLabel.Size = new System.Drawing.Size(39, 14);
+			this.ArmorLabel.Size = new System.Drawing.Size(38, 14);
 			this.ArmorLabel.TabIndex = 14;
 			this.ArmorLabel.Text = "Armor";
 			// 
@@ -246,9 +252,9 @@ namespace WordMaster.UI
 			// 
 			this.DungeonPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.DungeonPanel.BackColor = System.Drawing.Color.Gainsboro;
-			this.DungeonPanel.Controls.Add(this.MiscTextBox2);
+			this.DungeonPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(159)))), ((int)(((byte)(126)))));
 			this.DungeonPanel.Controls.Add(this.MiscTextBox1);
+			this.DungeonPanel.Controls.Add(this.MiscTextBox2);
 			this.DungeonPanel.Controls.Add(this.MiscLabel);
 			this.DungeonPanel.Controls.Add(this.SquareTextBox2);
 			this.DungeonPanel.Controls.Add(this.FloorTextBox2);
@@ -260,10 +266,50 @@ namespace WordMaster.UI
 			this.DungeonPanel.Controls.Add(this.FloorLabel);
 			this.DungeonPanel.Controls.Add(this.SquareLabel);
 			this.DungeonPanel.Cursor = System.Windows.Forms.Cursors.Default;
-			this.DungeonPanel.Location = new System.Drawing.Point(3, 3);
+			this.DungeonPanel.Location = new System.Drawing.Point(2, 73);
 			this.DungeonPanel.Name = "DungeonPanel";
-			this.DungeonPanel.Size = new System.Drawing.Size(170, 182);
+			this.DungeonPanel.Size = new System.Drawing.Size(180, 277);
 			this.DungeonPanel.TabIndex = 19;
+			// 
+			// MiscTextBox1
+			// 
+			this.MiscTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.MiscTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.MiscTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
+			this.MiscTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.MiscTextBox1.Location = new System.Drawing.Point(57, 217);
+			this.MiscTextBox1.Name = "MiscTextBox1";
+			this.MiscTextBox1.ReadOnly = true;
+			this.MiscTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+			this.MiscTextBox1.Size = new System.Drawing.Size(118, 14);
+			this.MiscTextBox1.TabIndex = 27;
+			this.MiscTextBox1.Text = "";
+			this.MiscTextBox1.WordWrap = false;
+			// 
+			// MiscTextBox2
+			// 
+			this.MiscTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.MiscTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.MiscTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
+			this.MiscTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.MiscTextBox2.Location = new System.Drawing.Point(6, 237);
+			this.MiscTextBox2.Name = "MiscTextBox2";
+			this.MiscTextBox2.ReadOnly = true;
+			this.MiscTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.MiscTextBox2.Size = new System.Drawing.Size(169, 35);
+			this.MiscTextBox2.TabIndex = 26;
+			this.MiscTextBox2.Text = "";
+			// 
+			// MiscLabel
+			// 
+			this.MiscLabel.AutoSize = true;
+			this.MiscLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.MiscLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.MiscLabel.Location = new System.Drawing.Point(3, 217);
+			this.MiscLabel.Name = "MiscLabel";
+			this.MiscLabel.Size = new System.Drawing.Size(30, 14);
+			this.MiscLabel.TabIndex = 25;
+			this.MiscLabel.Text = "Misc";
 			// 
 			// SquareTextBox2
 			// 
@@ -271,14 +317,13 @@ namespace WordMaster.UI
 			this.SquareTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.SquareTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
 			this.SquareTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.SquareTextBox2.Location = new System.Drawing.Point(60, 108);
+			this.SquareTextBox2.Location = new System.Drawing.Point(6, 165);
 			this.SquareTextBox2.Name = "SquareTextBox2";
 			this.SquareTextBox2.ReadOnly = true;
-			this.SquareTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.SquareTextBox2.Size = new System.Drawing.Size(104, 14);
+			this.SquareTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.SquareTextBox2.Size = new System.Drawing.Size(169, 35);
 			this.SquareTextBox2.TabIndex = 24;
 			this.SquareTextBox2.Text = "";
-			this.SquareTextBox2.WordWrap = false;
 			// 
 			// FloorTextBox2
 			// 
@@ -286,14 +331,13 @@ namespace WordMaster.UI
 			this.FloorTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.FloorTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FloorTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.FloorTextBox2.Location = new System.Drawing.Point(60, 68);
+			this.FloorTextBox2.Location = new System.Drawing.Point(6, 94);
 			this.FloorTextBox2.Name = "FloorTextBox2";
 			this.FloorTextBox2.ReadOnly = true;
-			this.FloorTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.FloorTextBox2.Size = new System.Drawing.Size(104, 14);
+			this.FloorTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.FloorTextBox2.Size = new System.Drawing.Size(169, 35);
 			this.FloorTextBox2.TabIndex = 23;
 			this.FloorTextBox2.Text = "";
-			this.FloorTextBox2.WordWrap = false;
 			// 
 			// DungeonTextBox2
 			// 
@@ -301,14 +345,13 @@ namespace WordMaster.UI
 			this.DungeonTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.DungeonTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
 			this.DungeonTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.DungeonTextBox2.Location = new System.Drawing.Point(60, 28);
+			this.DungeonTextBox2.Location = new System.Drawing.Point(6, 25);
 			this.DungeonTextBox2.Name = "DungeonTextBox2";
 			this.DungeonTextBox2.ReadOnly = true;
-			this.DungeonTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.DungeonTextBox2.Size = new System.Drawing.Size(104, 14);
+			this.DungeonTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Vertical;
+			this.DungeonTextBox2.Size = new System.Drawing.Size(169, 35);
 			this.DungeonTextBox2.TabIndex = 22;
 			this.DungeonTextBox2.Text = "";
-			this.DungeonTextBox2.WordWrap = false;
 			// 
 			// DungeonTextBox1
 			// 
@@ -316,11 +359,11 @@ namespace WordMaster.UI
 			this.DungeonTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.DungeonTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.DungeonTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.DungeonTextBox1.Location = new System.Drawing.Point(60, 8);
+			this.DungeonTextBox1.Location = new System.Drawing.Point(57, 5);
 			this.DungeonTextBox1.Name = "DungeonTextBox1";
 			this.DungeonTextBox1.ReadOnly = true;
 			this.DungeonTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.DungeonTextBox1.Size = new System.Drawing.Size(104, 14);
+			this.DungeonTextBox1.Size = new System.Drawing.Size(118, 14);
 			this.DungeonTextBox1.TabIndex = 21;
 			this.DungeonTextBox1.Text = "";
 			this.DungeonTextBox1.WordWrap = false;
@@ -331,11 +374,11 @@ namespace WordMaster.UI
 			this.SquareTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.SquareTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.SquareTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.SquareTextBox1.Location = new System.Drawing.Point(60, 88);
+			this.SquareTextBox1.Location = new System.Drawing.Point(57, 145);
 			this.SquareTextBox1.Name = "SquareTextBox1";
 			this.SquareTextBox1.ReadOnly = true;
 			this.SquareTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.SquareTextBox1.Size = new System.Drawing.Size(104, 14);
+			this.SquareTextBox1.Size = new System.Drawing.Size(118, 14);
 			this.SquareTextBox1.TabIndex = 20;
 			this.SquareTextBox1.Text = "";
 			this.SquareTextBox1.WordWrap = false;
@@ -346,11 +389,11 @@ namespace WordMaster.UI
 			this.FloorTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
 			this.FloorTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FloorTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.FloorTextBox1.Location = new System.Drawing.Point(60, 48);
+			this.FloorTextBox1.Location = new System.Drawing.Point(57, 74);
 			this.FloorTextBox1.Name = "FloorTextBox1";
 			this.FloorTextBox1.ReadOnly = true;
 			this.FloorTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.FloorTextBox1.Size = new System.Drawing.Size(104, 14);
+			this.FloorTextBox1.Size = new System.Drawing.Size(118, 14);
 			this.FloorTextBox1.TabIndex = 19;
 			this.FloorTextBox1.Text = "";
 			this.FloorTextBox1.WordWrap = false;
@@ -358,33 +401,33 @@ namespace WordMaster.UI
 			// DungeonLabel
 			// 
 			this.DungeonLabel.AutoSize = true;
-			this.DungeonLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.DungeonLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.DungeonLabel.Location = new System.Drawing.Point(3, 8);
+			this.DungeonLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.DungeonLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.DungeonLabel.Location = new System.Drawing.Point(3, 5);
 			this.DungeonLabel.Name = "DungeonLabel";
-			this.DungeonLabel.Size = new System.Drawing.Size(56, 14);
+			this.DungeonLabel.Size = new System.Drawing.Size(51, 14);
 			this.DungeonLabel.TabIndex = 15;
 			this.DungeonLabel.Text = "Dungeon";
 			// 
 			// FloorLabel
 			// 
 			this.FloorLabel.AutoSize = true;
-			this.FloorLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FloorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.FloorLabel.Location = new System.Drawing.Point(3, 48);
+			this.FloorLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.FloorLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.FloorLabel.Location = new System.Drawing.Point(3, 74);
 			this.FloorLabel.Name = "FloorLabel";
-			this.FloorLabel.Size = new System.Drawing.Size(35, 14);
+			this.FloorLabel.Size = new System.Drawing.Size(32, 14);
 			this.FloorLabel.TabIndex = 16;
 			this.FloorLabel.Text = "Floor";
 			// 
 			// SquareLabel
 			// 
 			this.SquareLabel.AutoSize = true;
-			this.SquareLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.SquareLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.SquareLabel.Location = new System.Drawing.Point(3, 88);
+			this.SquareLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.SquareLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.SquareLabel.Location = new System.Drawing.Point(3, 145);
 			this.SquareLabel.Name = "SquareLabel";
-			this.SquareLabel.Size = new System.Drawing.Size(45, 14);
+			this.SquareLabel.Size = new System.Drawing.Size(41, 14);
 			this.SquareLabel.TabIndex = 17;
 			this.SquareLabel.Text = "Square";
 			// 
@@ -450,71 +493,67 @@ namespace WordMaster.UI
             | System.Windows.Forms.AnchorStyles.Right)));
 			this.MainPanel.AutoSizeMode = System.Windows.Forms.AutoSizeMode.GrowAndShrink;
 			this.MainPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
+			this.MainPanel.Controls.Add(this.pictureBox1);
 			this.MainPanel.Controls.Add(this.DungeonPanel);
 			this.MainPanel.Controls.Add(this.CharacterPanel);
 			this.MainPanel.Controls.Add(this.ControlPanel);
 			this.MainPanel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MainPanel.Location = new System.Drawing.Point(606, 3);
+			this.MainPanel.Location = new System.Drawing.Point(757, 6);
 			this.MainPanel.Margin = new System.Windows.Forms.Padding(0);
 			this.MainPanel.Name = "MainPanel";
-			this.MainPanel.Size = new System.Drawing.Size(176, 556);
+			this.MainPanel.Size = new System.Drawing.Size(184, 750);
 			this.MainPanel.TabIndex = 1;
 			// 
 			// ControlPanel
 			// 
 			this.ControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-			this.ControlPanel.BackColor = System.Drawing.Color.Gainsboro;
+			this.ControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(159)))), ((int)(((byte)(126)))));
 			this.ControlPanel.Controls.Add(this.GoToUpButton);
 			this.ControlPanel.Controls.Add(this.GoToDownButton);
 			this.ControlPanel.Controls.Add(this.QuitTheGame);
 			this.ControlPanel.Controls.Add(this.GoToRightButton);
 			this.ControlPanel.Controls.Add(this.GoToLeftButton);
-			this.ControlPanel.Location = new System.Drawing.Point(3, 402);
+			this.ControlPanel.Location = new System.Drawing.Point(2, 596);
 			this.ControlPanel.Name = "ControlPanel";
-			this.ControlPanel.Size = new System.Drawing.Size(170, 150);
+			this.ControlPanel.Size = new System.Drawing.Size(180, 151);
 			this.ControlPanel.TabIndex = 20;
 			// 
-			// MiscTextBox2
+			// ExperienceTextBox
 			// 
-			this.MiscTextBox2.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-			this.MiscTextBox2.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.MiscTextBox2.Cursor = System.Windows.Forms.Cursors.Default;
-			this.MiscTextBox2.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.MiscTextBox2.Location = new System.Drawing.Point(60, 148);
-			this.MiscTextBox2.Name = "MiscTextBox2";
-			this.MiscTextBox2.ReadOnly = true;
-			this.MiscTextBox2.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.MiscTextBox2.Size = new System.Drawing.Size(104, 14);
-			this.MiscTextBox2.TabIndex = 27;
-			this.MiscTextBox2.Text = "";
-			this.MiscTextBox2.WordWrap = false;
+			this.ExperienceTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.ExperienceTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.ExperienceTextBox.Cursor = System.Windows.Forms.Cursors.Default;
+			this.ExperienceTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.ExperienceTextBox.Location = new System.Drawing.Point(71, 117);
+			this.ExperienceTextBox.Name = "ExperienceTextBox";
+			this.ExperienceTextBox.ReadOnly = true;
+			this.ExperienceTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+			this.ExperienceTextBox.Size = new System.Drawing.Size(104, 14);
+			this.ExperienceTextBox.TabIndex = 24;
+			this.ExperienceTextBox.Text = "";
+			this.ExperienceTextBox.WordWrap = false;
 			// 
-			// MiscTextBox1
+			// ExperienceLabel
 			// 
-			this.MiscTextBox1.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-			this.MiscTextBox1.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.MiscTextBox1.Cursor = System.Windows.Forms.Cursors.Default;
-			this.MiscTextBox1.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.MiscTextBox1.Location = new System.Drawing.Point(60, 128);
-			this.MiscTextBox1.Name = "MiscTextBox1";
-			this.MiscTextBox1.ReadOnly = true;
-			this.MiscTextBox1.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.MiscTextBox1.Size = new System.Drawing.Size(104, 14);
-			this.MiscTextBox1.TabIndex = 26;
-			this.MiscTextBox1.Text = "";
-			this.MiscTextBox1.WordWrap = false;
+			this.ExperienceLabel.AutoSize = true;
+			this.ExperienceLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ExperienceLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.ExperienceLabel.Location = new System.Drawing.Point(3, 117);
+			this.ExperienceLabel.Name = "ExperienceLabel";
+			this.ExperienceLabel.Size = new System.Drawing.Size(61, 14);
+			this.ExperienceLabel.TabIndex = 23;
+			this.ExperienceLabel.Text = "Experience";
 			// 
-			// MiscLabel
+			// pictureBox1
 			// 
-			this.MiscLabel.AutoSize = true;
-			this.MiscLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.MiscLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.MiscLabel.Location = new System.Drawing.Point(3, 128);
-			this.MiscLabel.Name = "MiscLabel";
-			this.MiscLabel.Size = new System.Drawing.Size(32, 14);
-			this.MiscLabel.TabIndex = 25;
-			this.MiscLabel.Text = "Misc";
+			this.pictureBox1.Image = global::WordMaster.UI.Properties.Resources.Logo_v1;
+			this.pictureBox1.Location = new System.Drawing.Point(2, 2);
+			this.pictureBox1.Name = "pictureBox1";
+			this.pictureBox1.Size = new System.Drawing.Size(180, 65);
+			this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
+			this.pictureBox1.TabIndex = 21;
+			this.pictureBox1.TabStop = false;
 			// 
 			// FloorViewer
 			// 
@@ -524,10 +563,10 @@ namespace WordMaster.UI
 			this.FloorViewer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			this.FloorViewer.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FloorViewer.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FloorViewer.Location = new System.Drawing.Point(3, 3);
+			this.FloorViewer.Location = new System.Drawing.Point(4, 6);
 			this.FloorViewer.Margin = new System.Windows.Forms.Padding(0);
 			this.FloorViewer.Name = "FloorViewer";
-			this.FloorViewer.Size = new System.Drawing.Size(601, 556);
+			this.FloorViewer.Size = new System.Drawing.Size(750, 750);
 			this.FloorViewer.TabIndex = 2;
 			this.FloorViewer.Text = "FloorViewer";
 			// 
@@ -536,7 +575,7 @@ namespace WordMaster.UI
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.BackColor = System.Drawing.Color.Black;
-			this.ClientSize = new System.Drawing.Size(784, 562);
+			this.ClientSize = new System.Drawing.Size(944, 762);
 			this.Controls.Add(this.MainPanel);
 			this.Controls.Add(this.FloorViewer);
 			this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -551,6 +590,7 @@ namespace WordMaster.UI
 			this.DungeonPanel.PerformLayout();
 			this.MainPanel.ResumeLayout(false);
 			this.ControlPanel.ResumeLayout(false);
+			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
 			this.ResumeLayout(false);
 
         }
@@ -586,8 +626,11 @@ namespace WordMaster.UI
 		private RichTextBox DungeonTextBox2;
 		private RichTextBox FloorTextBox2;
 		private RichTextBox SquareTextBox2;
-		private RichTextBox MiscTextBox2;
 		private RichTextBox MiscTextBox1;
+		private RichTextBox MiscTextBox2;
 		private Label MiscLabel;
+		private RichTextBox ExperienceTextBox;
+		private Label ExperienceLabel;
+		private PictureBox pictureBox1;
     }
 }

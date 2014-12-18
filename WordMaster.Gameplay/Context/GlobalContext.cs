@@ -51,7 +51,7 @@ namespace WordMaster.Gameplay
 			{
 				Dungeon emptyDungeon = new Dungeon( this, "", "" );
 				Floor emptyFloor = emptyDungeon.AddFloor( "", "", 10, 10 );
-				emptyFloor.SetAllSquares( "", "" );
+				emptyFloor.SetAllSquares( "", "", false );
 
 				return emptyDungeon;
 			}
@@ -299,7 +299,6 @@ namespace WordMaster.Gameplay
 		{
 			Dungeon check, dungeon;
 			Floor floorA, floorB, floorC, floorD, floorE, floorF;
-			Square entrance, exit, AtoB, BtoA, BtoC, CtoB, CtoD, DtoC, DtoE, EtoD, EtoF, FtoE;
 
 			if( TryGetDungeon( name, out check ) ) throw new ArgumentException( "A Dungeon with this name already exist.", "name" );
 
@@ -307,7 +306,7 @@ namespace WordMaster.Gameplay
 
 			// Level 0
 			floorA = dungeon.AddFloor( "The entrance area", "You enter the dungeon and stand near the entrance...", 10, 10 );
-			entrance = floorA.SetSquare( 1, 1, "Entrance", "A wooden door that crack will you push it.", true );
+			floorA.SetSquare( 1, 1, "Entrance", "A wooden door that crack will you push it.", true );
 			floorA.SetSquare( 1, 2, "Stone floor", "The stone are cold below yours feets.", true );
 			floorA.SetSquare( 1, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorA.SetSquare( 1, 4, "Stone floor", "The stone are cold below yours feets.", true );
@@ -342,12 +341,12 @@ namespace WordMaster.Gameplay
 			floorA.SetSquare( 8, 5, "Stone floor", "The stone are cold below yours feets.", true );
 			floorA.SetSquare( 8, 6, "Stone floor", "The stone are cold below yours feets.", true );
 			floorA.SetSquare( 8, 7, "Stone floor", "The stone are cold below yours feets.", true );
-			AtoB = floorA.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
+			floorA.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorA.SetAllUninitializedSquares( "Stone wall", "The stone have endure the passing of time...", false );
 
 			// Level 1
 			floorB = dungeon.AddFloor( "The 1st floor", "While you climbing the stair, you feel the air become rarer.", 10, 10 );
-			BtoC = floorB.SetSquare( 1, 1, "Wooden ladder", "Their is an hole here, in the floor's roof...", true );
+			floorB.SetSquare( 1, 1, "Wooden ladder", "Their is an hole here, in the floor's roof...", true );
 			floorB.SetSquare( 1, 2, "Stone floor", "The stone are cold below yours feets.", true );
 			floorB.SetSquare( 1, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorB.SetSquare( 1, 4, "Stone floor", "The stone are cold below yours feets.", true );
@@ -382,12 +381,12 @@ namespace WordMaster.Gameplay
 			floorB.SetSquare( 7, 7, "Stone floor", "The stone are cold below yours feets.", true );
 			floorB.SetSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorB.SetSquare( 8, 7, "Stone floor", "The stone are cold below yours feets.", true );
-			BtoA = floorB.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
+			floorB.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorB.SetAllUninitializedSquares( "Stone wall", "The stone have endure the passing of time...", false );
 
 			// Level 2
 			floorC = dungeon.AddFloor( "The 2nd floor", "While the ground is still cold, the air is warm.", 10, 10 );
-			CtoB = floorC.SetSquare( 1, 1, "Stone floor", "The stone are cold below yours feets.", true );
+			floorC.SetSquare( 1, 1, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 1, 2, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 1, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 1, 4, "Stone floor", "The stone are cold below yours feets.", true );
@@ -412,7 +411,7 @@ namespace WordMaster.Gameplay
 			floorC.SetSquare( 6, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 6, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 6, 5, "Stone floor", "The stone are cold below yours feets.", true );
-			CtoD = floorC.SetSquare( 6, 8, "Iron ladder", "You can safely escape this floor from here.", true );
+			floorC.SetSquare( 6, 8, "Iron ladder", "You can safely escape this floor from here.", true );
 			floorC.SetSquare( 7, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 7, 7, "Stone floor", "The stone are cold below yours feets.", true );
 			floorC.SetSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true );
@@ -443,13 +442,13 @@ namespace WordMaster.Gameplay
 			floorD.SetSquare( 5, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 5, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 6, 4, "Stone floor", "The stone are cold below yours feets.", true );
-			DtoC = floorD.SetSquare( 6, 8, "Stone floor", "The stone are cold below yours feets.", true );
+			floorD.SetSquare( 6, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 7, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 7, 5, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 7, 6, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 8, 6, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetSquare( 8, 7, "Stone floor", "The stone are cold below yours feets.", true );
-			DtoE = floorD.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
+			floorD.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorD.SetAllUninitializedSquares( "Stone wall", "The stone have endure the passing of time...", false );
 
 			// Level 4
@@ -492,8 +491,8 @@ namespace WordMaster.Gameplay
 			floorE.SetSquare( 8, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorE.SetSquare( 8, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorE.SetSquare( 8, 5, "Stone floor", "The stone are cold below yours feets.", true );
-			EtoF = floorE.SetSquare( 8, 6, "Stone floor", "The stone are cold below yours feets.", true );
-			EtoD = floorE.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true);
+			floorE.SetSquare( 8, 6, "Stone floor", "The stone are cold below yours feets.", true );
+			floorE.SetSquare( 8, 8, "Stone floor", "The stone are cold below yours feets.", true);
 			floorE.SetAllUninitializedSquares( "Stone wall", "The stone have endure the passing of time...", false );
 
 			// Level 5
@@ -528,25 +527,28 @@ namespace WordMaster.Gameplay
 			floorF.SetSquare( 6, 4, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 6, 5, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 6, 7, "Stone floor", "The stone are cold below yours feets.", true );
+			floorF.SetSquare( 6, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 7, 1, "Stone floor", "The stone are cold below yours feets.", true );
-			floorF.SetSquare( 7, 7, "Stone floor", "The stone are cold below yours feets.", true );
-			floorF.SetSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 8, 1, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 8, 2, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 8, 3, "Stone floor", "The stone are cold below yours feets.", true );
 			floorF.SetSquare( 8, 4, "Stone floor", "The stone are cold below yours feets.", true );
-			FtoE = floorF.SetSquare( 8, 5, "Stone floor", "The stone are cold below yours feets.", true );
-			exit = floorF.SetSquare( 8, 8, "Exit", "To leave the dungeon.", true );
+			floorF.SetSquare( 8, 5, "Stone floor", "The stone are cold below yours feets.", true );
+			floorF.SetSquare( 8, 6, "Stone floor", "The stone are cold below yours feets.", true );
+			floorF.SetSquare( 8, 8, "Exit", "To leave the dungeon.", true );
 			floorF.SetAllUninitializedSquares( "Wooden wall", "The planks have endure the passing of time...", false );
 
 			// Special Squares
-			dungeon.Entrance = entrance;
-			AtoB.SetTeleport( "Old stair", "You are not sure this stair will stand long enough to carry you.", BtoA, true );
-			BtoC.SetTeleport( "Hole", "Their is an hole here, in the floor's ground...", CtoB, true );
-			CtoD.SetTeleport( "Iron ladder", "You can safely escape this floor from here.", DtoC, true );
-			DtoE.SetTeleport( "Wooden ladder", "A sturdy ladder.", EtoD, true );
-			EtoF.SetTeleport( "Rope", "A rope that lead somewhere else.", FtoE, true );
-			dungeon.Exit = exit;
+			dungeon.Entrance = floorA[1, 1];
+			dungeon.Exit = floorF[8, 8];
+			floorA[8, 8].SetTeleport( "Old stair", "You are not sure this stair will stand long enough to carry you.", floorB[8, 8], true );
+			floorB[1, 1].SetTeleport( "Hole", "Their is an hole here, in the floor's ground...", floorC[1, 1], true );
+			floorC[6, 8].SetTeleport( "Iron ladder", "You can safely escape this floor from here.", floorD[6, 8], true );
+			floorD[8, 8].SetTeleport( "Wooden ladder", "A sturdy ladder.", floorE[8, 8], true );
+			floorE[8, 6].SetTeleport( "Rope", "A rope that lead somewhere else.", floorF[8, 6], true );
+			floorA[2, 6].SetTeleport( "Magical teleporter", "An unknow device that could lead you somewhere else", floorF[3, 7], false );
+			floorF[2, 8].SetSwitch( "Bulky mechanism", "Their an inscription above the mechanism: \"Activate that you may escape\"", true, false, false, floorF.CreateSquare( 7, 8, "Stone floor", "The stone are cold below yours feets.", true ) );
+			floorF[4, 8].SetTrap( "Strange device", "You should not try to touch it, but why not?", false, false, false, false, 20 );
 
 			return dungeon;
 		}

@@ -112,7 +112,7 @@ namespace WordMaster.Gameplay
 		#region Creates Square (outside the layout)
 		/// <summary>
 		/// Initializes an instance of <see cref="Square"/> class OUTSIDE the layout of this instance of <see cref="Floor"/> class.
-		/// WARNING: Dungeon must be editable, line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
+		/// WARNING: Line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
 		/// </summary>
 		/// <param name="line">Square's horizontal coordinate.</param>
 		/// <param name="column">Square's vertical coordinate.</param>
@@ -122,7 +122,6 @@ namespace WordMaster.Gameplay
 		/// <returns>New Square's reference.</returns>
 		public Square CreateSquare( int line, int column, string name, string description, bool holdable )
 		{
-			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
 			if( !CheckBounds( line, column ) ) throw new IndexOutOfRangeException( "Coordinates out of range." );
 
 			return new Square( this, line, column, name, description, holdable );
@@ -131,7 +130,7 @@ namespace WordMaster.Gameplay
 		/// <summary>
 		/// Initializes an instance of <see cref="Square"/> class OUTSIDE the layout of this instance of <see cref="Floor"/> class.
 		/// NOTE: The Square created will have an empty description and will not be holdable.
-		/// WARNING: Dungeon must be editable, line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
+		/// WARNING: Line and column must be inside the layout (see <see cref="Floor.CheckBounds"/>).
 		/// </summary>
 		/// <param name="line">Square's horizontal coordinate.</param>
 		/// <param name="column">Square's vertical coordinate.</param>
@@ -194,6 +193,8 @@ namespace WordMaster.Gameplay
 		/// <returns>New Square's reference.</returns>
 		public Square SetSquare(int line, int column, string name, string description, bool holdable )
 		{
+			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
+
 			return _layout[line, column] = CreateSquare( line, column, name, description, holdable );
 		}
 
@@ -294,14 +295,14 @@ namespace WordMaster.Gameplay
 		/// <param name="name">Squares' name.</param>
 		/// <param name="description">Squares' description, optional and empty by default.</param>
 		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
-		public void SetAllUninitializedSquares(string name, string description = "", bool holdable = false) 
+		public void SetAllUninitializedSquares( string name, string description = "", bool holdable = false ) 
 		{
 			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
 
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
 						for( int j = 0; j < _layout.GetLength( 1 ); j++ )
 							if( !CheckSquare( i, j ) )
-								_layout[i, j] = new Square( this, i, j, name, description = "", holdable );
+								_layout[i, j] = new Square( this, i, j, name, description, holdable );
 		}
 
 		/// <summary>

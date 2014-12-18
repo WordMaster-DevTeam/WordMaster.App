@@ -8,7 +8,7 @@ namespace WordMaster.Gameplay
     {
 		readonly GlobalContext _globalContext;
 		string _name, _description;
-		int _health, _experience, _level, _armor;
+		int _maxHealth, _health, _experience, _level, _armor;
 		readonly List<Item> _inventory;
 		readonly List<HistoricRecord> _historics;
 		Dungeon _dungeon;
@@ -32,6 +32,7 @@ namespace WordMaster.Gameplay
 			_globalContext = globalContext;
 			_name = name;
 			_description = description;
+			_maxHealth = health;
 			_health = health;
 			_experience = experience;
 			_level = level;
@@ -65,6 +66,15 @@ namespace WordMaster.Gameplay
             get { return _description; }
 			set { _description = value; }
         }
+
+		/// <summary>
+		/// Gets or sets (this DLL only) the <see cref="Character"/>'s maximum health points.
+		/// </summary>
+		public int MaxHealth
+		{
+			get { return _maxHealth; }
+			internal set { _maxHealth = value; }
+		}
 
 		/// <summary>
 		/// Gets or sets (this DLL only) the <see cref="Character"/>'s health points.
@@ -168,6 +178,22 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
+		/// Gets if this <see cref="Charecter"/> is alive.
+		/// </summary>
+		public bool Alive
+		{
+			get { return _health > 0; }
+		}
+
+		/// <summary>
+		/// Set this <see cref="Character"/> class by giving him his maximum of health
+		/// </summary>
+		public bool Resurrect
+		{
+			set { _health = _maxHealth; }
+		}
+
+		/// <summary>
 		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
 		/// </summary>
 		/// <param name="gameContext">GameContext's reference.</param>
@@ -184,7 +210,18 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null, effectively leaving the Dungeon
+		/// Sets the current <see cref="Floor"/> and current <see cref="Square"/> to the starting values.
+		/// </summary>
+		internal void RetryDungeon()
+		{
+			if( _gameContext == null ) throw new InvalidOperationException( "This Character is not in a Game." );
+			
+			_square = Dungeon.Entrance;
+			_floor = _dungeon.Entrance.Floor;
+		}
+
+		/// <summary>
+		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to null, effectively leaving the Dungeon.
 		/// </summary>
 		internal void LeaveDungeon()
 		{
@@ -204,31 +241,33 @@ namespace WordMaster.Gameplay
 		/// <returns>If the Character have moved.</returns>
 		public bool TryMoveTo( Square target )
 		{
-			if( target == null || target.Holdable == false ) // Target not set or not holdable
+			if( this.Alive ) // Dead Character can not move
 			{
-				return false;
-			}
-			else
-			{
-				if( target.Floor.Dungeon.Entrance.Equals( target ) ) // Cancel the Game (exit the Dungeon by the entrance)
+				if( target != null ) // Target set
 				{
-					_gameContext.GlobalContext.CancelGame( this );
-				}
-				else if( target.Floor.Dungeon.Exit.Equals( target ) ) // Finish the Game (exit the Dungeon by the exit)
-				{
-					_gameContext.GlobalContext.FinishGame( this );
-				}
-				else if( target.Trigger != null ) // Trigger set
-				{
-					target.Trigger.Activate( this );
-				}
-				else // No Trigger
-				{
-					_square = target;
-				}
+					if( target.Holdable ) // Target holdable
+					{
+						_square = target;
 
-				return true;
+						if( target.Floor.Dungeon.Entrance.Equals( target ) ) // Dungeon's entrance found -> Cancel the Game
+						{
+							_gameContext.GlobalContext.CancelGame( this );
+						}
+						else if( target.Floor.Dungeon.Exit.Equals( target ) ) // Dungeon's exit found -> Finish the Game
+						{
+							_gameContext.GlobalContext.FinishGame( this );
+						}
+						else if( target.Trigger != null ) // Trigger found -> Activation
+						{
+							target.Trigger.Activate( this );
+						}
+
+						return true;
+					}
+				}
 			}
+			
+			return false;
 		}
 
         /// <summary>

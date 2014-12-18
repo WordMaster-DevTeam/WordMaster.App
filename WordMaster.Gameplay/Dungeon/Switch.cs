@@ -46,23 +46,18 @@ namespace WordMaster.Gameplay
 		/// <param name="user">Character's reference, the user of this <see crefe="Trigger"/>.</param>
 		internal override void Activate( Character user )
 		{
-			base.Activate(user);
-
 			if( this.Active )
 			{
 				Square temp;
 
-				if( NumberOfUses % 2 == 0 ) // Second activation and even activation only
-					temp = _oldSquare;
-				else // First activation and odd activation only
+				if( NumberOfUses % 2 == 0 ) // First activation and odd activation only
 					temp = _newSquare;
+				else // Second activation and even activation only
+					temp = _oldSquare;
 
 				Holder.Floor[temp.Line, temp.Column] = temp;
-
-				if( !user.Square.Floor.Equals( user.Floor ) )
-					user.Floor = user.Square.Floor;
 			}
-
+			base.Activate( user );
 		}
 	}
 }

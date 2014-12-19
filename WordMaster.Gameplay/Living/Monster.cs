@@ -1,15 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace WordMaster.Gameplay
 {
 	public class Monster
 	{
+		readonly GlobalContext _globalContext;
 		string _name, _description;
-		int _health, _experience, _level, _armor;
+		int _maxHealth, _health, _experience, _level, _armor;
 		readonly List<Item> _inventory;
 
 		/// <summary>
@@ -22,15 +20,25 @@ namespace WordMaster.Gameplay
 		/// <param name="level">Monster's level, used when a <see cref="Floor"/> is filled.</param>
 		/// <param name="armor">Monster's armor.</param>
 		/// <param name="inventory">Monster's inventory.</param>
-		internal Monster( string name, string description, int health, int experience, int level, int armor, List<Item> inventory )
+		internal Monster( GlobalContext globalContext, string name, string description, int health, int experience, int level, int armor )
 		{
+			_globalContext = globalContext;
 			_name = name;
 			_description = description;
+			_maxHealth = health;
 			_health = health;
 			_experience = experience;
 			_level = level;
 			_armor = armor;
-			_inventory = inventory;
+			_inventory = new List<Item>();
+		}
+
+		/// <summary>
+		/// Gets the current instance of <see cref="GlobalContext"/> class.
+		/// </summary>
+		public GlobalContext GlobalContext
+		{
+			get { return _globalContext; }
 		}
 
 		/// <summary>
@@ -49,6 +57,15 @@ namespace WordMaster.Gameplay
 		{
 			get { return _description; }
 			set { _description = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets (this DLL only) the <see cref="Monster"/>'s maximum health points.
+		/// </summary>
+		public int MaxHealth
+		{
+			get { return _maxHealth; }
+			internal set { _maxHealth = value; }
 		}
 
 		/// <summary>
@@ -85,6 +102,22 @@ namespace WordMaster.Gameplay
 		{
 			get { return _armor; }
 			set { _armor = value; }
+		}
+
+		/// <summary>
+		/// Gets if this <see cref="Monster"/> is alive.
+		/// </summary>
+		public bool Alive
+		{
+			get { return _health > 0; }
+		}
+
+		/// <summary>
+		/// Get if this <see cref="Monster"/> is dead.
+		/// </summary>
+		public bool Dead
+		{
+			get { return _health <= 0; }
 		}
 
 		/// <summary>

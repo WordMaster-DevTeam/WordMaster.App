@@ -22,7 +22,8 @@ namespace WordMaster.UI
         public InGame()
         {
 			_globalContext = new GlobalContext();
-			_gameContext = _globalContext.StartNewGame( _globalContext.AddDefaultCharacter( "Bob" ), _globalContext.AddDefaultDungeon( "The Academy" ), out _game, out _historicRecord );
+
+			_gameContext = _globalContext.StartNewGame( _gameContext.GetCharacter( "Oliver" ), _globalContext.GetDungeon( "The Academy" ), out _game, out _historicRecord );
 			InitializeComponent();
         }
 
@@ -33,10 +34,7 @@ namespace WordMaster.UI
 			FloorViewer.Initialize( _gameContext );
         }
 
-        private void QuitTheGame_Click( object sender, EventArgs e )
-        {
-            Application.Exit( );
-        }
+
 
 		#region Interface's updates
 		private void UpdateCharacterPanel()
@@ -95,7 +93,7 @@ namespace WordMaster.UI
 				if( _gameContext.Game.Character.GameContext == null ) // Game ended
 				{
 					// Updated FloorViewer's Floor
-					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon[0] );
+					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon(new Guid().ToString(), (10))[0] );
 					UpdateDungeonPanel();
 					UpdateCharacterPanel();
 				}
@@ -223,6 +221,11 @@ namespace WordMaster.UI
 			}
 
 			return base.ProcessCmdKey( ref msg, keyData );
+		}
+
+		private void QuitTheGame_Click( object sender, EventArgs e )
+		{
+			Application.Exit();
 		}
 		#endregion
 	}

@@ -8,6 +8,7 @@ namespace WordMaster.Gameplay
 		readonly int _line, _column;
 		string _name, _description;
 		bool _holdable;
+		Monster _monster;
 		Trigger _trigger;
 
 		/// <summary>
@@ -79,6 +80,15 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
+		/// Gets or sets (this DLL only) the current instance of <see cref="Monster"/> used in this instance of <see cref="Square"/> class.
+		/// </summary>
+		public Monster Monster
+		{
+			get { return _monster; }
+			internal set { _monster = value; }
+		}
+
+		/// <summary>
 		/// Gets the current instance of <see cref="Trigger"/> used in this instance of <see cref="Square"/> class.
 		/// </summary>
 		public Trigger Trigger
@@ -86,6 +96,7 @@ namespace WordMaster.Gameplay
 			get { return _trigger; }
 		}
 
+		#region Sets Triggers (Switch, Teleport, Trap)
 		/// <summary>
 		/// Initializes a new instance of <see cref="Switch"/> class within this instance of <see cref="Square"/> class.
 		/// NB: A Switch is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
@@ -151,5 +162,6 @@ namespace WordMaster.Gameplay
 			_trigger = new Trap( this, name, description, onlyOnceActivated, proximityActivated, hidden, ignoreArmor, intensity );
 			return (Trap)_trigger;
 		}
+		#endregion
 	}
 }

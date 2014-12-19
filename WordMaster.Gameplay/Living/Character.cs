@@ -178,11 +178,19 @@ namespace WordMaster.Gameplay
 		}
 
 		/// <summary>
-		/// Gets if this <see cref="Charecter"/> is alive.
+		/// Gets if this <see cref="Character"/> is alive.
 		/// </summary>
 		public bool Alive
 		{
 			get { return _health > 0; }
+		}
+
+		/// <summary>
+		/// Get if this <see cref="Character"/> is dead.
+		/// </summary>
+		public bool Dead
+		{
+			get { return _health <= 0; }
 		}
 
 		/// <summary>
@@ -193,6 +201,7 @@ namespace WordMaster.Gameplay
 			set { _health = _maxHealth; }
 		}
 
+		#region Character's Game management
 		/// <summary>
 		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
 		/// </summary>
@@ -230,7 +239,9 @@ namespace WordMaster.Gameplay
 			_square = null;
 			_gameContext = null;
 		}
+		#endregion
 
+		#region Character's movements management
 		/// <summary>
 		/// Moves an instance of <see cref="Character"/> class to a different Square.
 		/// This method will change Character's <see cref="Floor"/> if the targeted <see cref="Square"/> teleport to another Floor.
@@ -288,6 +299,7 @@ namespace WordMaster.Gameplay
 			{
 				return false;
 			}
-        }
-    }
+		}
+		#endregion
+	}
 }

@@ -39,10 +39,13 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Context\GlobalContext.cs" />
+    <Compile Include="Context\GlobalContext_Character.cs" />
+    <Compile Include="Context\GlobalContext_Monster.cs" />
     <Compile Include="Living\Character.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Context\GameContext.cs" />
-    <Compile Include="Context\GlobalContext.cs" />
+    <Compile Include="Context\GlobalContext_Dungeon.cs" />
     <Compile Include="Game\HistoricRecord.cs" />
     <Compile Include="Miscs\Item.cs" />
     <Compile Include="Dungeon\Square.cs" />

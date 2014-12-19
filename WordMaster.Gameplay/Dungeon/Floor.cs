@@ -19,7 +19,7 @@ namespace WordMaster.Gameplay
 		{
 			get
 			{
-				if( CheckBounds(line, column) ) // Inside the layout
+				if( CheckBounds( line, column ) ) // Inside the layout
 					return _layout[line, column];
 				else // Outside the layout
 					return null;
@@ -109,6 +109,46 @@ namespace WordMaster.Gameplay
 			get { return _layout.GetLength( 0 ) * _layout.GetLength( 1 ); }
 		}
 
+		#region Generates Monsters
+		public bool GenerateMonsters( int probability, int maxMonsterLevel = 0 )
+		{
+			if( probability < 0 || probability > 100 ) throw new ArgumentException( "Probability must be a number between 0 and 100.", "probability" );
+			if( _dungeon.GlobalContext.NumberOfMonsters == 0 ) throw new InvalidOperationException( "No Monster set." );
+			if( !CheckAllSquares() ) throw new InvalidOperationException( "All Squares must be set." );
+
+			Random random = _dungeon.GlobalContext.Random;
+
+			for( int i = 0; i < NumberOfLines; i++ )
+			{
+				for( int j = 0; j < NumberOfColumns; j++ )
+				{
+					Square square = this[i, j];
+					int value = random.Next( 100 );
+
+					if( square.Holdable )
+					{
+						
+					}
+				}
+			}
+
+			return true;
+		}
+
+		public bool TryGenerateMonsters( int probability, int maxMonsterLevel = 0 )
+		{
+			try
+			{
+				return GenerateMonsters( probability, maxMonsterLevel );
+			}
+			catch
+			{
+				return false;
+			}
+		}
+
+		#endregion
+
 		#region Creates Square (outside the layout)
 		/// <summary>
 		/// Initializes an instance of <see cref="Square"/> class OUTSIDE the layout of this instance of <see cref="Floor"/> class.
@@ -191,7 +231,7 @@ namespace WordMaster.Gameplay
 		/// <param name="description">Square's description.</param>
 		/// <param name="holdable">Square's Holdable state.</param>
 		/// <returns>New Square's reference.</returns>
-		public Square SetSquare(int line, int column, string name, string description, bool holdable )
+		public Square SetSquare( int line, int column, string name, string description, bool holdable )
 		{
 			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
 
@@ -247,7 +287,7 @@ namespace WordMaster.Gameplay
 		/// <returns>If the Squares have been set.</returns>
 		public bool TrySetSquare( int line, int column, string name, out Square square )
 		{
-			return TrySetSquare( line, column, name, "", false , out square );
+			return TrySetSquare( line, column, name, "", false, out square );
 		}
 		#endregion
 
@@ -295,14 +335,14 @@ namespace WordMaster.Gameplay
 		/// <param name="name">Squares' name.</param>
 		/// <param name="description">Squares' description, optional and empty by default.</param>
 		/// <param name="holdable">Squares' Holdable state, optional and false by default.</param>
-		public void SetAllUninitializedSquares( string name, string description = "", bool holdable = false ) 
+		public void SetAllUninitializedSquares( string name, string description = "", bool holdable = false )
 		{
 			if( !Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Floor in not editable Dungeon" );
 
 			for( int i = 0; i < _layout.GetLength( 0 ); i++ )
-						for( int j = 0; j < _layout.GetLength( 1 ); j++ )
-							if( !CheckSquare( i, j ) )
-								_layout[i, j] = new Square( this, i, j, name, description, holdable );
+				for( int j = 0; j < _layout.GetLength( 1 ); j++ )
+					if( !CheckSquare( i, j ) )
+						_layout[i, j] = new Square( this, i, j, name, description, holdable );
 		}
 
 		/// <summary>
@@ -380,7 +420,7 @@ namespace WordMaster.Gameplay
 		public bool CheckSquare( int line, int column )
 		{
 			if( CheckBounds( line, column ) )
-				if( _layout[line, column] != null)
+				if( _layout[line, column] != null )
 					return true;
 			return false;
 		}

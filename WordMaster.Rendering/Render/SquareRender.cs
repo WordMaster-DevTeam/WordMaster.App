@@ -55,48 +55,39 @@ namespace WordMaster.Rendering
 		{
 			Rectangle rectangle = new Rectangle( 0, 0, _floorRender.SquareRenderingWidth, _floorRender.SquareRenderingWidth );
 
-			// Default colors (no textures yet)
 			if( _square != null )
 			{
-				// Default 
-				if( _square.Holdable ) // Holdable
+				/* -- Square -- */
+				if( _square.Floor.Dungeon.Entrance != null )
+					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) ) // Entrance
+						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
+				else if( _square.Floor.Dungeon.Exit != null )
+					if( _square.Floor.Dungeon.Exit.Equals( this._square ) ) // Exit
+						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
+				else if( _square.Holdable ) // Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
 				else // Not Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
 
-
-				if( _square.Trigger != null ) // The Trigger is set
+				/* -- Triggers -- */
+				if( _square.Trigger != null )
 				{
 					if( _square.Trigger is Teleport && !_square.Trigger.Hidden ) // Teleport
-						graphic.FillRectangle( new SolidBrush( Color.Yellow ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.Yellow ), rectangle );
 					else if( _square.Trigger is Switch && !_square.Trigger.Hidden ) // Switch
-						graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.Orange ), rectangle );
 					else if( _square.Trigger is Trap && !_square.Trigger.Hidden ) // Trap
-						graphic.FillRectangle( new SolidBrush( Color.Red ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.Red ), rectangle );
 				}
 
-				if( _square.Floor.Dungeon.Entrance != null ) // The Entrance is set
-				{
-					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) ) // Entrance
-						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
-				}
-
-				if( _square.Floor.Dungeon.Exit != null ) // The Exit is set
-				{
-					if( _square.Floor.Dungeon.Exit.Equals( this._square ) ) // Exit
-						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
-				}
-
-				if( _floorRender.Character != null ) // Their is a Character in this Floor
+				/* -- Characters -- */
+				if( _floorRender.Character != null )
 				{
 					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
-						graphic.FillRectangle( new SolidBrush( Color.LightBlue ), rectangle );
-				}
-				else // No Character
-				{
-					graphic.FillRectangle( new SolidBrush( Color.Black ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.LightBlue ), rectangle );
 				}
 			}
+
 			rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
 		}
 	}

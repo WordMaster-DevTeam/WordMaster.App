@@ -146,6 +146,7 @@ namespace WordMaster.Gameplay
 			}
 		}
 
+		#region Renames Floor
 		/// <summary>
 		/// Resets the a new name for the specified instance of <see cref="Floor"/> class.
 		/// WARNING: Dungeon must be editable and Floor's name must be unique.
@@ -210,7 +211,9 @@ namespace WordMaster.Gameplay
 			else
 				return false;
 		}
+		#endregion
 
+		#region Adds Floor
 		/// <summary>
 		/// Adds a new instance of <see cref="Floor"/> class to this instance of <see cref="Dungeon"/> class.
 		/// WARNING: Dungeon must be editable, each Floor must be adjoining, Floor's name must be unique, level must be positive and the number of Square superior or equal to two.
@@ -292,7 +295,9 @@ namespace WordMaster.Gameplay
 		{
 			return TryAddFloor( _floors.Count, name, description, numberOfLines, numberOfColumns, out floor );
 		}
-		
+		#endregion
+
+		#region Removes Floor
 		/// <summary>
 		/// Removes an instance of <see cref="Floor"/> class of the current instance of <see cref="Dungeon"/> class.
 		/// WARNING: Dungeon must be editable.
@@ -327,7 +332,9 @@ namespace WordMaster.Gameplay
 				return false;
 			}
 		}
+		#endregion
 
+		#region Gets Floor
 		/// <summary>
 		/// Gets the reference of the instance of <see cref="Floor"/> class in the current instance of <see cref="Dungeon"/> class.
 		/// WARNING: A Floor with this name must already exist.
@@ -390,7 +397,9 @@ namespace WordMaster.Gameplay
 			floor = null;
 			return false;
 		}
+		#endregion
 
+		#region Checks Floor
 		/// <summary>
 		/// Checks if a Floor's instance exist with the specified name in the current instance of <see cref="Dungeon"/> class.
 		/// </summary>
@@ -413,5 +422,6 @@ namespace WordMaster.Gameplay
 					return true;
 			return false;
 		}
+		#endregion
 	}
 }

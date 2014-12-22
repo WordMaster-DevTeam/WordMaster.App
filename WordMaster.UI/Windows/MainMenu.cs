@@ -32,9 +32,8 @@ namespace WordMaster.UI
 
             _globalContext = new GlobalContext( );
             _character = _globalContext.AddDefaultCharacter( "Tartempion" );
-            _dungeon = _globalContext.AddDefaultDungeon( "the default dungeon" );
-            _gameContext = new GameContext( _globalContext, _character, _dungeon, out _game, out _historic );
-            _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
+            _dungeon = _globalContext.AddDefaultDungeon( "The Default Dungeon" );
+            _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
             // Test Characters list, will be discart when tests are finish
 
 

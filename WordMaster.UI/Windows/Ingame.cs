@@ -19,10 +19,9 @@ namespace WordMaster.UI
 		Game _game;
 		HistoricRecord _historicRecord;
 
-        public InGame()
+        public InGame(GameContext gameContext)
         {
-			_globalContext = new GlobalContext();
-			_gameContext = _globalContext.StartNewGame( _globalContext.AddDefaultCharacter( "Oliver" ), _globalContext.AddDefaultDungeon( "The Cab" ), out _game, out _historicRecord );
+            _gameContext = gameContext;
 
 			InitializeComponent();
         }

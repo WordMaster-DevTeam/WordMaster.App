@@ -16,7 +16,8 @@ namespace WordMaster.UI
         Character _character;
 		Game _game;
 		HistoricRecord _historicRecord;
-        internal GlobalContext _context;
+        internal GlobalContext _globalContext;
+        GameContext _gameContext;
 
         public CharacterRecap()
         {
@@ -30,20 +31,25 @@ namespace WordMaster.UI
             NameLbl.Text = NameLbl.Text + character.Name;
             LifeLbl.Text = LifeLbl.Text + character.Health;
             LevelLbl.Text = LevelLbl.Text + character.Level;
-            DungeonLbl.Text = DungeonLbl.Text + character.Dungeon.Name;
+            DungeonLbl.Text = DungeonLbl.Text + character.Dungeon;
         }
 
-        internal void SetContext(GlobalContext context)
+        internal void SetContext(GlobalContext globalContext)
         {
-            _context = context;
+            _globalContext = globalContext;
+        }
+
+        internal void SetGameContext(GameContext gameContext)
+        {
+            _gameContext = gameContext;
         }
         private void LaunchBtn_Click( object sender, EventArgs e )
         {
             if(_character.Dungeon==null)
             {
 
-                _context.StartNewGame( _character, _context.AddDefaultDungeon( "Default" ), out _game, out _historicRecord );
-                InGame inGameForm = new InGame( );
+
+                InGame inGameForm = new InGame( _gameContext );
                 inGameForm.Show( );
                 //using( DungeonSelection dungeonSelectForm = new DungeonSelection( ) )
                 //{
@@ -60,7 +66,7 @@ namespace WordMaster.UI
             }
             else
             {
-                InGame inGameForm = new InGame( );
+                InGame inGameForm = new InGame( _gameContext );
                 inGameForm.Show( );
             }                     
         } 

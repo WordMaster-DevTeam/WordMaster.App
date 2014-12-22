@@ -30,7 +30,7 @@ namespace WordMaster.UI
             NameLbl.Text = NameLbl.Text + character.Name;
             LifeLbl.Text = LifeLbl.Text + character.Health;
             LevelLbl.Text = LevelLbl.Text + character.Level;
-            DungeonLbl.Text = DungeonLbl.Text + character.Dungeon;
+            DungeonLbl.Text = DungeonLbl.Text + character.Dungeon.Name;
         }
 
         internal void SetContext(GlobalContext context)

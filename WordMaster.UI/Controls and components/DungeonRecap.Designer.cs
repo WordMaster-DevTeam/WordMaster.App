@@ -28,21 +28,21 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.PlayerPictureBox = new System.Windows.Forms.PictureBox();
             this.NameLbl = new System.Windows.Forms.Label();
             this.FloorsCountLbl = new System.Windows.Forms.Label();
             this.DescriptionLbl = new System.Windows.Forms.Label();
             this.SelectBtn = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PlayerPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
-            // pictureBox1
+            // PlayerPictureBox
             // 
-            this.pictureBox1.Location = new System.Drawing.Point(3, 3);
-            this.pictureBox1.Name = "pictureBox1";
-            this.pictureBox1.Size = new System.Drawing.Size(138, 156);
-            this.pictureBox1.TabIndex = 0;
-            this.pictureBox1.TabStop = false;
+            this.PlayerPictureBox.Location = new System.Drawing.Point(3, 3);
+            this.PlayerPictureBox.Name = "PlayerPictureBox";
+            this.PlayerPictureBox.Size = new System.Drawing.Size(138, 156);
+            this.PlayerPictureBox.TabIndex = 0;
+            this.PlayerPictureBox.TabStop = false;
             // 
             // NameLbl
             // 
@@ -97,11 +97,10 @@
             this.Controls.Add(this.DescriptionLbl);
             this.Controls.Add(this.FloorsCountLbl);
             this.Controls.Add(this.NameLbl);
-            this.Controls.Add(this.pictureBox1);
+            this.Controls.Add(this.PlayerPictureBox);
             this.Name = "DungeonRecap";
             this.Size = new System.Drawing.Size(1100, 162);
-            this.Load += new System.EventHandler(this.DungeonRecap_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.PlayerPictureBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -109,7 +108,7 @@
 
         #endregion
 
-        private System.Windows.Forms.PictureBox pictureBox1;
+        private System.Windows.Forms.PictureBox PlayerPictureBox;
         private System.Windows.Forms.Label NameLbl;
         private System.Windows.Forms.Label FloorsCountLbl;
         private System.Windows.Forms.Label DescriptionLbl;

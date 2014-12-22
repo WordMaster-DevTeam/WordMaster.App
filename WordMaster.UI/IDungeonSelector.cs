@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordMaster.UI
 {
-    interface IDungeonSelector
+    public interface IDungeonSelector
     {
     }
 }

@@ -14,6 +14,7 @@ namespace WordMaster.UI
     public partial class DungeonSelection : Form, IDungeonSelector
     {
         List<Dungeon> _dungeons;
+        GlobalContext _context;
 
         public DungeonSelection()
         {
@@ -32,6 +33,11 @@ namespace WordMaster.UI
                 DungeonListTableLayout.Controls.Add( newRecap );
             }
         }
+
+        internal void SetContext( GlobalContext context )
+        {
+            _context = context;
+        }
         
         protected override void OnLoad( EventArgs e )
         {
@@ -47,8 +53,15 @@ namespace WordMaster.UI
             {
                 DungeonRecap newRecap = new DungeonRecap( );
                 newRecap.SetDungeon( aDungeon );
+                newRecap.IsSelected+= new EventHandler ( DungeonRecap_SelectBtnClicked);
                 DungeonListTableLayout.Controls.Add( newRecap );
             }
+        }
+
+        private void DungeonRecap_SelectBtnClicked(object sender,EventArgs e)
+        {
+            this.DialogResult = DialogResult.OK;
+            //newRecap.RecapDungeon = recapCharacter.Dungeon;
         }
 
         private void BackBtn_Click( object sender, EventArgs e )

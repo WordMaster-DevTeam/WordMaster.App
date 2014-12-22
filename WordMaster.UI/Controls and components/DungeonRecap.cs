@@ -13,18 +13,25 @@ namespace WordMaster.UI
 {
     public partial class DungeonRecap : UserControl
     {
-        Dungeon _dungeon;
-
+        internal Dungeon _dungeon;
+       
         public IDungeonSelector DS
         {
             get { return (IDungeonSelector)Parent; }
+        }
+
+        internal Dungeon RecapDungeon
+        {
+            get { return _dungeon; }
         }
         public DungeonRecap()
         {
             InitializeComponent( );
             this.Dock = DockStyle.Fill;
         }
-        
+
+        public event EventHandler IsSelected;
+
         internal void SetDungeon( Dungeon dungeon)
         {
             _dungeon = dungeon;
@@ -34,19 +41,10 @@ namespace WordMaster.UI
         }
 
         private void SelectBtn_Click( object sender, EventArgs e )
-        {
-            ParentForm.DialogResult = DialogResult.OK;
-            
-        }
-       
-        private void DungeonRecap_Load( object sender, EventArgs e )
-        {
-
+        {            
+            if ( IsSelected != null ) IsSelected( this, e );
         }
 
-        private void label2_Click( object sender, EventArgs e )
-        {
-
-        }
+        private void label2_Click( object sender, EventArgs e ){}
     }
 }

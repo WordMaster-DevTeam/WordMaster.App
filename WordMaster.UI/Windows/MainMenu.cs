@@ -14,7 +14,7 @@ namespace WordMaster.UI
 {
 	public partial class MainMenu : Form
 	{
-        GlobalContext _globalContext;        
+        internal GlobalContext _globalContext;        
         Character _character;
         Dungeon _dungeon;
         Game _game;
@@ -48,7 +48,8 @@ namespace WordMaster.UI
             foreach(Character character in _globalContext.Characters)
             {
                 CharacterRecap newCell = new CharacterRecap();
-                newCell.SetCharacter( character );                
+                newCell.SetCharacter( character );
+                newCell.SetContext( _globalContext );
                 CharacterTableLayout.Controls.Add( newCell );               
             }
         }

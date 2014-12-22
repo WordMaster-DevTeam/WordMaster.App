@@ -8,8 +8,8 @@ namespace WordMaster.Rendering
 {
 	public class FloorRender
 	{
-		Character _character;
-		Floor _floor;
+		CharacterBreed _character;
+		FloorStructure _floor;
 		SquareRender[,] _squaresRender;
 		int _squareRenderingWidth;
 
@@ -35,7 +35,7 @@ namespace WordMaster.Rendering
 		/// </summary>
 		/// <param name="character">Character's reference.</param>
 		/// <param name="floor">Floor's reference.</param>
-		public FloorRender( Character character , Floor floor )
+		public FloorRender( CharacterBreed character , FloorStructure floor )
 		{
 			_floor = floor;
 			_character = character;
@@ -49,7 +49,7 @@ namespace WordMaster.Rendering
 		/// <summary>
 		/// Gets the instance of <see cref="Floor"/> class used.
 		/// </summary>
-		public Floor Floor
+		public FloorStructure Floor
 		{
 			get { return _floor; }
 		}
@@ -57,7 +57,7 @@ namespace WordMaster.Rendering
 		/// <summary>
 		/// Gets or sets the <see cref="Character"/> used.
 		/// </summary>
-		public Character Character
+		public CharacterBreed Character
 		{
 			get { return _character; }
 			set { _character = value; }

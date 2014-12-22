@@ -12,7 +12,7 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
+			DungeonStructure dungeon;
 			string dungeonName = "a dungeon";
 			string dungeonDescription = "a description of a dungeon";
 
@@ -29,7 +29,7 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
+			DungeonStructure dungeon;
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 
@@ -46,8 +46,8 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor square;
+			DungeonStructure dungeon;
+			FloorStructure square;
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 
@@ -63,8 +63,8 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor square;
+			DungeonStructure dungeon;
+			FloorStructure square;
 			string dungeonName = "a dungeon";
 			string floorAName = "a floor";
 			string floorBName = "another floor";
@@ -82,8 +82,8 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floorA, floorB, floorC;
+			DungeonStructure dungeon;
+			FloorStructure floorA, floorB, floorC;
 			string dungeonName = "a dungeon";
 			string floorAName = "a floor";
 			string floorBName = "another floor";
@@ -106,8 +106,8 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floorA, floorB, floorC;
+			DungeonStructure dungeon;
+			FloorStructure floorA, floorB, floorC;
 			string dungeonName = "a dungeon";
 			string floorAName = "a floor";
 			string floorBName = "another floor";
@@ -131,8 +131,8 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floorA, floorB, floorC;
+			DungeonStructure dungeon;
+			FloorStructure floorA, floorB, floorC;
 			string dungeonName = "a dungeon";
 			string floorAName = "a floor";
 			string floorBName = "another floor";

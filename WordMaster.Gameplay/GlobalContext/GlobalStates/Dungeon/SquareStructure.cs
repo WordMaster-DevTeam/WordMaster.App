@@ -1,0 +1,168 @@
+﻿using System;
+
+namespace WordMaster.Gameplay
+{
+	[Serializable]
+	public class SquareStructure
+	{
+		readonly FloorStructure _floor;
+		readonly int _line, _column;
+		string _name, _description;
+		bool _holdable;
+		MonsterBreed _monster;
+		Trigger _trigger;
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		/// <param name="floor">Floor's reference, each Square must be in a <see cref="Floor"/>.</param>
+		/// <param name="line">Square's horizontal coordinate.</param>
+		/// <param name="column">Square's vertical coordinate.</param>
+		/// <param name="name">Square's names.</param>
+		/// <param name="description">Square's description</param>
+		/// <param name="holdable">Square's Holdable state.</param>
+		internal SquareStructure( FloorStructure floor, int line, int column, string name, string description, bool holdable )
+		{
+			_floor = floor;
+			_line = line;
+			_column = column;
+			_name = name;
+			_description = description;
+			_holdable = holdable;
+		}
+
+		/// <summary>
+		/// Gets the reference of the instance <see cref="Floor"/> class where this instance of <see cref="SquareStructure"/> class is.
+		/// </summary>
+		public FloorStructure Floor
+		{
+			get { return _floor; }
+		}
+
+		/// <summary>
+		/// Gets the horizontal coordinate of this instance of <see cref="SquareStructure"/> in an instance of <see cref="Floor"/> class.
+		/// </summary>
+		public int Line
+		{
+			get { return _line; }
+		}
+
+		/// Gets the vertical coordinate of this instance of <see cref="SquareStructure"/> in an instance of <see cref="Floor"/> class.
+		public int Column
+		{
+			get { return _column; }
+		}
+
+		/// <summary>
+		/// Gets or sets the name of this instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		public string Name
+		{
+			get { return _name; }
+			set { if( Floor.Dungeon.Editable ) _name = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the description of this instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		public string Description
+		{
+			get { return _description; }
+			set { if( Floor.Dungeon.Editable ) _description = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets the holdable state of this instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		public bool Holdable
+		{
+			get { return _holdable; }
+			set { if( Floor.Dungeon.Editable ) _holdable = value; }
+		}
+
+		/// <summary>
+		/// Gets or sets (this DLL only) the current instance of <see cref="Monster"/> used in this instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		public MonsterBreed Monster
+		{
+			get { return _monster; }
+			internal set { _monster = value; }
+		}
+
+		/// <summary>
+		/// Gets the current instance of <see cref="Trigger"/> used in this instance of <see cref="SquareStructure"/> class.
+		/// </summary>
+		public Trigger Trigger
+		{
+			get { return _trigger; }
+		}
+
+		#region Sets Triggers (Switch, Teleport, Trap)
+		/// <summary>
+		/// Initializes a new instance of <see cref="Switch"/> class within this instance of <see cref="SquareStructure"/> class.
+		/// NB: A Switch is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable, exchanged Square must be initialize.
+		/// </summary>
+		/// <param name="name">Switch's name.</param>
+		/// <param name="description">Switch's description.</param>
+		/// <param name="onlyOnceActivated">Switch's activation occurence, set to false for one shoot, true to unlimited.</param>
+		/// <param name="proximityActivated">Switch's activation mechanisme, set to false for one position activation, true to neighbors activation additionally.</param>
+		/// <param name="hidden">Switch's concealment, set to false for a unconcelead trigger, true for an concelead one.</param>
+		/// <param name="newSquare">Switch's replacement, or Switch's target if use a second time (if possible).</param>
+		/// <returns>New Switch's reference.</returns>
+		public Switch SetSwitch( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, SquareStructure exchanged )
+		{
+			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
+			if( exchanged == null ) throw new ArgumentException( "Changed can not be null", "changed" );
+
+			if( !proximityActivated ) // A Square with a Switch must be holdable if not proximity activated
+				_holdable = true;
+			_trigger = new Switch( this, name, description, onlyOnceActivated, proximityActivated, hidden, exchanged );
+			return (Switch)_trigger;
+		}
+
+		/// <summary>
+		/// Initializes a new instance of <see cref="Teleport"/> class within this instance of <see cref="SquareStructure"/> class.
+		/// NB: A Teleport is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable, target must be initialize.
+		/// </summary>
+		/// <param name="name">Teleport's name.</param>
+		/// <param name="description">Teleport's description.</param>
+		/// <param name="target">Square's reference, each Teleport must have a targeted Square to be use.</param>
+		/// <param name="bidirectional">Square's direction property, automatically set the target's trigger to lead to this Trigger's holder.</param>
+		/// <returns>New Teleport's reference.</returns>
+		public Teleport SetTeleport( string name, string description, SquareStructure target, bool bidirectional )
+		{
+			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
+			if( target == null ) throw new ArgumentNullException( "Target can not be null", "target" );
+
+			_holdable = true; // A Square with a Teleport must alway be holdable
+			_trigger = new Teleport( this, name, description, target, bidirectional );
+			return (Teleport)_trigger;
+		}
+
+		/// <summary>
+		/// Initializes a new intance of <see cref="Trap"/> class within this instance of <see cref="SquareStructure"/> class.
+		/// NB: A Trap is a <see cref="Trigger"/>, their can be only ONE Trigger for each Square. An unholdable Square holding a not proximity activated Trigger become holdable.
+		/// WARNING: Dungeon must be editable.
+		/// </summary>
+		/// <param name="name">Trap's name.</param>
+		/// <param name="description">Trap's description.</param>
+		/// <param name="onlyOnceActivated">Trap's activation occurence, set to false for one shoot, true to unlimited.</param>
+		/// <param name="proximityActivated">Trap's activation mechanisme, set to false for one position activation, true to neighbors activation additionally.</param>
+		/// <param name="hidden">Trap's concealment, set to false for a unconcelead trigger, true for an concelead one.</param>
+		/// <param name="ignoreArmor">Trap's effect with armor, set to false to do not ignore armor, true will ignore it.</param>
+		/// <param name="intensity">Trap's intensity, number of health point substract to a <see cref="CharacterBreed"/> when activate.</param>
+		/// <returns>New Trap's reference.</returns>
+		public Trap SetTrap( string name, string description, bool onlyOnceActivated, bool proximityActivated, bool hidden, bool ignoreArmor, int intensity )
+		{
+			if( !Floor.Dungeon.Editable ) throw new InvalidOperationException( "Can not edit a Square in not editable Dungeon" );
+
+			if( !proximityActivated ) // A Square with a Trap must be holdable if not proximity activated
+				_holdable = true;
+			_trigger = new Trap( this, name, description, onlyOnceActivated, proximityActivated, hidden, ignoreArmor, intensity );
+			return (Trap)_trigger;
+		}
+		#endregion
+	}
+}

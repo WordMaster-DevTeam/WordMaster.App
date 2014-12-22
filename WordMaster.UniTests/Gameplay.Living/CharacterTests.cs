@@ -12,7 +12,7 @@ namespace WordMaster.UniTests
         {
 			// Arrange
 			GlobalContext context =  new GlobalContext();
-			Character character;
+			CharacterBreed character;
 			string characterName = "a character";
 			string characterDescription = "a description of a character";
 			int hp = 150, xp = 500, lvl = 3, armor = 25;
@@ -57,10 +57,10 @@ namespace WordMaster.UniTests
         {
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Character character;
-			Dungeon dungeon;
-			Floor floor;
-			Square final;
+			CharacterBreed character;
+			DungeonStructure dungeon;
+			FloorStructure floor;
+			SquareStructure final;
 			Game game;
 			HistoricRecord historicRecord;
 			string characterName = "a character";

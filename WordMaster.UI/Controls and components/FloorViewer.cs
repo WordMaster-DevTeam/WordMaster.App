@@ -26,7 +26,7 @@ namespace WordMaster.UI
 		/// <param name="gameContext"></param>
 		internal void Initialize( GameContext gameContext )
 		{
-			_viewPort = new ViewPort( new FloorRender( gameContext.Game.Character, gameContext.Game.Character.Floor ), 1 ); // ViewPort used to display the Floor
+			_viewPort = new ViewPort( new FloorRender( gameContext.Character, gameContext.Character.Floor ), 1 ); // ViewPort used to display the Floor
 			_viewPort.AreaChanged += _viewPort_AreaChanged; // Force the application to (re)draw the ViewPort
 		}
 

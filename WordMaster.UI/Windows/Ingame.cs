@@ -16,14 +16,12 @@ namespace WordMaster.UI
     {
         GlobalContext _globalContext;      
 		GameContext _gameContext;
-		Game _game;
 		HistoricRecord _historicRecord;
 
         public InGame()
         {
 			_globalContext = new GlobalContext();
-
-			_gameContext = _globalContext.StartNewGame( _gameContext.GetCharacter( "Oliver" ), _globalContext.GetDungeon( "The Academy" ), out _game, out _historicRecord );
+			_gameContext = _globalContext.StartNewGame( _globalContext.GetCharacter( "Oliver" ), _globalContext.GetDungeon( "The Academy" ), out _historicRecord );
 			InitializeComponent();
         }
 
@@ -39,34 +37,34 @@ namespace WordMaster.UI
 		#region Interface's updates
 		private void UpdateCharacterPanel()
 		{
-			NameTextBox.Text = _gameContext.Game.Character.Name;
-			LifeTextBox.Text = _gameContext.Game.Character.Health.ToString() + " / " + _gameContext.Game.Character.MaxHealth.ToString();
-			LevelTextBox.Text = _gameContext.Game.Character.Level.ToString();
-			ArmorTextBox.Text = _gameContext.Game.Character.Armor.ToString();
-			ExperienceTextBox.Text = _gameContext.Game.Character.Experience.ToString();
-			DescriptionTextBox.Text = _gameContext.Game.Character.Description;
+			NameTextBox.Text = _gameContext.Character.Name;
+			LifeTextBox.Text = _gameContext.Character.Health.ToString() + " / " + _gameContext.Character.MaxHealth.ToString();
+			LevelTextBox.Text = _gameContext.Character.Level.ToString();
+			ArmorTextBox.Text = _gameContext.Character.Armor.ToString();
+			ExperienceTextBox.Text = _gameContext.Character.Experience.ToString();
+			DescriptionTextBox.Text = _gameContext.Character.Description;
 		}
 
 		private void UpdateDungeonPanel()
 		{
-			if(_gameContext.Game.Character.GameContext != null ) // Game ongoing
+			if(_gameContext.Character.GameContext != null ) // Game ongoing
 			{
-				DungeonTextBox1.Text = _gameContext.Game.Character.Dungeon.Name;
-				DungeonTextBox2.Text = _gameContext.Game.Character.Dungeon.Description;
-				FloorTextBox1.Text = _gameContext.Game.Character.Floor.Name;
-				FloorTextBox2.Text = _gameContext.Game.Character.Floor.Description;
-				SquareTextBox1.Text = _gameContext.Game.Character.Square.Name;
-				SquareTextBox2.Text = _gameContext.Game.Character.Square.Description;
+				DungeonTextBox1.Text = _gameContext.Character.Dungeon.Name;
+				DungeonTextBox2.Text = _gameContext.Character.Dungeon.Description;
+				FloorTextBox1.Text = _gameContext.Character.Floor.Name;
+				FloorTextBox2.Text = _gameContext.Character.Floor.Description;
+				SquareTextBox1.Text = _gameContext.Character.Square.Name;
+				SquareTextBox2.Text = _gameContext.Character.Square.Description;
 
-				if( _game.Character.Square.Trigger == null ) // No Trigger
+				if( _gameContext.Character.Square.Trigger == null ) // No Trigger
 				{
 					MiscTextBox2.Text = "...";
 					MiscTextBox1.Text = "...";
 				}
 				else // Trigger found
 				{
-					MiscTextBox1.Text = _gameContext.Game.Character.Square.Trigger.Name;
-					MiscTextBox2.Text = _gameContext.Game.Character.Square.Trigger.Description;
+					MiscTextBox1.Text = _gameContext.Character.Square.Trigger.Name;
+					MiscTextBox2.Text = _gameContext.Character.Square.Trigger.Description;
 				}
 			}
 			else // Game ended
@@ -84,13 +82,13 @@ namespace WordMaster.UI
 		#endregion
 
 		#region Interface's controls
-		private void MoveAndUpdate( Square initial, int line, int column )
+		private void MoveAndUpdate( SquareStructure initial, int line, int column )
 		{
-			Square target = initial.Floor[line, column];
+			SquareStructure target = initial.Floor[line, column];
 
-			if( _gameContext.Game.Character.TryMoveTo( target ) ) // Checks holdable state and activates trigger if neeeded
+			if( _gameContext.Character.TryMoveTo( target ) ) // Checks holdable state and activates trigger if neeeded
 			{
-				if( _gameContext.Game.Character.GameContext == null ) // Game ended
+				if( _gameContext.Character.GameContext == null ) // Game ended
 				{
 					// Updated FloorViewer's Floor
 					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon(new Guid().ToString(), (10))[0] );
@@ -99,7 +97,7 @@ namespace WordMaster.UI
 				}
 				else // Game ongoing
 				{
-					FloorViewer.ViewPort.FloorRender = new FloorRender( _gameContext.Game.Character, _gameContext.Game.Character.Floor );
+					FloorViewer.ViewPort.FloorRender = new FloorRender( _gameContext.Character, _gameContext.Character.Floor );
 					UpdateDungeonPanel();
 					UpdateCharacterPanel();
 				}
@@ -108,45 +106,45 @@ namespace WordMaster.UI
 
 		private void GoToUp()
 		{
-			if( _gameContext.Game.Character.Square != null )
+			if( _gameContext.Character.Square != null )
 				MoveAndUpdate
 				(
-					_gameContext.Game.Character.Square,
-					_gameContext.Game.Character.Square.Line - 1,
-					_gameContext.Game.Character.Square.Column
+					_gameContext.Character.Square,
+					_gameContext.Character.Square.Line - 1,
+					_gameContext.Character.Square.Column
 				);
 		}
 
 		private void GoToRight()
 		{
-			if( _gameContext.Game.Character.Square != null )
+			if( _gameContext.Character.Square != null )
 				MoveAndUpdate
 				(
-					_gameContext.Game.Character.Square,
-					_gameContext.Game.Character.Square.Line,
-					_gameContext.Game.Character.Square.Column + 1
+					_gameContext.Character.Square,
+					_gameContext.Character.Square.Line,
+					_gameContext.Character.Square.Column + 1
 				);
 		}
 
 		private void GoToDown()
 		{
-			if( _gameContext.Game.Character.Square != null )
+			if( _gameContext.Character.Square != null )
 				MoveAndUpdate
 				(
-					_gameContext.Game.Character.Square,
-					_gameContext.Game.Character.Square.Line + 1,
-					_gameContext.Game.Character.Square.Column
+					_gameContext.Character.Square,
+					_gameContext.Character.Square.Line + 1,
+					_gameContext.Character.Square.Column
 				);
 		}
 
 		private void GoToLeft()
 		{
-			if( _gameContext.Game.Character.Square != null )
+			if( _gameContext.Character.Square != null )
 				MoveAndUpdate
 				(
-					_gameContext.Game.Character.Square,
-					_gameContext.Game.Character.Square.Line,
-					_gameContext.Game.Character.Square.Column - 1
+					_gameContext.Character.Square,
+					_gameContext.Character.Square.Line,
+					_gameContext.Character.Square.Column - 1
 				);
 		}
 

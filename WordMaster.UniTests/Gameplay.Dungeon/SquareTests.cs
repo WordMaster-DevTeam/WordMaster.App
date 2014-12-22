@@ -12,9 +12,9 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floor;
-			Square square;
+			DungeonStructure dungeon;
+			FloorStructure floor;
+			SquareStructure square;
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 			string squareName = "a square";
@@ -38,9 +38,9 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floor;
-			Square square;
+			DungeonStructure dungeon;
+			FloorStructure floor;
+			SquareStructure square;
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 			string squareName1 = "a square";
@@ -71,9 +71,9 @@ namespace WordMaster.UniTests
 		{
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			Dungeon dungeon;
-			Floor floor;
-			Square squareA, squareB, squareC;
+			DungeonStructure dungeon;
+			FloorStructure floor;
+			SquareStructure squareA, squareB, squareC;
 			string dungeonName = "a dungeon";
 			string floorName = "a floor";
 			string squareName = "a square";

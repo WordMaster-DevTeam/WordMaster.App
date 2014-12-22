@@ -7,14 +7,14 @@ namespace WordMaster.Rendering
 	public class SquareRender
 	{
 		readonly FloorRender _floorRender;
-		readonly Square _square;
+		readonly SquareStructure _square;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="SquareRender"/> class.
 		/// </summary>
 		/// <param name="floorRender">FloorRender's reference, encapsulate this instance of SquareRender.</param>
 		/// <param name="square">Square'reference, object to render.</param>
-		internal SquareRender( FloorRender floorRender, Square square )
+		internal SquareRender( FloorRender floorRender, SquareStructure square )
 		{
 			_floorRender = floorRender;
 			_square = square;

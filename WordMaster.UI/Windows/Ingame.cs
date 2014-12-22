@@ -29,19 +29,19 @@ namespace WordMaster.UI
         private void InGame_Load( object sender, EventArgs e )
         {
 			// DungeonPanel
-			DungeonTextBox1.Text = _game.Character.Dungeon.Name;
-			DungeonTextBox2.Text = _game.Character.Dungeon.Description;
-			FloorTextBox1.Text = _game.Character.Floor.Name;
-			FloorTextBox2.Text = _game.Character.Floor.Description;
-			SquareTextBox1.Text = _game.Character.Square.Name;
-			SquareTextBox2.Text = _game.Character.Square.Description;
+            DungeonTextBox1.Text = _gameContext.Game.Character.Dungeon.Name;
+            DungeonTextBox2.Text = _gameContext.Game.Character.Dungeon.Description;
+            FloorTextBox1.Text = _gameContext.Game.Character.Floor.Name;
+            FloorTextBox2.Text = _gameContext.Game.Character.Floor.Description;
+            SquareTextBox1.Text = _gameContext.Game.Character.Square.Name;
+            SquareTextBox2.Text = _gameContext.Game.Character.Square.Description;
 
 			// CharacterPanel
-			NameTextBox.Text = _game.Character.Name;
-			LifeTextBox.Text = _game.Character.Health.ToString();
-			LevelTextBox.Text = _game.Character.Level.ToString();
-			ArmorTextBox.Text = _game.Character.Armor.ToString();
-			DescriptionTextBox.Text = _game.Character.Description;
+            NameTextBox.Text = _gameContext.Game.Character.Name;
+            LifeTextBox.Text = _gameContext.Game.Character.Health.ToString( );
+            LevelTextBox.Text = _gameContext.Game.Character.Level.ToString( );
+            ArmorTextBox.Text = _gameContext.Game.Character.Armor.ToString( );
+            DescriptionTextBox.Text = _gameContext.Game.Character.Description;
 
 			// FloorViewer
 			FloorViewer.Initialize( _gameContext );
@@ -51,52 +51,7 @@ namespace WordMaster.UI
         {
             Application.Exit( );
         }
-       
-        private void label3_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void Profilpicturebox_Click( object sender, EventArgs e )
-        {
-            
-        }
-
-        private void WDversionlbl_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void Lifelbl_Click( object sender, EventArgs e )
-		{
-
-		}
-
-		private void panel1_Paint( object sender, PaintEventArgs e )
-		{
-
-		}
-
-		private void Namelbl_Click( object sender, EventArgs e )
-		{
-
-		}
-
-        private void DescriptionLabel_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void FloorLabel_Click( object sender, EventArgs e )
-        {
-
-        }
-
-		private void floorView1_Click( object sender, EventArgs e )
-		{
-
-		}
-
+	
 		private void NameTextBox_TextChanged( object sender, EventArgs e )
 		{
 

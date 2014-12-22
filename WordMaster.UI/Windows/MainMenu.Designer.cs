@@ -63,7 +63,6 @@
             this.TutorialBTn.TabIndex = 3;
             this.TutorialBTn.Text = "Tutorial";
             this.TutorialBTn.UseVisualStyleBackColor = true;
-            this.TutorialBTn.Click += new System.EventHandler(this.TutorialBTn_Click);
             // 
             // OptionBtn
             // 
@@ -75,7 +74,6 @@
             this.OptionBtn.TabIndex = 4;
             this.OptionBtn.Text = "Option";
             this.OptionBtn.UseVisualStyleBackColor = true;
-            this.OptionBtn.Click += new System.EventHandler(this.OptionBtn_Click);
             // 
             // ScoresBtn
             // 
@@ -87,7 +85,6 @@
             this.ScoresBtn.TabIndex = 5;
             this.ScoresBtn.Text = "Scores";
             this.ScoresBtn.UseVisualStyleBackColor = true;
-            this.ScoresBtn.Click += new System.EventHandler(this.ScoresBtn_Click);
             // 
             // CreditsBtn
             // 

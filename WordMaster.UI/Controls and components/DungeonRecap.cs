@@ -13,14 +13,14 @@ namespace WordMaster.UI
 {
     public partial class DungeonRecap : UserControl
     {
-        internal Dungeon _dungeon;
+        Dungeon _dungeon;
        
         public IDungeonSelector DS
         {
             get { return (IDungeonSelector)Parent; }
         }
 
-        internal Dungeon RecapDungeon
+        internal Dungeon Dungeon
         {
             get { return _dungeon; }
         }

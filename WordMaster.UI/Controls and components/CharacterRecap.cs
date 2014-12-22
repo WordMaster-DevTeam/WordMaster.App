@@ -19,8 +19,9 @@ namespace WordMaster.UI
         internal GlobalContext _globalContext;
         GameContext _gameContext;
 
-        public CharacterRecap()
+        public CharacterRecap( GlobalContext globalContext )
         {
+            _globalContext = globalContext;
             InitializeComponent( );
             this.Dock = DockStyle.Fill;
         }
@@ -31,7 +32,11 @@ namespace WordMaster.UI
             NameLbl.Text = NameLbl.Text + character.Name;
             LifeLbl.Text = LifeLbl.Text + character.Health;
             LevelLbl.Text = LevelLbl.Text + character.Level;
-            DungeonLbl.Text = DungeonLbl.Text + character.Dungeon;
+            if(character.Dungeon!=null)
+            {
+                DungeonLbl.Text = DungeonLbl.Text + character.Dungeon.Name;
+            }
+            
         }
 
         internal void SetContext(GlobalContext globalContext)
@@ -39,36 +44,31 @@ namespace WordMaster.UI
             _globalContext = globalContext;
         }
 
-        internal void SetGameContext(GameContext gameContext)
-        {
-            _gameContext = gameContext;
-        }
         private void LaunchBtn_Click( object sender, EventArgs e )
         {
-            if(_character.Dungeon==null)
+            if(_character.Dungeon == null)
             {
 
+                using( DungeonSelection dungeonSelectForm = new DungeonSelection( _character, _globalContext) )
+                {
 
-                InGame inGameForm = new InGame( _gameContext );
-                inGameForm.Show( );
-                //using( DungeonSelection dungeonSelectForm = new DungeonSelection( ) )
-                //{
-                //    dungeonSelectForm.SetContext(_context)
-                    
-                //    DialogResult res = dungeonSelectForm.ShowDialog( );
-                //    if(res == DialogResult.OK)
-                //    {
-                //        dungeonSelectForm.Close( );
-                //    }
-                    
-                //}
+                    DialogResult res = dungeonSelectForm.ShowDialog( );
+                    if(res == DialogResult.OK)
+                    {
+                        ParentForm.Refresh();
+                        dungeonSelectForm.Close( );
+                    }
+
+                }
                 
             }
             else
             {
-                InGame inGameForm = new InGame( _gameContext );
-                inGameForm.Show( );
-            }                     
+                InGame inGame = new InGame( _gameContext );
+                inGame.Show( );
+            }
+
+                  
         } 
     }
 }

@@ -11,57 +11,40 @@ using WordMaster.Gameplay;
 
 namespace WordMaster.UI
 {
-    public partial class DungeonSelection : Form, IDungeonSelector
+    public partial class DungeonSelection : Form
     {
-        List<Dungeon> _dungeons;
-        GlobalContext _context;
+        GlobalContext _globalContext;
+        Character _character;
 
-        public DungeonSelection()
+        public DungeonSelection( Character character, GlobalContext globalContext )
         {
-            InitializeComponent( );
+            _globalContext = globalContext;
+            _character = character;
+            InitializeComponent();
         }
 
-        public void SetDungeonList( List<Dungeon> dungeonList )
-        {
-            _dungeons = dungeonList;
-            DungeonListTableLayout.RowCount = _dungeons.Count( );
-
-            foreach ( Dungeon aDungeon in _dungeons )
-            {
-                DungeonRecap newRecap = new DungeonRecap( );
-                newRecap.SetDungeon( aDungeon );
-                DungeonListTableLayout.Controls.Add( newRecap );
-            }
-        }
-
-        internal void SetContext( GlobalContext context )
-        {
-            _context = context;
-        }
-        
         protected override void OnLoad( EventArgs e )
         {
-            AppManager.CurrentContext.AddDefaultDungeon( "Rusty Cage" );
-            AppManager.CurrentContext.AddDefaultDungeon( "Black Tower" );
-            AppManager.CurrentContext.AddDefaultDungeon( "Mudddy Jail" );
-            AppManager.CurrentContext.AddDefaultDungeon( "Flooded Cache" );
-            AppManager.CurrentContext.AddDefaultDungeon( "Unknow Place" );
+            DungeonListTableLayout.RowCount = _globalContext.Dungeons.Count();
 
-            DungeonListTableLayout.RowCount = AppManager.CurrentContext.Dungeons.Count( );
-
-            foreach(Dungeon aDungeon in AppManager.CurrentContext.Dungeons)
+            foreach ( Dungeon dungeon in _globalContext.Dungeons )
             {
                 DungeonRecap newRecap = new DungeonRecap( );
-                newRecap.SetDungeon( aDungeon );
-                newRecap.IsSelected+= new EventHandler ( DungeonRecap_SelectBtnClicked);
+                newRecap.SetDungeon( dungeon );
+                newRecap.IsSelected += new EventHandler( DungeonRecap_SelectBtnClicked );
                 DungeonListTableLayout.Controls.Add( newRecap );
             }
         }
 
         private void DungeonRecap_SelectBtnClicked(object sender,EventArgs e)
         {
+            Game game;
+            HistoricRecord historicRecord;
+
             this.DialogResult = DialogResult.OK;
-            //newRecap.RecapDungeon = recapCharacter.Dungeon;
+            GameContext gameContext = _globalContext.StartNewGame( _character,( (DungeonRecap)sender ).Dungeon, out game, out historicRecord);
+            InGame ingameForm = new InGame( gameContext );
+            ingameForm.Show( );
         }
 
         private void BackBtn_Click( object sender, EventArgs e )

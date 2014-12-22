@@ -36,9 +36,7 @@ namespace WordMaster.UI
             _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
             // Test Characters list, will be discart when tests are finish
 
-
             CharacterTableLayout.RowCount = _globalContext.Characters.Count( );
-			
             
             // Saved Characters loading (need serialization)
             // ---- TODO ----
@@ -46,7 +44,7 @@ namespace WordMaster.UI
             // Filling table layout with all the Characters            
             foreach(Character character in _globalContext.Characters)
             {
-                CharacterRecap newCell = new CharacterRecap();
+                CharacterRecap newCell = new CharacterRecap( _globalContext);
                 newCell.SetCharacter( character );
                 newCell.SetContext( _globalContext );
                 CharacterTableLayout.Controls.Add( newCell );               
@@ -80,7 +78,7 @@ namespace WordMaster.UI
                         {
                             MessageBox.Show( "An error occured, the Character cannot be added." );
                         }
-                        CharacterRecap newCell = new CharacterRecap( );
+                        CharacterRecap newCell = new CharacterRecap( _globalContext );
                         newCell.SetCharacter( newCharacter );
                         CharacterTableLayout.Controls.Add( newCell );
                     }
@@ -92,21 +90,6 @@ namespace WordMaster.UI
         private void QuitBtn_Click( object sender, EventArgs e )
         {
             Application.Exit();
-        }
-
-        private void ScoresBtn_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void OptionBtn_Click( object sender, EventArgs e )
-        {
-
-        }
-
-        private void TutorialBTn_Click( object sender, EventArgs e )
-        {
-
         }       
 	}
 }

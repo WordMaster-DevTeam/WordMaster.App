@@ -2,9 +2,10 @@
 
 namespace WordMaster.Gameplay
 {
+    [Serializable]
 	public class HistoricRecord
 	{
-        [Serializable]
+        
 		readonly Character _character;
 		readonly Dungeon _dungeon;
 		DateTime _beginning;

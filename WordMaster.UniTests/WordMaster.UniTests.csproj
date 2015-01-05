@@ -51,6 +51,7 @@
     <Compile Include="IOChecks.InputsChecker\InputsCheckerTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Gameplay.Dungeon\SquareTests.cs" />
+    <Compile Include="Gameplay.Serialization\SerializationTest.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WordMaster.Gameplay\WordMaster.Gameplay.csproj">

@@ -2,9 +2,10 @@
 
 namespace WordMaster.Gameplay
 {
+    [Serializable]
     public class Item
     {
-        [Serializable]
+        
         string _name;
         string _description;
 

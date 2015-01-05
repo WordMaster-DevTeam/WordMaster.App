@@ -4,6 +4,7 @@ namespace WordMaster.Gameplay
 {
 	public class Floor
 	{
+        [Serializable]
 		readonly Dungeon _dungeon;
 		int _level;
 		string _name, _description;

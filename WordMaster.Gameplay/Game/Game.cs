@@ -4,6 +4,7 @@ namespace WordMaster.Gameplay
 {
 	public class Game
 	{
+        [Serializable]
 		readonly Character _character;
 		readonly Dungeon _dungeon;
 		readonly HistoricRecord _historic;

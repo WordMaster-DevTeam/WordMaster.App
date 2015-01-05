@@ -2,6 +2,7 @@
 
 namespace WordMaster.Gameplay
 {
+    [Serializable]
 	public class GameContext
 	{
 		readonly GlobalContext _globalContext;

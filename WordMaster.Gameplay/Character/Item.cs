@@ -4,6 +4,7 @@ namespace WordMaster.Gameplay
 {
     public class Item
     {
+        [Serializable]
         string _name;
         string _description;
 

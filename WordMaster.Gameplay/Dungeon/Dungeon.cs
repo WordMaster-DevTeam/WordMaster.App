@@ -5,6 +5,7 @@ namespace WordMaster.Gameplay
 {
     public class Dungeon
     {
+        [Serializable]
 		readonly GlobalContext _globalContext;
 		readonly Dictionary<string, Floor> _floors;
 		string _name, _description;

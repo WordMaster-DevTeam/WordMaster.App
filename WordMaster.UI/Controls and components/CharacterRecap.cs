@@ -35,6 +35,10 @@ namespace WordMaster.UI
             if(character.Dungeon!=null)
             {
                 DungeonLbl.Text = DungeonLbl.Text + character.Dungeon.Name;
+                if(character.GameContext.Game.Historic.Cancelled ==true)
+                {
+                    DungeonLbl.Text = DungeonLbl.Text + " (unfinished)";
+                }
             }
             
         }

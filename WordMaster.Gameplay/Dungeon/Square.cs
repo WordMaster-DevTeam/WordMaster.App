@@ -4,6 +4,7 @@ namespace WordMaster.Gameplay
 {
 	public class Square
 	{
+        [Serializable]
 		readonly Floor _floor;
 		readonly int _line, _column;
 		string _name, _description;

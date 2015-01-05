@@ -49,6 +49,7 @@ namespace WordMaster.UI
 
         private void QuitTheGame_Click( object sender, EventArgs e )
         {
+            _gameContext.Game.Historic.Cancelled = true;
             Application.Exit( );
         }
 	

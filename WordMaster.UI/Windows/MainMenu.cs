@@ -7,6 +7,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 using WordMaster.Gameplay;
 using WordMaster.IOChecks;
 
@@ -30,16 +33,27 @@ namespace WordMaster.UI
         {
             base.OnLoad( e );
 
-            _globalContext = new GlobalContext( );
-            _character = _globalContext.AddDefaultCharacter( "Tartempion" );
-            _dungeon = _globalContext.AddDefaultDungeon( "The Default Dungeon" );
-            _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
-            // Test Characters list, will be discart when tests are finish
+            //if ( File.Exists( @"C:\Users\b\Documents\Visual Studio 2013\Projects\WordMaster.App\WordMaster.App\WordMaster.UI\bin\Debug\GameContext.bin" ) )
+            //{
+            //}
 
-            CharacterTableLayout.RowCount = _globalContext.Characters.Count( );
-            
             // Saved Characters loading (need serialization)
-            // ---- TODO ----
+            IFormatter formatter = new BinaryFormatter( );
+            Stream stream = new FileStream( "GameContext.bin", FileMode.Open, FileAccess.Read, FileShare.Read );            
+            _gameContext = (GameContext)formatter.Deserialize( stream );
+            _globalContext = _gameContext.GlobalContext;
+          
+            //else
+            //{
+            //    _globalContext = new GlobalContext( );
+            //    _character = _globalContext.AddDefaultCharacter( "Tartempion" );
+            //    _dungeon = _globalContext.AddDefaultDungeon( "Old Cave" );
+            //    _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
+            //}
+            
+            stream.Close( );
+            
+            CharacterTableLayout.RowCount = _globalContext.Characters.Count( );                       
 
             // Filling table layout with all the Characters            
             foreach(Character character in _globalContext.Characters)
@@ -89,6 +103,10 @@ namespace WordMaster.UI
 
         private void QuitBtn_Click( object sender, EventArgs e )
         {
+            IFormatter formatter = new BinaryFormatter( );
+            Stream stream = new FileStream( "GameContext.bin", FileMode.Create, FileAccess.Write, FileShare.None );
+            formatter.Serialize( stream, _gameContext );
+            stream.Close( );
             Application.Exit();
         }       
 	}

@@ -14,12 +14,7 @@ namespace WordMaster.UI
     public partial class DungeonRecap : UserControl
     {
         Dungeon _dungeon;
-       
-        public IDungeonSelector DS
-        {
-            get { return (IDungeonSelector)Parent; }
-        }
-
+              
         internal Dungeon Dungeon
         {
             get { return _dungeon; }

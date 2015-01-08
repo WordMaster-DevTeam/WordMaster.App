@@ -33,25 +33,28 @@ namespace WordMaster.UI
         {
             base.OnLoad( e );
 
-            //if ( File.Exists( @"C:\Users\b\Documents\Visual Studio 2013\Projects\WordMaster.App\WordMaster.App\WordMaster.UI\bin\Debug\GameContext.bin" ) )
-            //{
-            //}
+            // Saved Characters loading            
+            string path = Path.GetFullPath( "GameContext.bin" );
 
-            // Saved Characters loading (need serialization)
-            IFormatter formatter = new BinaryFormatter( );
-            Stream stream = new FileStream( "GameContext.bin", FileMode.Open, FileAccess.Read, FileShare.Read );            
-            _gameContext = (GameContext)formatter.Deserialize( stream );
-            _globalContext = _gameContext.GlobalContext;
-          
-            //else
-            //{
-            //    _globalContext = new GlobalContext( );
-            //    _character = _globalContext.AddDefaultCharacter( "Tartempion" );
-            //    _dungeon = _globalContext.AddDefaultDungeon( "Old Cave" );
-            //    _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
-            //}
+            if ( File.Exists( path ) )
+            {
+                IFormatter formatter = new BinaryFormatter( );
+                Stream stream = new FileStream( "GameContext.bin", FileMode.Open, FileAccess.Read, FileShare.Read );
+             
+                _gameContext = (GameContext)formatter.Deserialize( stream );
+                _globalContext = _gameContext.GlobalContext;
+
+                stream.Close( );
+            }
+            else
+            {
+                _globalContext = new GlobalContext( );
+                _character = _globalContext.AddDefaultCharacter( "Tartempion" );
+                _dungeon = _globalContext.AddDefaultDungeon( "Old Cave" );
+                _gameContext = _globalContext.StartNewGame( _character, _dungeon, out _game, out _historic );
+            }
             
-            stream.Close( );
+            
             
             CharacterTableLayout.RowCount = _globalContext.Characters.Count( );                       
 

@@ -39,15 +39,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Inventory\ActiveItem.cs" />
     <Compile Include="Character\Character.cs" />
     <Compile Include="Game\Game.cs" />
     <Compile Include="Context\GameContext.cs" />
     <Compile Include="Context\GlobalContext.cs" />
     <Compile Include="Game\HistoricRecord.cs" />
-    <Compile Include="Character\Item.cs" />
+    <Compile Include="Inventory\Item.cs" />
     <Compile Include="Dungeon\Square.cs" />
     <Compile Include="Dungeon\Floor.cs" />
     <Compile Include="Dungeon\Dungeon.cs" />
+    <Compile Include="Inventory\PassiveItem.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

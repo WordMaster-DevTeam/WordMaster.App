@@ -3,7 +3,7 @@
 namespace WordMaster.Gameplay
 {
     [Serializable]
-    public class Item
+    public abstract class Item
     {
         
         string _name;
@@ -18,6 +18,8 @@ namespace WordMaster.Gameplay
         {
             _name = name;
             _description = description;
-        }       
+        }
+
+        public void Activate();
     }
 }

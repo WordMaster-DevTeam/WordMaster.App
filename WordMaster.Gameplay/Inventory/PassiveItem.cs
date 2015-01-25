@@ -8,5 +8,6 @@ namespace WordMaster.Gameplay.Inventory
 {
     abstract class PassiveItem:Item
     {
+        string _competenceupped;
     }
 }

@@ -8,6 +8,7 @@ namespace WordMaster.Gameplay
         
         string _name;
         string _description;
+        Character _character;
 
         /// <summary>
         /// Initializes a new instance of <see cref="Item"/> class.

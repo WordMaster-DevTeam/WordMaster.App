@@ -42,6 +42,8 @@ namespace WordMaster.UI
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(InGame));
 			this.QuitTheGame = new System.Windows.Forms.Button();
 			this.CharacterPanel = new System.Windows.Forms.Panel();
+			this.ExperienceTextBox = new System.Windows.Forms.RichTextBox();
+			this.ExperienceLabel = new System.Windows.Forms.Label();
 			this.DescriptionTextBox = new System.Windows.Forms.RichTextBox();
 			this.ArmorTextBox = new System.Windows.Forms.RichTextBox();
 			this.LevelTextBox = new System.Windows.Forms.RichTextBox();
@@ -70,16 +72,14 @@ namespace WordMaster.UI
 			this.GoToLeftButton = new System.Windows.Forms.Button();
 			this.GoToRightButton = new System.Windows.Forms.Button();
 			this.MainPanel = new System.Windows.Forms.Panel();
-			this.ControlPanel = new System.Windows.Forms.Panel();
-			this.ExperienceTextBox = new System.Windows.Forms.RichTextBox();
-			this.ExperienceLabel = new System.Windows.Forms.Label();
 			this.pictureBox1 = new System.Windows.Forms.PictureBox();
+			this.ControlPanel = new System.Windows.Forms.Panel();
 			this.FloorViewer = new WordMaster.UI.FloorViewer();
 			this.CharacterPanel.SuspendLayout();
 			this.DungeonPanel.SuspendLayout();
 			this.MainPanel.SuspendLayout();
-			this.ControlPanel.SuspendLayout();
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+			this.ControlPanel.SuspendLayout();
 			this.SuspendLayout();
 			// 
 			// QuitTheGame
@@ -88,7 +88,7 @@ namespace WordMaster.UI
 			this.QuitTheGame.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.QuitTheGame.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.QuitTheGame.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.QuitTheGame.Location = new System.Drawing.Point(26, 118);
+			this.QuitTheGame.Location = new System.Drawing.Point(34, 89);
 			this.QuitTheGame.Name = "QuitTheGame";
 			this.QuitTheGame.Size = new System.Drawing.Size(119, 25);
 			this.QuitTheGame.TabIndex = 7;
@@ -114,10 +114,36 @@ namespace WordMaster.UI
 			this.CharacterPanel.Controls.Add(this.DescriptionLabel);
 			this.CharacterPanel.Controls.Add(this.ArmorLabel);
 			this.CharacterPanel.Cursor = System.Windows.Forms.Cursors.Default;
-			this.CharacterPanel.Location = new System.Drawing.Point(2, 357);
+			this.CharacterPanel.Location = new System.Drawing.Point(3, 73);
 			this.CharacterPanel.Name = "CharacterPanel";
-			this.CharacterPanel.Size = new System.Drawing.Size(180, 232);
+			this.CharacterPanel.Size = new System.Drawing.Size(180, 233);
 			this.CharacterPanel.TabIndex = 18;
+			// 
+			// ExperienceTextBox
+			// 
+			this.ExperienceTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
+			this.ExperienceTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
+			this.ExperienceTextBox.Cursor = System.Windows.Forms.Cursors.Default;
+			this.ExperienceTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
+			this.ExperienceTextBox.Location = new System.Drawing.Point(71, 117);
+			this.ExperienceTextBox.Name = "ExperienceTextBox";
+			this.ExperienceTextBox.ReadOnly = true;
+			this.ExperienceTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
+			this.ExperienceTextBox.Size = new System.Drawing.Size(104, 14);
+			this.ExperienceTextBox.TabIndex = 24;
+			this.ExperienceTextBox.Text = "";
+			this.ExperienceTextBox.WordWrap = false;
+			// 
+			// ExperienceLabel
+			// 
+			this.ExperienceLabel.AutoSize = true;
+			this.ExperienceLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+			this.ExperienceLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
+			this.ExperienceLabel.Location = new System.Drawing.Point(3, 117);
+			this.ExperienceLabel.Name = "ExperienceLabel";
+			this.ExperienceLabel.Size = new System.Drawing.Size(61, 14);
+			this.ExperienceLabel.TabIndex = 23;
+			this.ExperienceLabel.Text = "Experience";
 			// 
 			// DescriptionTextBox
 			// 
@@ -266,7 +292,7 @@ namespace WordMaster.UI
 			this.DungeonPanel.Controls.Add(this.FloorLabel);
 			this.DungeonPanel.Controls.Add(this.SquareLabel);
 			this.DungeonPanel.Cursor = System.Windows.Forms.Cursors.Default;
-			this.DungeonPanel.Location = new System.Drawing.Point(2, 73);
+			this.DungeonPanel.Location = new System.Drawing.Point(2, 313);
 			this.DungeonPanel.Name = "DungeonPanel";
 			this.DungeonPanel.Size = new System.Drawing.Size(180, 277);
 			this.DungeonPanel.TabIndex = 19;
@@ -437,7 +463,7 @@ namespace WordMaster.UI
 			this.GoToUpButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.GoToUpButton.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.GoToUpButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.GoToUpButton.Location = new System.Drawing.Point(59, 11);
+			this.GoToUpButton.Location = new System.Drawing.Point(64, 11);
 			this.GoToUpButton.Name = "GoToUpButton";
 			this.GoToUpButton.Size = new System.Drawing.Size(54, 25);
 			this.GoToUpButton.TabIndex = 13;
@@ -451,7 +477,7 @@ namespace WordMaster.UI
 			this.GoToDownButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.GoToDownButton.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.GoToDownButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.GoToDownButton.Location = new System.Drawing.Point(59, 77);
+			this.GoToDownButton.Location = new System.Drawing.Point(64, 42);
 			this.GoToDownButton.Name = "GoToDownButton";
 			this.GoToDownButton.Size = new System.Drawing.Size(54, 25);
 			this.GoToDownButton.TabIndex = 11;
@@ -465,7 +491,7 @@ namespace WordMaster.UI
 			this.GoToLeftButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.GoToLeftButton.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.GoToLeftButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.GoToLeftButton.Location = new System.Drawing.Point(26, 44);
+			this.GoToLeftButton.Location = new System.Drawing.Point(6, 26);
 			this.GoToLeftButton.Name = "GoToLeftButton";
 			this.GoToLeftButton.Size = new System.Drawing.Size(54, 25);
 			this.GoToLeftButton.TabIndex = 10;
@@ -479,7 +505,7 @@ namespace WordMaster.UI
 			this.GoToRightButton.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
 			this.GoToRightButton.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
 			this.GoToRightButton.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(40)))), ((int)(((byte)(40)))), ((int)(((byte)(40)))));
-			this.GoToRightButton.Location = new System.Drawing.Point(91, 44);
+			this.GoToRightButton.Location = new System.Drawing.Point(122, 26);
 			this.GoToRightButton.Name = "GoToRightButton";
 			this.GoToRightButton.Size = new System.Drawing.Size(54, 25);
 			this.GoToRightButton.TabIndex = 12;
@@ -504,47 +530,6 @@ namespace WordMaster.UI
 			this.MainPanel.Size = new System.Drawing.Size(184, 750);
 			this.MainPanel.TabIndex = 1;
 			// 
-			// ControlPanel
-			// 
-			this.ControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-			this.ControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(159)))), ((int)(((byte)(126)))));
-			this.ControlPanel.Controls.Add(this.GoToUpButton);
-			this.ControlPanel.Controls.Add(this.GoToDownButton);
-			this.ControlPanel.Controls.Add(this.QuitTheGame);
-			this.ControlPanel.Controls.Add(this.GoToRightButton);
-			this.ControlPanel.Controls.Add(this.GoToLeftButton);
-			this.ControlPanel.Location = new System.Drawing.Point(2, 596);
-			this.ControlPanel.Name = "ControlPanel";
-			this.ControlPanel.Size = new System.Drawing.Size(180, 151);
-			this.ControlPanel.TabIndex = 20;
-			// 
-			// ExperienceTextBox
-			// 
-			this.ExperienceTextBox.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
-			this.ExperienceTextBox.BorderStyle = System.Windows.Forms.BorderStyle.None;
-			this.ExperienceTextBox.Cursor = System.Windows.Forms.Cursors.Default;
-			this.ExperienceTextBox.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(240)))), ((int)(((byte)(240)))), ((int)(((byte)(240)))));
-			this.ExperienceTextBox.Location = new System.Drawing.Point(71, 117);
-			this.ExperienceTextBox.Name = "ExperienceTextBox";
-			this.ExperienceTextBox.ReadOnly = true;
-			this.ExperienceTextBox.ScrollBars = System.Windows.Forms.RichTextBoxScrollBars.Horizontal;
-			this.ExperienceTextBox.Size = new System.Drawing.Size(104, 14);
-			this.ExperienceTextBox.TabIndex = 24;
-			this.ExperienceTextBox.Text = "";
-			this.ExperienceTextBox.WordWrap = false;
-			// 
-			// ExperienceLabel
-			// 
-			this.ExperienceLabel.AutoSize = true;
-			this.ExperienceLabel.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.ExperienceLabel.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(20)))), ((int)(((byte)(20)))), ((int)(((byte)(20)))));
-			this.ExperienceLabel.Location = new System.Drawing.Point(3, 117);
-			this.ExperienceLabel.Name = "ExperienceLabel";
-			this.ExperienceLabel.Size = new System.Drawing.Size(61, 14);
-			this.ExperienceLabel.TabIndex = 23;
-			this.ExperienceLabel.Text = "Experience";
-			// 
 			// pictureBox1
 			// 
 			this.pictureBox1.Image = global::WordMaster.UI.Properties.Resources.Logo_v1;
@@ -555,6 +540,21 @@ namespace WordMaster.UI
 			this.pictureBox1.TabIndex = 21;
 			this.pictureBox1.TabStop = false;
 			// 
+			// ControlPanel
+			// 
+			this.ControlPanel.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+			this.ControlPanel.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(173)))), ((int)(((byte)(159)))), ((int)(((byte)(126)))));
+			this.ControlPanel.Controls.Add(this.GoToUpButton);
+			this.ControlPanel.Controls.Add(this.GoToDownButton);
+			this.ControlPanel.Controls.Add(this.GoToRightButton);
+			this.ControlPanel.Controls.Add(this.QuitTheGame);
+			this.ControlPanel.Controls.Add(this.GoToLeftButton);
+			this.ControlPanel.Location = new System.Drawing.Point(2, 596);
+			this.ControlPanel.Name = "ControlPanel";
+			this.ControlPanel.Size = new System.Drawing.Size(180, 117);
+			this.ControlPanel.TabIndex = 20;
+			// 
 			// FloorViewer
 			// 
 			this.FloorViewer.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -563,7 +563,7 @@ namespace WordMaster.UI
 			this.FloorViewer.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(100)))), ((int)(((byte)(100)))), ((int)(((byte)(100)))));
 			this.FloorViewer.Cursor = System.Windows.Forms.Cursors.Default;
 			this.FloorViewer.Font = new System.Drawing.Font("Calibri", 9F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-			this.FloorViewer.Location = new System.Drawing.Point(4, 6);
+			this.FloorViewer.Location = new System.Drawing.Point(3, 6);
 			this.FloorViewer.Margin = new System.Windows.Forms.Padding(0);
 			this.FloorViewer.Name = "FloorViewer";
 			this.FloorViewer.Size = new System.Drawing.Size(750, 750);
@@ -589,8 +589,8 @@ namespace WordMaster.UI
 			this.DungeonPanel.ResumeLayout(false);
 			this.DungeonPanel.PerformLayout();
 			this.MainPanel.ResumeLayout(false);
-			this.ControlPanel.ResumeLayout(false);
 			((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+			this.ControlPanel.ResumeLayout(false);
 			this.ResumeLayout(false);
 
         }

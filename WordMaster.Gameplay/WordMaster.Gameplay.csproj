@@ -39,29 +39,28 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="GameContext\GameStates\Dungeon\PlayedDungeon.cs" />
-    <Compile Include="GameContext\GameStates\Dungeon\PlayedFloor.cs" />
-    <Compile Include="GameContext\GameStates\Item\Item.cs" />
-    <Compile Include="GameContext\GameStates\Monster\Monster.cs" />
-    <Compile Include="GameContext\GameStates\Dungeon\PlayedSquare.cs" />
-    <Compile Include="GameContext\GameStates\Dungeon\Trigger\TriggerWear.cs" />
-    <Compile Include="GlobalContext\GlobalContext.cs" />
-    <Compile Include="GlobalContext\GlobalContext_Character.cs" />
-    <Compile Include="GlobalContext\GlobalContext_Monster.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Character\Character.cs" />
-    <Compile Include="GameContext\GameContext.cs" />
-    <Compile Include="GlobalContext\GlobalContext_Dungeon.cs" />
-    <Compile Include="GameContext\GameStates\Character\HistoricRecord.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Item\ItemType.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Square.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Floor.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Dungeon.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Monster\MonsterBreed.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Trigger\Switch.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Trigger\Trap.cs" />
+    <Compile Include="Character\Character.cs" />
+    <Compile Include="Item.cs" />
+    <Compile Include="World%27s First Layout\Ennemies\Elite.cs" />
+    <Compile Include="World%27s First Layout\Ennemies\Levy.cs" />
+    <Compile Include="World%27s First Layout\Ennemies\Veteran.cs" />
+    <Compile Include="World%27s Second Layout\Dungeon.cs" />
+    <Compile Include="World%27s Second Layout\Floor.cs" />
+    <Compile Include="World%27s Second Layout\Miscs\Monster.cs" />
+    <Compile Include="World%27s Second Layout\Square.cs" />
+    <Compile Include="World%27s Second Layout\Miscs\Trigger.cs" />
+    <Compile Include="Contexts\GlobalContext.cs" />
+    <Compile Include="Contexts\GameContext.cs" />
+    <Compile Include="Character\HistoricRecord.cs" />
+    <Compile Include="World%27s First Layout\SquareStructure.cs" />
+    <Compile Include="World%27s First Layout\FloorStructure.cs" />
+    <Compile Include="World%27s First Layout\DungeonStructure.cs" />
+    <Compile Include="World%27s First Layout\Ennemies\Ennemy.cs" />
+    <Compile Include="World%27s First Layout\Mechanisms\Switch.cs" />
+    <Compile Include="World%27s First Layout\Mechanisms\Trap.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Trigger\Trigger.cs" />
-    <Compile Include="GlobalContext\GlobalStates\Dungeon\Trigger\Teleport.cs" />
+    <Compile Include="World%27s First Layout\Mechanisms\Mechanism.cs" />
+    <Compile Include="World%27s First Layout\Mechanisms\Teleport.cs" />
   </ItemGroup>
   <ItemGroup>
     <WCFMetadata Include="Service References\" />

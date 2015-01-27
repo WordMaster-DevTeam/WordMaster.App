@@ -7,14 +7,14 @@ namespace WordMaster.Rendering
 	public class SquareRender
 	{
 		readonly FloorRender _floorRender;
-		readonly SquareStructure _square;
+		readonly Square _square;
 
 		/// <summary>
 		/// Initializes a new instance of <see cref="SquareRender"/> class.
 		/// </summary>
 		/// <param name="floorRender">FloorRender's reference, encapsulate this instance of SquareRender.</param>
 		/// <param name="square">Square'reference, object to render.</param>
-		internal SquareRender( FloorRender floorRender, SquareStructure square )
+		internal SquareRender( FloorRender floorRender, Square square )
 		{
 			_floorRender = floorRender;
 			_square = square;
@@ -37,8 +37,8 @@ namespace WordMaster.Rendering
 			{
 				return new Rectangle
 				(
-					_square.Column * _floorRender.SquareRenderingWidth,
-					_square.Line * _floorRender.SquareRenderingWidth,
+					_square.Structure.Column * _floorRender.SquareRenderingWidth,
+					_square.Structure.Line * _floorRender.SquareRenderingWidth,
 					_floorRender.SquareRenderingWidth,
 					_floorRender.SquareRenderingWidth
 				);
@@ -58,26 +58,49 @@ namespace WordMaster.Rendering
 			if( _square != null )
 			{
 				/* -- Square -- */
-				if( _square.Floor.Dungeon.Entrance != null )
-					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) ) // Entrance
-						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
-				else if( _square.Floor.Dungeon.Exit != null )
-					if( _square.Floor.Dungeon.Exit.Equals( this._square ) ) // Exit
-						graphic.FillRectangle( new SolidBrush( Color.Green ), rectangle );
-				else if( _square.Holdable ) // Holdable
+				if( _square.Structure.Holdable ) // Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
 				else // Not Holdable
 					graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
 
+				if( _square.Structure.FloorStructure.DungeonStructure.Entrance != null )
+					if( _square.Structure.FloorStructure.DungeonStructure.Entrance.Equals( _square.Structure ) ) // Entrance
+						graphic.FillEllipse( new SolidBrush( Color.DarkCyan ), rectangle );
+
+				if( _square.Structure.FloorStructure.DungeonStructure.Exit != null )
+					if( _square.Structure.FloorStructure.DungeonStructure.Exit.Equals( _square.Structure ) ) // Exit
+						graphic.FillEllipse( new SolidBrush( Color.DarkBlue ), rectangle );
+
 				/* -- Triggers -- */
 				if( _square.Trigger != null )
 				{
-					if( _square.Trigger is Teleport && !_square.Trigger.Hidden ) // Teleport
+					if( _square.Trigger.Mechanism is Teleport && !_square.Trigger.Mechanism.Concealed ) // Teleport
 						graphic.FillEllipse( new SolidBrush( Color.Yellow ), rectangle );
-					else if( _square.Trigger is Switch && !_square.Trigger.Hidden ) // Switch
+					else if( _square.Trigger.Mechanism is Switch && !_square.Trigger.Mechanism.Concealed ) // Switch
 						graphic.FillEllipse( new SolidBrush( Color.Orange ), rectangle );
-					else if( _square.Trigger is Trap && !_square.Trigger.Hidden ) // Trap
+					else if( _square.Trigger.Mechanism is Trap && !_square.Trigger.Mechanism.Concealed ) // Trap
 						graphic.FillEllipse( new SolidBrush( Color.Red ), rectangle );
+				}
+
+				/* -- Monsters -- */
+				if( _square.Monster != null )
+				{
+					if( _square.Monster.Ennemy is Levy ) // Levy
+					{
+						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(8, 8, _floorRender.SquareRenderingWidth - 16, _floorRender.SquareRenderingWidth - 16));
+					}
+					else if( _square.Monster.Ennemy is Veteran ) // Veteran
+					{
+						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(4, 4, _floorRender.SquareRenderingWidth - 8, _floorRender.SquareRenderingWidth - 8));
+					}
+					else if( _square.Monster.Ennemy is Elite ) // Elite
+					{
+						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
+						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(2, 2, _floorRender.SquareRenderingWidth - 4, _floorRender.SquareRenderingWidth - 4));
+					}
+
 				}
 
 				/* -- Characters -- */

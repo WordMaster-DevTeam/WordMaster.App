@@ -30,7 +30,7 @@ namespace WordMaster.UniTests
 			Assert.AreEqual( square.Name, squareName );
 			Assert.AreEqual( square.Description, squareDescription );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.AreEqual( square.Trigger, null );
+			Assert.AreEqual( square.Mechanism, null );
 		}
 
 		[Test]
@@ -63,7 +63,7 @@ namespace WordMaster.UniTests
 			Assert.AreEqual( square.Name, squareName2 );
 			Assert.AreEqual( square.Description, squareDescription2 );
 			Assert.AreEqual( square.Holdable, true );
-			Assert.IsInstanceOf<Teleport>( square.Trigger );
+			Assert.IsInstanceOf<Teleport>( square.Mechanism );
 		}
 
 		[Test]
@@ -89,8 +89,8 @@ namespace WordMaster.UniTests
 			squareA.SetTeleport( triggerName, triggerDescription, squareC, false );
 
 			// Assert
-			Assert.AreSame( squareA.Trigger.Holder, squareA );
-			Assert.IsInstanceOf<Teleport>( squareA.Trigger);
+			Assert.AreSame( squareA.Mechanism.Holder, squareA );
+			Assert.IsInstanceOf<Teleport>( squareA.Mechanism);
 			Assert.IsTrue( squareA.Holdable );
 			Assert.IsFalse( squareB.Holdable );
 			Assert.IsTrue( squareC.Holdable );

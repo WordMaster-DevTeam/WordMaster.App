@@ -17,11 +17,11 @@ namespace WordMaster.UI
         GlobalContext _globalContext;      
 		GameContext _gameContext;
 		HistoricRecord _historicRecord;
-
+		
         public InGame()
         {
 			_globalContext = new GlobalContext();
-			_gameContext = _globalContext.StartNewGame( _globalContext.GetCharacter( "Oliver" ), _globalContext.GetDungeon( "The Academy" ), out _historicRecord );
+			_gameContext = _globalContext.StartNewGame( _globalContext.GetCharacter( "Olivier" ), _globalContext.GetDungeon( "Tutorial" ), out _historicRecord );
 			InitializeComponent();
         }
 
@@ -32,13 +32,11 @@ namespace WordMaster.UI
 			FloorViewer.Initialize( _gameContext );
         }
 
-
-
 		#region Interface's updates
 		private void UpdateCharacterPanel()
 		{
 			NameTextBox.Text = _gameContext.Character.Name;
-			LifeTextBox.Text = _gameContext.Character.Health.ToString() + " / " + _gameContext.Character.MaxHealth.ToString();
+			LifeTextBox.Text = _gameContext.Character.CurrentHealth.ToString() + " / " + _gameContext.Character.MaxHealth.ToString();
 			LevelTextBox.Text = _gameContext.Character.Level.ToString();
 			ArmorTextBox.Text = _gameContext.Character.Armor.ToString();
 			ExperienceTextBox.Text = _gameContext.Character.Experience.ToString();
@@ -49,12 +47,12 @@ namespace WordMaster.UI
 		{
 			if(_gameContext.Character.GameContext != null ) // Game ongoing
 			{
-				DungeonTextBox1.Text = _gameContext.Character.Dungeon.Name;
-				DungeonTextBox2.Text = _gameContext.Character.Dungeon.Description;
-				FloorTextBox1.Text = _gameContext.Character.Floor.Name;
-				FloorTextBox2.Text = _gameContext.Character.Floor.Description;
-				SquareTextBox1.Text = _gameContext.Character.Square.Name;
-				SquareTextBox2.Text = _gameContext.Character.Square.Description;
+				DungeonTextBox1.Text = _gameContext.Character.Dungeon.Structure.Name;
+				DungeonTextBox2.Text = _gameContext.Character.Dungeon.Structure.Description;
+				FloorTextBox1.Text = _gameContext.Character.Floor.Structure.Name;
+				FloorTextBox2.Text = _gameContext.Character.Floor.Structure.Description;
+				SquareTextBox1.Text = _gameContext.Character.Square.Structure.Name;
+				SquareTextBox2.Text = _gameContext.Character.Square.Structure.Description;
 
 				if( _gameContext.Character.Square.Trigger == null ) // No Trigger
 				{
@@ -63,8 +61,8 @@ namespace WordMaster.UI
 				}
 				else // Trigger found
 				{
-					MiscTextBox1.Text = _gameContext.Character.Square.Trigger.Name;
-					MiscTextBox2.Text = _gameContext.Character.Square.Trigger.Description;
+					MiscTextBox1.Text = _gameContext.Character.Square.Trigger.Mechanism.Name;
+					MiscTextBox2.Text = _gameContext.Character.Square.Trigger.Mechanism.Description;
 				}
 			}
 			else // Game ended
@@ -82,18 +80,15 @@ namespace WordMaster.UI
 		#endregion
 
 		#region Interface's controls
-		private void MoveAndUpdate( SquareStructure initial, int line, int column )
+		private void MoveAndUpdate( Square initial, int line, int column )
 		{
-			SquareStructure target = initial.Floor[line, column];
+			Square target = initial.Floor[line, column];
 
 			if( _gameContext.Character.TryMoveTo( target ) ) // Checks holdable state and activates trigger if neeeded
 			{
 				if( _gameContext.Character.GameContext == null ) // Game ended
 				{
-					// Updated FloorViewer's Floor
-					FloorViewer.ViewPort.FloorRender = new FloorRender( null, _globalContext.EmptyDungeon(new Guid().ToString(), (10))[0] );
-					UpdateDungeonPanel();
-					UpdateCharacterPanel();
+					Application.Exit();
 				}
 				else // Game ongoing
 				{
@@ -110,8 +105,8 @@ namespace WordMaster.UI
 				MoveAndUpdate
 				(
 					_gameContext.Character.Square,
-					_gameContext.Character.Square.Line - 1,
-					_gameContext.Character.Square.Column
+					_gameContext.Character.Square.Structure.Line - 1,
+					_gameContext.Character.Square.Structure.Column
 				);
 		}
 
@@ -121,8 +116,8 @@ namespace WordMaster.UI
 				MoveAndUpdate
 				(
 					_gameContext.Character.Square,
-					_gameContext.Character.Square.Line,
-					_gameContext.Character.Square.Column + 1
+					_gameContext.Character.Square.Structure.Line,
+					_gameContext.Character.Square.Structure.Column + 1
 				);
 		}
 
@@ -132,8 +127,8 @@ namespace WordMaster.UI
 				MoveAndUpdate
 				(
 					_gameContext.Character.Square,
-					_gameContext.Character.Square.Line + 1,
-					_gameContext.Character.Square.Column
+					_gameContext.Character.Square.Structure.Line + 1,
+					_gameContext.Character.Square.Structure.Column
 				);
 		}
 
@@ -143,8 +138,8 @@ namespace WordMaster.UI
 				MoveAndUpdate
 				(
 					_gameContext.Character.Square,
-					_gameContext.Character.Square.Line,
-					_gameContext.Character.Square.Column - 1
+					_gameContext.Character.Square.Structure.Line,
+					_gameContext.Character.Square.Structure.Column - 1
 				);
 		}
 

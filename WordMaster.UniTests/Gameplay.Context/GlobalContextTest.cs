@@ -16,7 +16,7 @@ namespace WordMaster.UniTests
 		{
 			//Arrange
 			GlobalContext context = new GlobalContext();
-			CharacterBreed character;
+			Character character;
 			string characterName = "a character";
 
 			//Act
@@ -67,7 +67,7 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-            CharacterBreed character;
+            Character character;
             DungeonStructure dungeon;
             FloorStructure floor;
 			Game game;
@@ -97,7 +97,7 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-            CharacterBreed character;
+            Character character;
             DungeonStructure dungeon;
             FloorStructure floor;
 			Game game;
@@ -130,7 +130,7 @@ namespace WordMaster.UniTests
         {
             //Arrange
             GlobalContext context = new GlobalContext();
-            CharacterBreed character;
+            Character character;
             DungeonStructure dungeon;
             FloorStructure floor;
 			Game game;

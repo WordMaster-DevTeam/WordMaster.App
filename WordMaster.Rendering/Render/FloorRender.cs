@@ -8,10 +8,10 @@ namespace WordMaster.Rendering
 {
 	public class FloorRender
 	{
-		CharacterBreed _character;
-		FloorStructure _floor;
+		Character _character;
+		Floor _floor;
 		SquareRender[,] _squaresRender;
-		int _squareRenderingWidth;
+		int _squareRenderingWidth = 32;
 
 		/// <summary>
 		/// Recover an instance of <see cref="SquareRender"/> class using the [int, int] syntax.
@@ -23,7 +23,7 @@ namespace WordMaster.Rendering
 		{
 			get
 			{
-				if( _floor.CheckBounds( line, column ) ) // Inside the layout
+				if( _floor.Structure.CheckBounds( line, column ) ) // Inside the layout
 					return _squaresRender[line, column];
 				else // Outside the layout
 					return null;
@@ -35,21 +35,21 @@ namespace WordMaster.Rendering
 		/// </summary>
 		/// <param name="character">Character's reference.</param>
 		/// <param name="floor">Floor's reference.</param>
-		public FloorRender( CharacterBreed character , FloorStructure floor )
+		public FloorRender( Character character , Floor floor )
 		{
 			_floor = floor;
 			_character = character;
-			_squaresRender = new SquareRender[_floor.NumberOfLines, _floor.NumberOfColumns];
+			_squaresRender = new SquareRender[_floor.Structure.NumberOfLines, _floor.Structure.NumberOfColumns];
 
-			for( int i = 0; i < _floor.NumberOfLines; i++ )
-				for( int j = 0; j < _floor.NumberOfColumns; j++ )
+			for( int i = 0; i < _floor.Structure.NumberOfLines; i++ )
+				for( int j = 0; j < _floor.Structure.NumberOfColumns; j++ )
 					_squaresRender[i, j] = new SquareRender( this, floor[i, j] );
 		}
 
 		/// <summary>
 		/// Gets the instance of <see cref="Floor"/> class used.
 		/// </summary>
-		public FloorStructure Floor
+		public Floor Floor
 		{
 			get { return _floor; }
 		}
@@ -57,7 +57,7 @@ namespace WordMaster.Rendering
 		/// <summary>
 		/// Gets or sets the <see cref="Character"/> used.
 		/// </summary>
-		public CharacterBreed Character
+		public Character Character
 		{
 			get { return _character; }
 			set { _character = value; }
@@ -71,10 +71,10 @@ namespace WordMaster.Rendering
 		{
 			get
 			{
- 				if(_floor.NumberOfLines > _floor.NumberOfColumns)
-					return _floor.NumberOfLines;
+				if( _floor.Structure.NumberOfLines > _floor.Structure.NumberOfColumns )
+					return _floor.Structure.NumberOfLines;
 				else
-					return _floor.NumberOfColumns;
+					return _floor.Structure.NumberOfColumns;
 			}
 
 		}
@@ -85,19 +85,8 @@ namespace WordMaster.Rendering
 		/// </summary>
 		public int SquareRenderingWidth
 		{
-			get
-			{
-				if( _squareRenderingWidth <= 0 )
-					_squareRenderingWidth = 1;
-				return _squareRenderingWidth;
-			}
-			set
-			{
-				if( value < 1 )
-					_squareRenderingWidth = 1;
-				else
-					_squareRenderingWidth = value;
-			}
+			get { return _squareRenderingWidth; }
+			set { _squareRenderingWidth = value; }
 		}
 
 		/// <summary>
@@ -108,7 +97,6 @@ namespace WordMaster.Rendering
 		{
 			get { return FloorRenderingSize * SquareRenderingWidth;  }
 		}
-
 
         /// <summary>
 		/// Gets the total area used for represent the <see cref="FloorRender"/> (in centimeters).

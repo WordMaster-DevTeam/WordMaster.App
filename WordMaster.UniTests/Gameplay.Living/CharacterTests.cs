@@ -12,7 +12,7 @@ namespace WordMaster.UniTests
         {
 			// Arrange
 			GlobalContext context =  new GlobalContext();
-			CharacterBreed character;
+			Character character;
 			string characterName = "a character";
 			string characterDescription = "a description of a character";
 			int hp = 150, xp = 500, lvl = 3, armor = 25;
@@ -23,7 +23,7 @@ namespace WordMaster.UniTests
 			// Assert
 			Assert.AreEqual(character.Name, characterName);
 			Assert.AreEqual(character.Description, characterDescription);
-			Assert.AreEqual(character.Health, hp);
+			Assert.AreEqual(character.CurrentHealth, hp);
 			Assert.AreEqual(character.Experience, xp);
 			Assert.AreEqual(character.Level, lvl);
 			Assert.AreEqual(character.Armor, armor);
@@ -57,7 +57,7 @@ namespace WordMaster.UniTests
         {
 			// Arrange
 			GlobalContext context = new GlobalContext();
-			CharacterBreed character;
+			Character character;
 			DungeonStructure dungeon;
 			FloorStructure floor;
 			SquareStructure final;

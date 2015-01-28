@@ -68,6 +68,7 @@ namespace WordMaster.UI
             }
             else
             {
+                _gameContext = _character.GameContext;
                 InGame inGame = new InGame( _gameContext );
                 inGame.Show( );
             }

@@ -9,6 +9,9 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using WordMaster.Gameplay;
 using WordMaster.Rendering;
+using System.Runtime.Serialization.Formatters.Binary;
+using System.Runtime.Serialization;
+using System.IO;
 
 namespace WordMaster.UI
 {
@@ -49,6 +52,10 @@ namespace WordMaster.UI
 
         private void QuitTheGame_Click( object sender, EventArgs e )
         {
+            IFormatter formatter = new BinaryFormatter( );
+            Stream stream = new FileStream( "GameContext.bin", FileMode.Create, FileAccess.Write, FileShare.None );
+            formatter.Serialize( stream, _gameContext );
+            stream.Close( );
             _gameContext.Game.Historic.Cancelled = true;
             Application.Exit( );
         }

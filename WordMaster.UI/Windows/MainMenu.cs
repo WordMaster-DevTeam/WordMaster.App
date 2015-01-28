@@ -80,8 +80,8 @@ namespace WordMaster.UI
                     DialogResult r = createCharacterForm.ShowDialog( );
                     if ( r == DialogResult.Cancel ) return;
 
-                    string name = createCharacterForm.CharacterName;
-                    string desc = createCharacterForm.Description;
+                    string name = createCharacterForm.TextBoxName;
+                    string desc = createCharacterForm.TextBoxDescription;
                     if ( InputsChecker.CheckNameLength( name ) )
                     {
                         isValid = true;

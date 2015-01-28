@@ -19,15 +19,17 @@ namespace WordMaster.UI
             InitializeComponent( );
         }
 
-        public string CharacterName
+        public string TextBoxName
         {
             get { return _nameTextBox.Text; }
+            set { _nameTextBox.Text = value; }
         }
 
-        public string Description
+        public string TextBoxDescription
         {
             get { return _descriptionRichTextBox.Text; }
-        }
+            set { _descriptionRichTextBox.Text = value; }
+        }       
 
         private void CreateCharacter_Load( object sender, EventArgs e )
         {

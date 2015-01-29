@@ -34,6 +34,8 @@
             this.DungeonLbl = new System.Windows.Forms.Label();
             this.LaunchBtn = new System.Windows.Forms.Button();
             this.CharacterPictureBox = new System.Windows.Forms.PictureBox();
+            this.BtnEdit = new System.Windows.Forms.Button();
+            this.BtnDelete = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.CharacterPictureBox)).BeginInit();
             this.SuspendLayout();
             // 
@@ -93,6 +95,30 @@
             this.CharacterPictureBox.TabIndex = 5;
             this.CharacterPictureBox.TabStop = false;
             // 
+            // BtnEdit
+            // 
+            this.BtnEdit.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnEdit.BackColor = System.Drawing.Color.Gray;
+            this.BtnEdit.Location = new System.Drawing.Point(767, 125);
+            this.BtnEdit.Name = "BtnEdit";
+            this.BtnEdit.Size = new System.Drawing.Size(87, 29);
+            this.BtnEdit.TabIndex = 6;
+            this.BtnEdit.Text = "Edit";
+            this.BtnEdit.UseVisualStyleBackColor = false;
+            this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
+            // 
+            // BtnDelete
+            // 
+            this.BtnDelete.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
+            this.BtnDelete.BackColor = System.Drawing.Color.Gray;
+            this.BtnDelete.Location = new System.Drawing.Point(919, 3);
+            this.BtnDelete.Name = "BtnDelete";
+            this.BtnDelete.Size = new System.Drawing.Size(28, 29);
+            this.BtnDelete.TabIndex = 7;
+            this.BtnDelete.Text = "X";
+            this.BtnDelete.UseVisualStyleBackColor = false;
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
+            // 
             // CharacterRecap
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -100,6 +126,8 @@
             this.AutoSize = true;
             this.BackColor = System.Drawing.Color.DimGray;
             this.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.Controls.Add(this.BtnDelete);
+            this.Controls.Add(this.BtnEdit);
             this.Controls.Add(this.CharacterPictureBox);
             this.Controls.Add(this.LaunchBtn);
             this.Controls.Add(this.DungeonLbl);
@@ -122,5 +150,7 @@
         private System.Windows.Forms.Label DungeonLbl;
         private System.Windows.Forms.Button LaunchBtn;
         private System.Windows.Forms.PictureBox CharacterPictureBox;
+        private System.Windows.Forms.Button BtnEdit;
+        private System.Windows.Forms.Button BtnDelete;
     }
 }

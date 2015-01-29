@@ -363,5 +363,16 @@ namespace WordMaster.Gameplay
 						return false;
 			return true;
 		}
+
+        public Square Square
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
 	}
 }

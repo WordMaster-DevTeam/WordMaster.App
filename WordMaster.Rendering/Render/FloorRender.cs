@@ -11,7 +11,7 @@ namespace WordMaster.Rendering
 		Character _character;
 		Floor _floor;
 		SquareRender[,] _squaresRender;
-		int _squareRenderingWidth;
+		int _squareRenderingWidth = 32;
 
 		/// <summary>
 		/// Recover an instance of <see cref="SquareRender"/> class using the [int, int] syntax.
@@ -93,19 +93,8 @@ namespace WordMaster.Rendering
 		/// </summary>
 		public int SquareRenderingWidth
 		{
-			get
-			{
-				if( _squareRenderingWidth <= 0 )
-					_squareRenderingWidth = 1;
-				return _squareRenderingWidth;
-			}
-			set
-			{
-				if( value < 1 )
-					_squareRenderingWidth = 1;
-				else
-					_squareRenderingWidth = value;
-			}
+			get { return _squareRenderingWidth; }
+			set { _squareRenderingWidth = value; }
 		}
 
 		/// <summary>

@@ -415,5 +415,16 @@ namespace WordMaster.Gameplay
 					return true;
 			return false;
 		}
+
+        public Floor Floor
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
 	}
 }

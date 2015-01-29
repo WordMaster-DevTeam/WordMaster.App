@@ -41,6 +41,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Properties\Resources.Designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Resources.resx</DependentUpon>
+    </Compile>
     <Compile Include="Render\FloorRender.cs" />
     <Compile Include="Render\SquareRender.cs" />
     <Compile Include="Render\SquareRenderInfos.cs" />
@@ -51,6 +56,27 @@
       <Project>{57693073-a0d2-4a4d-9d72-36ef48da2f8c}</Project>
       <Name>WordMaster.Gameplay</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Properties\Resources.resx">
+      <Generator>ResXFileCodeGenerator</Generator>
+      <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\beacon.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\cobblestone.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\door_iron_upper.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\stonebrick_cracked.bmp" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\trip_wire_source.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

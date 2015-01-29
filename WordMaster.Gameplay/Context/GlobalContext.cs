@@ -58,6 +58,28 @@ namespace WordMaster.Gameplay
 			}
 		}
 
+        public Character Character
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
+        public Dungeon Dungeon
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
 		#region Character's management methods
 		/// <summary>
 		/// Adds an instance of <see cref="Character"/> class in this instance of <see cref="GlobalContext"/> class.

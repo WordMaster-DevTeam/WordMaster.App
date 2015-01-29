@@ -74,6 +74,30 @@ namespace WordMaster.UI
             }
 
                   
+        }
+
+        private void BtnEdit_Click( object sender, EventArgs e )
+        {
+            using( CharacterCreator _editForm= new CharacterCreator() )
+            {
+                _editForm.TextBoxName = _character.Name;
+                _editForm.TextBoxDescription = _character.Description;
+
+                DialogResult res=_editForm.ShowDialog();
+
+                if(res==DialogResult.OK)
+                {
+                    _globalContext.RenameCharacter( _character, _editForm.TextBoxName );
+                    _character.Description = _editForm.TextBoxDescription;
+                    ParentForm.Refresh( );
+                }
+            }
+        }
+
+        private void BtnDelete_Click( object sender, EventArgs e )
+        {
+            _globalContext.ForceRemoveCharacter( _character );
+            ParentForm.Refresh( );
         } 
     }
 }

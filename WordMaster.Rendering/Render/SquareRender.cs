@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Drawing;
 using WordMaster.Gameplay;
+using System.IO;
 
 namespace WordMaster.Rendering
 {
@@ -55,40 +56,65 @@ namespace WordMaster.Rendering
         {
 			Rectangle rectangle = new Rectangle( 0, 0, _floorRender.SquareRenderingWidth, _floorRender.SquareRenderingWidth );
 
-			// Default colors (no textures yet)
 			if( _square != null )
 			{
-				graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
+                // Default
+                using( var wall = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/wall1.png" ) )
+                using( var tBrush = new TextureBrush( wall ) )
+                {
+				    graphic.FillRectangle( tBrush, rectangle );
+                }
 
 				if( _square.Holdable ) // Holdable
-					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
-				
-				if( _square.TeleportTo != null ) // Teleport
-					graphic.FillRectangle( new SolidBrush( Color.Orange ), rectangle );
-				
+                { 
+                    using( var soil = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/soil1.png" ) )
+                    using( var tBrush = new TextureBrush( soil ) )
+                    {
+                        graphic.FillRectangle( tBrush, rectangle );
+                    }
+                }
+                if( _square.TeleportTo != null ) // Teleport
+                {
+                    using ( var teleporter = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/teleport1.png" ) )
+                    using( var tBrush = new TextureBrush( teleporter ) )
+                    {
+                        graphic.FillRectangle( tBrush, rectangle );
+                    }
+                }
 				if( _square.Floor.Dungeon.Entrance != null ) // Entrance
 				{
-					if( _square.Floor.Dungeon.Entrance.Equals( this._square ) )
-						graphic.FillRectangle( new SolidBrush( Color.Red ), rectangle );
+                    if ( _square.Floor.Dungeon.Entrance.Equals( this._square ) )
+                        using ( var entrance = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/entrance1.png" ) )   
+                        using ( var tBrush = new TextureBrush( entrance ) )
+                        {
+                            graphic.FillRectangle( tBrush, rectangle );
+                        }
 				}
 
 				if( _square.Floor.Dungeon.Exit != null ) // Exit
 				{
 					if( _square.Floor.Dungeon.Exit.Equals( this._square ) )
-						graphic.FillRectangle( new SolidBrush( Color.Blue ), rectangle );
+                        using ( var exit = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/exit1.png" ) )
+                        using ( var tBrush = new TextureBrush( exit ) )
+                        {
+                            graphic.FillRectangle( tBrush, rectangle );
+                        }
 				}
 
 				if( _floorRender.Character != null ) // Their is a Character in this Floor
 				{
 					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
-						graphic.FillRectangle( new SolidBrush( Color.LightBlue ), rectangle );
+                        using ( var character = new Bitmap( "C:/Users/b/Documents/Visual Studio 2013/Projects/WordMaster.App/WordMaster.App/textures/character1.png" ) )
+                        using ( var tBrush = new TextureBrush( character ) )
+                        {                            
+                            graphic.FillRectangle( tBrush, rectangle );
+                        }
 				}
 				else
 				{
 					graphic.FillRectangle( new SolidBrush( Color.Black ), rectangle );
 				}
 			}
-			rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
         }
 	}
 }

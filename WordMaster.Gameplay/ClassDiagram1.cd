@@ -1,0 +1,100 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="WordMaster.Gameplay.Character" Collapsed="true">
+    <Position X="4.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>CAQAaAAIAAAgwAoEAGEAIQQEAAgAEAChEAApCgAAYAA=</HashCode>
+      <FileName>Character\Character.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Game" />
+      <Property Name="HistoricRecord" />
+      <Property Name="GameContext1" />
+      <Property Name="Item" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WordMaster.Gameplay.GameContext" Collapsed="true">
+    <Position X="1.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAAAAAAAAAAACAAAAAAAAgAAAAAAAAAAAAAAAQ=</HashCode>
+      <FileName>Context\GameContext.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.GlobalContext" Collapsed="true">
+    <Position X="4.25" Y="2" Width="1.5" />
+    <Compartments>
+      <Compartment Name="Methods" Collapsed="true" />
+    </Compartments>
+    <TypeIdentifier>
+      <HashCode>AUIAAAQCgABggAJAIAkQIAAAEQCABJCAIQAAAAAACAE=</HashCode>
+      <FileName>Context\GlobalContext.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Character" />
+      <Property Name="Dungeon" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Dungeon" Collapsed="true">
+    <Position X="4.25" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAZAAAAAggAAiECCgAIAQBAQICCgAAoAACAAAAABA=</HashCode>
+      <FileName>Dungeon\Dungeon.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Floor" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Floor" Collapsed="true">
+    <Position X="1" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AGAAIAAACIAggAAECBAQIYQACAiAACAJIAAwIAIAAAA=</HashCode>
+      <FileName>Dungeon\Floor.cs</FileName>
+    </TypeIdentifier>
+    <ShowAsAssociation>
+      <Property Name="Square" />
+    </ShowAsAssociation>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Square" Collapsed="true">
+    <Position X="1" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAgAIAAAAAAgAIoEAABBAAwAAAQAAAAAAAAAAAABAAA=</HashCode>
+      <FileName>Dungeon\Square.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Game" Collapsed="true">
+    <Position X="7.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAgEAAAAAAIAAAAAAACAAAAAABAAAACAA=</HashCode>
+      <FileName>Game\Game.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.HistoricRecord" Collapsed="true">
+    <Position X="4.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>gAIAAAAAACAAgEEAAAQAIAAQAwAAAIAAAAIAAAQACAI=</HashCode>
+      <FileName>Game\HistoricRecord.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.ActiveItem" Collapsed="true">
+    <Position X="5.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\ActiveItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Item" Collapsed="true">
+    <Position X="7" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAIAAAAAAAAEBEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\Item.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="WordMaster.Gameplay.Inventory.PassiveItem" Collapsed="true">
+    <Position X="8.25" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAEIAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Inventory\PassiveItem.cs</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Font Name="Segoe UI" Size="9" />
+</ClassDiagram>

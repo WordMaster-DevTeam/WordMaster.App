@@ -36,6 +36,6 @@ namespace WordMaster.Gameplay
 		public Game Game
 		{
 			get { return _game; }
-		}
+        }
 	}
 }

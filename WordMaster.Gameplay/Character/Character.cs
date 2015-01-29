@@ -164,6 +164,50 @@ namespace WordMaster.Gameplay
 			get { return _gameContext; }
 		}
 
+        public Game Game
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
+        public HistoricRecord HistoricRecord
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
+        public GameContext GameContext1
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
+        public Item Item
+        {
+            get
+            {
+                throw new System.NotImplementedException( );
+            }
+            set
+            {
+            }
+        }
+
 		/// <summary>
 		/// Sets the current <see cref="Dungeon"/>, current <see cref="Floor"/> and current <see cref="Square"/> to the starting Dungeon's coordinate.
 		/// </summary>

@@ -21,6 +21,6 @@ namespace WordMaster.Gameplay
             _description = description;
         }
 
-        public void Activate();
+        abstract public void Activate();
     }
 }

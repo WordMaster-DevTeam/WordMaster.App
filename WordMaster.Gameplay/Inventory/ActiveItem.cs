@@ -8,5 +8,11 @@ namespace WordMaster.Gameplay
 {
     abstract class ActiveItem:Item
     {
+        string _name, _description;
+
+        public ActiveItem(string name, string description): base(name, description)
+        {
+
+        }
     }
 }

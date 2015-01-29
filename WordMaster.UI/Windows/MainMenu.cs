@@ -64,7 +64,21 @@ namespace WordMaster.UI
                 CharacterRecap newCell = new CharacterRecap( _globalContext);
                 newCell.SetCharacter( character );
                 newCell.SetContext( _globalContext );
-                CharacterTableLayout.Controls.Add( newCell );               
+                CharacterTableLayout.Controls.Add( newCell );
+                newCell.CharacterListEdited += new EventHandler( newCell_CharacterListEdited );
+            }
+        }
+
+        void newCell_CharacterListEdited(object sender, EventArgs e)
+        {
+            CharacterTableLayout.Controls.Clear( );
+            foreach ( Character character in _globalContext.Characters )
+            {
+                CharacterRecap newCell = new CharacterRecap( _globalContext );
+                newCell.SetCharacter( character );
+                newCell.SetContext( _globalContext );
+                CharacterTableLayout.Controls.Add( newCell );
+                newCell.CharacterListEdited += new EventHandler( newCell_CharacterListEdited );
             }
         }
 

@@ -19,6 +19,8 @@ namespace WordMaster.UI
         internal GlobalContext _globalContext;
         GameContext _gameContext;
 
+        public event EventHandler CharacterListEdited;
+
         public CharacterRecap( GlobalContext globalContext )
         {
             _globalContext = globalContext;
@@ -89,7 +91,10 @@ namespace WordMaster.UI
                 {
                     _globalContext.RenameCharacter( _character, _editForm.TextBoxName );
                     _character.Description = _editForm.TextBoxDescription;
-                    ParentForm.Refresh( );
+                    if(CharacterListEdited !=null)
+                    {
+                        CharacterListEdited( this, e );
+                    }
                 }
             }
         }
@@ -97,7 +102,10 @@ namespace WordMaster.UI
         private void BtnDelete_Click( object sender, EventArgs e )
         {
             _globalContext.ForceRemoveCharacter( _character );
-            ParentForm.Refresh( );
+            if ( CharacterListEdited != null )
+            {
+                CharacterListEdited( this, e );
+            }
         } 
     }
 }

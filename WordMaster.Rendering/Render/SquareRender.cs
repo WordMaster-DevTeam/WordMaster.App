@@ -58,26 +58,53 @@ namespace WordMaster.Rendering
 			if( _square != null )
 			{
 				/* -- Square -- */
-				if( _square.Structure.Holdable ) // Holdable
-					graphic.FillRectangle( new SolidBrush( Color.Beige ), rectangle );
-				else // Not Holdable
-					graphic.FillRectangle( new SolidBrush( Color.Gray ), rectangle );
+				if( !_square.Structure.Holdable ) // Not Holdable
+					using( var wall = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/wall1.png" ) )
+					using( var tBrush = new TextureBrush( wall ) )
+					{
+						graphic.FillRectangle( tBrush, rectangle );
+					}
+				else // Holdable
+					using( var soil = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/soil1.png" ) )
+					using( var tBrush = new TextureBrush( soil ) )
+					{
+						graphic.FillRectangle( tBrush, rectangle );
+					}
+				
 
+				// Entrance
 				if( _square.Structure.FloorStructure.DungeonStructure.Entrance != null )
 					if( _square.Structure.FloorStructure.DungeonStructure.Entrance.Equals( _square.Structure ) ) // Entrance
-						graphic.FillEllipse( new SolidBrush( Color.DarkCyan ), rectangle );
+						using( var entrance = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/entrance1.png" ) )   
+                        using ( var tBrush = new TextureBrush( entrance ) )
+                        {
+                            graphic.FillRectangle( tBrush, rectangle );
+                        }
 
+				// Exit
 				if( _square.Structure.FloorStructure.DungeonStructure.Exit != null )
 					if( _square.Structure.FloorStructure.DungeonStructure.Exit.Equals( _square.Structure ) ) // Exit
-						graphic.FillEllipse( new SolidBrush( Color.DarkBlue ), rectangle );
+						using( var exit = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/exit1.png" ) )
+                        using ( var tBrush = new TextureBrush( exit ) )
+                        {
+                            graphic.FillRectangle( tBrush, rectangle );
+                        }
 
 				/* -- Triggers -- */
 				if( _square.Trigger != null )
 				{
 					if( _square.Trigger.Mechanism is Teleport && !_square.Trigger.Mechanism.Concealed ) // Teleport
-						graphic.FillEllipse( new SolidBrush( Color.Yellow ), rectangle );
+						using( var trigger_teleport = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/teleport1.png" ) )
+						using( var tBrush = new TextureBrush( trigger_teleport ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 					else if( _square.Trigger.Mechanism is Switch && !_square.Trigger.Mechanism.Concealed ) // Switch
-						graphic.FillEllipse( new SolidBrush( Color.Orange ), rectangle );
+						using( var trigger_switch = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/switch1.png" ) )
+						using( var tBrush = new TextureBrush( trigger_switch ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 					else if( _square.Trigger.Mechanism is Trap && !_square.Trigger.Mechanism.Concealed ) // Trap
 						graphic.FillEllipse( new SolidBrush( Color.Red ), rectangle );
 				}
@@ -87,18 +114,27 @@ namespace WordMaster.Rendering
 				{
 					if( _square.Monster.Ennemy is Levy ) // Levy
 					{
-						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
-						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(8, 8, _floorRender.SquareRenderingWidth - 16, _floorRender.SquareRenderingWidth - 16));
+						using( var monster_levy = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/monster1.png" ) )
+						using( var tBrush = new TextureBrush( monster_levy ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 					}
 					else if( _square.Monster.Ennemy is Veteran ) // Veteran
 					{
-						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
-						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(4, 4, _floorRender.SquareRenderingWidth - 8, _floorRender.SquareRenderingWidth - 8));
+						using( var monster_veteran = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/monster1.png" ) )
+						using( var tBrush = new TextureBrush( monster_veteran ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 					}
 					else if( _square.Monster.Ennemy is Elite ) // Elite
 					{
-						graphic.FillEllipse( new SolidBrush( Color.Black ), rectangle );
-						graphic.FillEllipse( new SolidBrush( Color.White ), new Rectangle(2, 2, _floorRender.SquareRenderingWidth - 4, _floorRender.SquareRenderingWidth - 4));
+						using( var monster_elite = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/monster1.png" ) )
+						using( var tBrush = new TextureBrush( monster_elite ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 					}
 
 				}
@@ -107,11 +143,35 @@ namespace WordMaster.Rendering
 				if( _floorRender.Character != null )
 				{
 					if( _floorRender.Character.Square.Equals( this._square ) ) // Player
-						graphic.FillEllipse( new SolidBrush( Color.LightBlue ), rectangle );
+						using( var character = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/character1.png" ) )
+						using( var tBrush = new TextureBrush( character ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 				}
-			}
 
-			rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
+				/* -- Fog of War -- */
+				if( !_square.Visited )
+				{
+					if( _square.Seen ) // To fix - Bugggy behavior
+					{
+						using( var character = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/fogTransparent125.png" ) )
+						using( var tBrush = new TextureBrush( character ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
+					}
+					else
+					{
+						using( var sBrush = new SolidBrush( Color.Black ) )
+						{
+							graphic.FillRectangle( sBrush, rectangle );
+						}
+					}
+				}
+
+				rectangle.Inflate( -(_floorRender.SquareRenderingWidth) / 12, -(_floorRender.SquareRenderingWidth) / 12 );
+			}
 		}
 	}
 }

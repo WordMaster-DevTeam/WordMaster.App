@@ -234,8 +234,6 @@ namespace WordMaster.Gameplay
 				{
 					if( target.Structure.Holdable ) // Target holdable
 					{
-
-
 						if( target.Floor.Dungeon.GetEquivalent(target.Floor.Dungeon.Structure.Entrance).Equals( target ) ) // Dungeon's entrance found -> Cancel the Game
 						{
 							_gameContext.GlobalContext.CancelGame( this );
@@ -247,6 +245,7 @@ namespace WordMaster.Gameplay
 						else if( target.Trigger != null ) // Trigger found -> Activation
 						{
 							target.Trigger.Activate( this );
+							UpdateFogOfWar( _square );
 						}
 						else if ( target.Monster != null ) // Monster found -> Fight
 						{
@@ -256,6 +255,7 @@ namespace WordMaster.Gameplay
 						else
 						{
 							_square = target;
+							UpdateFogOfWar( _square );
 						}
 
 						return true;
@@ -265,7 +265,7 @@ namespace WordMaster.Gameplay
 			else // Dead Character, restart Game
 			{
 				this._currentHealth = _maxHealth;
-				this.RetryDungeon();
+				this.GoToTheEntrance();
 				return true;
 			}
 
@@ -308,12 +308,14 @@ namespace WordMaster.Gameplay
 			_floor = gameContext.Dungeon.GetEquivalent(gameContext.Dungeon.Structure.Entrance).Floor;
 			_square = gameContext.Dungeon.GetEquivalent(gameContext.Dungeon.Structure.Entrance);
 			_gameContext = gameContext;
+
+			UpdateFogOfWar( _square );
 		}
 
 		/// <summary>
 		/// Sets the current <see cref="Floor"/> and current <see cref="Square"/> to the starting values.
 		/// </summary>
-		internal void RetryDungeon()
+		internal void GoToTheEntrance()
 		{
 			if( _gameContext == null ) throw new InvalidOperationException( "This Character is not in a Game." );
 
@@ -330,6 +332,23 @@ namespace WordMaster.Gameplay
 			_floor = null;
 			_square = null;
 			_gameContext = null;
+		}
+
+		/// <summary>
+		/// Updates adjacent <see cref="Square"/>.
+		/// </summary>
+		/// <param name="square"><see cref="Square"/>'s reference.</param>
+		private void UpdateFogOfWar(Square square)
+		{
+			square.Visited = square.Seen = true;
+			square.Floor[square.Structure.Line-1, square.Structure.Column-1].Seen = true;
+			square.Floor[square.Structure.Line-1, square.Structure.Column].Seen = true;
+			square.Floor[square.Structure.Line-1, square.Structure.Column+1].Seen = true;
+			square.Floor[square.Structure.Line, square.Structure.Column-1].Seen = true;
+			square.Floor[square.Structure.Line, square.Structure.Column+1].Seen = true;
+			square.Floor[square.Structure.Line+1, square.Structure.Column-1].Seen = true;
+			square.Floor[square.Structure.Line+1, square.Structure.Column].Seen = true;
+			square.Floor[square.Structure.Line+1, square.Structure.Column+1].Seen = true;
 		}
 		#endregion
 	}

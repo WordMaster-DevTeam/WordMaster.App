@@ -106,7 +106,11 @@ namespace WordMaster.Rendering
 							graphic.FillRectangle( tBrush, rectangle );
 						}
 					else if( _square.Trigger.Mechanism is Trap && !_square.Trigger.Mechanism.Concealed ) // Trap
-						graphic.FillEllipse( new SolidBrush( Color.Red ), rectangle );
+						using( var trigger_trap = new Bitmap( "C:/Users/Tetrapak/Documents/Visual Studio 2013/Projects/ITI.Projects/WordMaster.App/textures/switch1.png" ) )
+						using( var tBrush = new TextureBrush( trigger_trap ) )
+						{
+							graphic.FillRectangle( tBrush, rectangle );
+						}
 				}
 
 				/* -- Monsters -- */

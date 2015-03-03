@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace WordMaster.Gameplay
 {
+	[Serializable]
 	public class Item
 	{
 	}

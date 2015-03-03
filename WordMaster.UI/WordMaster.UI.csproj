@@ -48,8 +48,32 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ControlExtension.cs" />
+    <Compile Include="Controls and components\CharacterRecap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls and components\CharacterRecap.Designer.cs">
+      <DependentUpon>CharacterRecap.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Controls and components\DungeonRecap.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="Controls and components\DungeonRecap.Designer.cs">
+      <DependentUpon>DungeonRecap.cs</DependentUpon>
+    </Compile>
     <Compile Include="Controls and components\FloorViewer.cs">
       <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="Windows\CharacterCreator.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\CharacterCreator.Designer.cs">
+      <DependentUpon>CharacterCreator.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Windows\DungeonSelection.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\DungeonSelection.Designer.cs">
+      <DependentUpon>DungeonSelection.cs</DependentUpon>
     </Compile>
     <Compile Include="Windows\InGame.cs">
       <SubType>Form</SubType>
@@ -59,6 +83,24 @@
     </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Windows\MainMenu.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Windows\MainMenu.Designer.cs">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </Compile>
+    <EmbeddedResource Include="Controls and components\CharacterRecap.resx">
+      <DependentUpon>CharacterRecap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Controls and components\DungeonRecap.resx">
+      <DependentUpon>DungeonRecap.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\CharacterCreator.resx">
+      <DependentUpon>CharacterCreator.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Windows\DungeonSelection.resx">
+      <DependentUpon>DungeonSelection.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Windows\InGame.resx">
       <DependentUpon>InGame.cs</DependentUpon>
     </EmbeddedResource>
@@ -72,6 +114,9 @@
       <DependentUpon>Resources.resx</DependentUpon>
       <DesignTime>True</DesignTime>
     </Compile>
+    <EmbeddedResource Include="Windows\MainMenu.resx">
+      <DependentUpon>MainMenu.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

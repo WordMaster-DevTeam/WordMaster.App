@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace WordMaster.Gameplay
 {
+	[Serializable]
 	public class Levy : Ennemy
 	{
 		string _sentance;

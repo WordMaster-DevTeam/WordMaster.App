@@ -72,7 +72,7 @@ namespace WordMaster.Gameplay
 		/// <summary>
 		/// Gets the number of floors of this instance of <see cref="DungeonStructure"/> class.
 		/// </summary>
-		internal int NumberOfFloors
+		public int NumberOfFloors
 		{
 			get { return _floorStructures.Count; }
 		}

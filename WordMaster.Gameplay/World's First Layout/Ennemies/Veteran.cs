@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 namespace WordMaster.Gameplay
 {
+	[Serializable]
 	public class Veteran : Ennemy
 	{
 		string _sentance;

@@ -244,6 +244,7 @@ namespace WordMaster.Gameplay
 						}
 						else if( target.Trigger != null ) // Trigger found -> Activation
 						{
+							_square = target;
 							target.Trigger.Activate( this );
 							UpdateFogOfWar( _square );
 						}

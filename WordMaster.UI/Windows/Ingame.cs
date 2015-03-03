@@ -3,7 +3,10 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.Serialization;
+using System.Runtime.Serialization.Formatters.Binary;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
@@ -13,15 +16,14 @@ using WordMaster.Rendering;
 namespace WordMaster.UI
 {
     public partial class InGame : Form
-    {
-        GlobalContext _globalContext;      
+    {   
 		GameContext _gameContext;
 		HistoricRecord _historicRecord;
 		
-        public InGame()
+        public InGame(GameContext gameContext)
         {
-			_globalContext = new GlobalContext();
-			_gameContext = _globalContext.StartNewGame( _globalContext.GetCharacter( "Olivier" ), _globalContext.GetDungeon( "Tutorial" ), out _historicRecord );
+			_gameContext = gameContext;
+			_gameContext = _gameContext.GlobalContext.StartNewGame( _gameContext.GlobalContext.GetCharacter( "Olivier" ), _gameContext.GlobalContext.GetDungeon( "Tutorial" ), out _historicRecord );
 			InitializeComponent();
         }
 
@@ -194,7 +196,7 @@ namespace WordMaster.UI
 			// Capture R key (random movement)
 			if( keyData == Keys.R )
 			{
-				int key = _globalContext.Random.Next( 4 );
+				int key = _gameContext.GlobalContext.Random.Next( 4 );
 
 				switch( key )
 				{
@@ -218,6 +220,11 @@ namespace WordMaster.UI
 
 		private void QuitTheGame_Click( object sender, EventArgs e )
 		{
+			IFormatter formatter = new BinaryFormatter();
+			Stream stream = new FileStream( "GlobalContext.bin", FileMode.Create, FileAccess.Write, FileShare.None );
+			formatter.Serialize( stream, _gameContext.GlobalContext );
+			stream.Close();
+			_gameContext.Historic.Cancelled = true;
 			Application.Exit();
 		}
 		#endregion
